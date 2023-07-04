@@ -1,0 +1,37 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.5.33516.290
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CRVS", "CRVS\CRVS.csproj", "{69A523F7-E854-4E27-B1F5-945E9EE40A89}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CRVS.Core", "CRVS.Core\CRVS.Core.csproj", "{FA39EF04-67FB-4D5C-94B1-F003C6D8D3B7}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CRVS.EF", "CRVS.EF\CRVS.EF.csproj", "{398F9E3C-A450-4DD1-B73C-5F954F731395}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{69A523F7-E854-4E27-B1F5-945E9EE40A89}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{69A523F7-E854-4E27-B1F5-945E9EE40A89}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{69A523F7-E854-4E27-B1F5-945E9EE40A89}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{69A523F7-E854-4E27-B1F5-945E9EE40A89}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FA39EF04-67FB-4D5C-94B1-F003C6D8D3B7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FA39EF04-67FB-4D5C-94B1-F003C6D8D3B7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FA39EF04-67FB-4D5C-94B1-F003C6D8D3B7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FA39EF04-67FB-4D5C-94B1-F003C6D8D3B7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{398F9E3C-A450-4DD1-B73C-5F954F731395}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{398F9E3C-A450-4DD1-B73C-5F954F731395}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{398F9E3C-A450-4DD1-B73C-5F954F731395}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{398F9E3C-A450-4DD1-B73C-5F954F731395}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {54DD71EA-CB4E-48D6-AA52-9AD449C3EE57}
+	EndGlobalSection
+EndGlobal
