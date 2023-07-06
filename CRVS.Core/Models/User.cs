@@ -15,5 +15,13 @@ namespace CRVS.Core.Models
         public string? Email { get; set; }
         public string? Phone { get; set; }
         public string? Img { get; set; }
+        public bool IsBlocked { get; set; }
+        public string? Governorate { get; set; }
+        public string? Directorate { get; set; }
+        public string? Judiciary { get; set; }
+        public string? District { get; set; }
+        public string? Village { get; set; }
+        public string? FacilityType { get; set; }
+        public string? HealthInstitution { get; set; }
     }
 }

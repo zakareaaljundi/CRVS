@@ -1,0 +1,33 @@
+﻿@model IEnumerable<Microsoft.AspNetCore.Identity.IdentityRole>
+@{
+    ViewData["Title"] = "Roles List";
+}
+
+<h1 class="text-center my-5">@Localizer["RolesList"]</h1>
+
+<table class="table table-bordered">
+    <tr>
+        <th> @Html.DisplayNameFor(x=>x.Name) </th>
+        <th>@Localizer["Operations"]</th>
+    </tr>
+    @foreach (var role in Model)
+    {
+        <tr>
+            <td>@role.Name</td>
+            <td>
+                <a asp-action="EditRole" asp-controller="Account" asp-route-id="@role.Id" class="btn btn-warning">
+                    @Localizer["EditRole"]
+                </a>
+                <a asp-action="Permissions" asp-controller="Account" asp-route-id="@role.Id" class="btn btn-success">
+                    @Localizer["Permissions"]
+                </a>
+                @if (!(role.Name == "Admin"))
+                {
+                    <a asp-action="DeleteRole" asp-controller="Account" asp-route-id="@role.Id" class="btn btn-danger">
+                        @Localizer["DeleteRole"]
+                    </a>
+                }
+            </td>
+        </tr>
+    }
+</table>

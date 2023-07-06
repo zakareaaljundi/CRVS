@@ -1,0 +1,38 @@
+﻿@model CRVS.Core.Models.ViewModels.RolePermissionsViewModel
+
+@{
+    ViewData["Title"] = "Permissions";
+}
+
+<h1 class="text-center my-5">@Model.RoleName Permissions</h1>
+<form asp-controller="Account" asp-action="Permissions" method="post">
+    <input type="hidden" asp-for="RoleId" />
+    <table class="table-bordered table">
+        <thead>
+            <tr>
+                <th>Tables</th>
+                <th>Read</th>
+                <th>Add</th>
+                <th>Edit</th>
+                <th>Delete</th>
+                <th>Approval</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var tableName in Model.Permissions!.Keys)
+            {
+                <tr>
+                    <td>@tableName</td>
+                    <td><input type="checkbox" asp-for="Permissions![tableName]" /></td>
+                    <td><input type="checkbox" asp-for="AddPermissions![tableName]" /></td>
+                    <td><input type="checkbox" asp-for="EditPermissions![tableName]" /></td>
+                    <td><input type="checkbox" asp-for="DeletePermissions![tableName]" /></td>
+                    <td><input type="checkbox" asp-for="ApprovalPermissions![tableName]" /></td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <button type="submit" class="btn btn-primary">Save</button>
+    <a asp-action="RolesList" class="btn btn-warning">Cancel</a>
+</form>

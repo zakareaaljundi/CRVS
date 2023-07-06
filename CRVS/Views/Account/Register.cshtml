@@ -1,62 +1,168 @@
 ﻿@model CRVS.Core.Models.ViewModels.RegisterViewModel
-
 @{
     ViewData["Title"] = "Register";
 }
 
-<body class="page">
-    <main class="main page__main mt-5">
-        <div class="container">
-            <form asp-action="Register" class="login-form" enctype="multipart/form-data">
-                <h3 class="login-form__title">Sign Up</h3>
-                <div asp-validation-summary="All" class="text-danger"></div>
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="form-group d-flex flex-column align-items-center">
-                            <div class="position-relative w-75 mb-md-2">
-                                <img id="default" src="~/Images/GoldenBidPerson1_TestPicture.png" class="rounded-circle w-100" />
-                                <img id="preview" src="#" alt="Preview" class="top-0 w-100 rounded-circle left-0" style="display: none;" />
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="border-bottom title-part-padding">
+                <h4 class="card-title mb-0 text-center">Add User</h4>
+            </div>
+            <div class="card-body wizard-content">
+                <form asp-action="Register" class="login-form validation-wizard wizard-circle mt-5" enctype="multipart/form-data" method="post">
+                    <!-- Step 1 -->
+                    <h6>Step 1</h6>
+                    <section>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group d-flex flex-column align-items-center">
+                                    <div class="position-relative w-75 mb-md-2">
+                                        <img id="default" src="~/Images/GoldenBidPerson1_TestPicture.png" class="rounded-circle w-100" />
+                                        <img id="preview" src="#" alt="Preview" class="top-0 w-100 rounded-circle left-0" style="display: none;" />
+                                    </div>
+                                    <label class="p-0 bg-transparent">Profile Picture (Optional)</label>
+                                    <input asp-for="Img" class="form-control" onchange="previewImage(event)" />
+                                    <span asp-validation-for="Img" class="text-danger"></span>
+                                </div>
                             </div>
-                            <label class="p-0 bg-transparent">Profile Picture (Optional)</label>
-                            <input asp-for="Img" class="form-control" onchange="previewImage(event)" />
-                            <span asp-validation-for="Img" class="text-danger"></span>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <input asp-for="FName" class="form-control required" placeholder="First Name *" />
+                                    <span asp-validation-for="FName" class="text-danger"></span>
+                                </div>
+                                <div class="form-group">
+                                    <input asp-for="LName" class="form-control required" placeholder="Last Name *" />
+                                    <span asp-validation-for="LName" class="text-danger"></span>
+                                </div>
+                                <div class="form-group">
+                                    <input asp-for="Email" class="form-control required" placeholder="Email *" />
+                                    <span asp-validation-for="Email" class="text-danger"></span>
+                                </div>
+                                <div class="form-group">
+                                    <input asp-for="Phone" class="form-control required" placeholder="Phone *" value="+962" />
+                                    <span asp-validation-for="Phone" class="text-danger"></span>
+                                </div>
+                                <div class="form-group">
+                                    @*
+                                    <label for="GovernorateId">Governorate</label>*@
+                                    <select id="GovernorateId" name="GovernorateId" class="select2 form-control custom-select w-100 required">
+                                        <option value="" disabled selected hidden>-- Select Governorate *--</option>
+                                        @foreach (var item in ViewBag.Governorates)
+                                        {
+                                            <option value="@item.Value">@item.Text</option>
+                                        }
+                                    </select>
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <input asp-for="FName" class="form-control" placeholder="First Name" />
-                            <span asp-validation-for="FName" class="text-danger"></span>
+                    </section>
+                    <!-- Step 2 -->
+                    <h6>Step 2</h6>
+                    <section>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="DirectorateId">Directorate</label>
+                                    <select id="DirectorateId" name="DirectorateId" class="form-control required">
+                                        <option value="" disabled selected hidden>-- Select Directorate *--</option>
+                                        @foreach (var item in ViewBag.Directorates)
+                                        {
+                                            <option value="@item.Value">@item.Text</option>
+                                        }
+                                    </select>
+                                </div>
+                            </div>
                         </div>
-                        <div class="form-group">
-                            <input asp-for="LName" class="form-control" placeholder="Last Name" />
-                            <span asp-validation-for="LName" class="text-danger"></span>
+                    </section>
+                    <!-- Step 3 -->
+                    <h6>Step 3</h6>
+                    <section>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="JudiciaryId">Judiciary</label>
+                                    <select id="JudiciaryId" name="JudiciaryId" class="form-control required">
+                                        <option value="" disabled selected hidden>-- Select Judiciary *--</option>
+                                        @foreach (var item in ViewBag.Judiciaries)
+                                        {
+                                            <option value="@item.Value">@item.Text</option>
+                                        }
+                                    </select>
+                                </div>
+                            </div>
                         </div>
-                        <div class="form-group">
-                            <input asp-for="Email" class="form-control" placeholder="Email" />
-                            <span asp-validation-for="Email" class="text-danger"></span>
+                    </section>
+                    <!-- Step 4 -->
+                    <h6>Step 4</h6>
+                    <section>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="DistrictId">District</label>
+                                    <select id="DistrictId" name="DistrictId" class="form-control required">
+                                        <option value="" disabled selected hidden>-- Select District *--</option>
+                                        @foreach (var item in ViewBag.Districts)
+                                        {
+                                            <option value="@item.Value">@item.Text</option>
+                                        }
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <input asp-for="Village" class="form-control required" placeholder="Village *" />
+                                    <span asp-validation-for="Village" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="FacilityTypeId">Facility Type</label>
+                                    <select id="FacilityTypeId" name="FacilityTypeId" class="form-control required">
+                                        <option value="" disabled selected hidden>-- Select Facility Type *--</option>
+                                        @foreach (var item in ViewBag.FacilityTypes)
+                                        {
+                                            <option value="@item.Value">@item.Text</option>
+                                        }
+                                    </select>
+                                </div>
+                            </div>
                         </div>
-                        <div class="form-group">
-                            <input asp-for="Password" class="form-control" placeholder="Password" />
-                            <span asp-validation-for="Password" class="text-danger"></span>
+                    </section>
+                    <!-- Step 5 -->
+                    <h6>Step 5</h6>
+                    <section>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="HealthInstitutionId">Health Institution</label>
+                                    <select id="HealthInstitutionId" name="HealthInstitutionId" class="form-control required">
+                                        <option value="" disabled selected hidden>-- Select Health Institution *--</option>
+                                        @foreach (var item in ViewBag.HealthInstitutions)
+                                        {
+                                            <option value="@item.Value">@item.Text</option>
+                                        }
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <input asp-for="Password" class="form-control required" placeholder="Password *" />
+                                    <span asp-validation-for="Password" class="text-danger"></span>
+                                </div>
+                                <div class="form-group">
+                                    <input asp-for="ConfirmPassword" class="form-control required" placeholder="Confirm Password *" />
+                                    <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+                                </div>
+                            </div>
                         </div>
-                        <div class="form-group">
-                            <input asp-for="ConfirmPassword" class="form-control" placeholder="Confirm Password" />
-                            <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
-                        </div>
-                        <div class="form-group">
-                            <input asp-for="Phone" class="form-control" placeholder="Phone" value="+962" />
-                            <span asp-validation-for="Phone" class="text-danger"></span>
-                        </div>
-                        <button class="primary-btn w-100" type="submit">Create</button>
-                    </div>
-                    <div class="login-form__footer">
-                        <a class="login-form__link" asp-action="Login">I Have Account!</a>
-                    </div>
-                </div>
-            </form>
+                    </section>
+                    <input type="submit" value="Create" class="bottom-0 btn btn-primary position-absolute start-0" />
+                </form>
+            </div>
         </div>
-    </main>
-</body>
+    </div>
+</div>
 
 @section Scripts {
     <script>
@@ -73,7 +179,124 @@
             reader.readAsDataURL(input.files[0]);
         }
     </script>
-    @{
-        await Html.RenderPartialAsync("_ValidationScriptsPartial");
-    }
+    @*Filtering Directorates after selecting Governorate*@
+    <script>
+        $(document).ready(function () {
+            $('#GovernorateId').change(function () {
+                var selectedGovernorateId = $(this).val();
+                $.ajax({
+                    url: '/Account/GetDirectorates',
+                    type: 'GET',
+                    data: { governorateId: selectedGovernorateId },
+                    dataType: 'json',
+                    success: function (data) {
+                        var directorateDropdown = $('#DirectorateId');
+                        directorateDropdown.empty();
+                        var selectOption = $('<option></option>').val('').text('-- Select Directorate --');
+                        selectOption.prop('disabled', true);
+                        selectOption.prop('hidden', true);
+                        selectOption.prop('selected', true);
+                        directorateDropdown.append(selectOption);
+                        $.each(data, function (index, item) {
+                            var option = $('<option></option>').val(item.directorateId).text(item.directorateName);
+                            directorateDropdown.append(option);
+                        });
+                    },
+                    error: function (xhr, status, error) {
+                        console.log(xhr.responseText);
+                    }
+                });
+            });
+        });
+    </script>
+    @*Filtering Judiciaries after selecting Directorate*@
+    <script>
+        $(document).ready(function () {
+            $('#DirectorateId').change(function () {
+                var selectedDirectorateId = $(this).val();
+                $.ajax({
+                    url: '/Account/GetJudiciaries',
+                    type: 'GET',
+                    data: { directorateId: selectedDirectorateId },
+                    dataType: 'json',
+                    success: function (data) {
+                        var judiciaryDropdown = $('#JudiciaryId');
+                        judiciaryDropdown.empty();
+                        var selectOption = $('<option></option>').val('').text('-- Select Judiciary --');
+                        selectOption.prop('disabled', true);
+                        selectOption.prop('hidden', true);
+                        selectOption.prop('selected', true);
+                        judiciaryDropdown.append(selectOption);
+                        $.each(data, function (index, item) {
+                            var option = $('<option></option>').val(item.judiciaryId).text(item.judiciaryName);
+                            judiciaryDropdown.append(option);
+                        });
+                    },
+                    error: function (xhr, status, error) {
+                        console.log(xhr.responseText);
+                    }
+                });
+            });
+        });
+    </script>
+    @*Filtering Districts after selecting Judiciary*@
+    <script>
+        $(document).ready(function () {
+            $('#JudiciaryId').change(function () {
+                var selectedJudiciaryId = $(this).val();
+                $.ajax({
+                    url: '/Account/GetDistricts',
+                    type: 'GET',
+                    data: { judiciaryId: selectedJudiciaryId },
+                    dataType: 'json',
+                    success: function (data) {
+                        var districtDropdown = $('#DistrictId');
+                        districtDropdown.empty();
+                        var selectOption = $('<option></option>').val('').text('-- Select District --');
+                        selectOption.prop('disabled', true);
+                        selectOption.prop('hidden', true);
+                        selectOption.prop('selected', true);
+                        districtDropdown.append(selectOption);
+                        $.each(data, function (index, item) {
+                            var option = $('<option></option>').val(item.districtId).text(item.districtName);
+                            districtDropdown.append(option);
+                        });
+                    },
+                    error: function (xhr, status, error) {
+                        console.log(xhr.responseText);
+                    }
+                });
+            });
+        });
+    </script>
+    @*Filtering HealthInstitutions after selecting FacilityType*@
+    <script>
+        $(document).ready(function () {
+            $('#FacilityTypeId').change(function () {
+                var selectedFacilityTypeId = $(this).val();
+                $.ajax({
+                    url: '/Account/GetHealthInstitutions',
+                    type: 'GET',
+                    data: { facilityTypeId: selectedFacilityTypeId },
+                    dataType: 'json',
+                    success: function (data) {
+                        var healthInstitutionDropdown = $('#HealthInstitutionId');
+                        healthInstitutionDropdown.empty();
+                        var selectOption = $('<option></option>').val('').text('-- Select Directorate --');
+                        selectOption.prop('disabled', true);
+                        selectOption.prop('hidden', true);
+                        selectOption.prop('selected', true);
+                        healthInstitutionDropdown.append(selectOption);
+                        $.each(data, function (index, item) {
+                            var option = $('<option></option>').val(item.healthInstitutionId).text(item.healthInstitutionName);
+                            healthInstitutionDropdown.append(option);
+                        });
+                    },
+                    error: function (xhr, status, error) {
+                        console.log(xhr.responseText);
+                    }
+                });
+            });
+        });
+    </script>
 }

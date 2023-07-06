@@ -1,0 +1,62 @@
+﻿@model CRVS.Core.Models.User
+
+@{
+    ViewData["Title"] = "Profile";
+}
+
+<div class="row">
+    <div class="col-md-12 mb-4">
+        <h1 class="text-center">Profile Information</h1>
+    </div>
+    <div class="col-md-4">
+        <img src="@Html.DisplayFor(x=>x.Img)" style="width: 25rem" />
+    </div>
+    <div class="col-md-4">
+        <div class="form-group">
+            <label class="display-8">First Name :</label>
+            <p>@Html.DisplayFor(model=>model.FName)</p>
+        </div>
+        <div class="form-group">
+            <label class="display-8">Last Name</label>
+            <p>@Html.DisplayFor(model=>model.LName)</p>
+        </div>
+        <div class="form-group">
+            <label class="display-8">Email</label>
+            <p>@Html.DisplayFor(model=>model.Email)</p>
+        </div>
+        <div class="form-group">
+            <label class="display-8">c</label>
+            <p>@Html.DisplayFor(model=>model.Phone)</p>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="form-group">
+            <label class="display-8">Governorate Name :</label>
+            <p>@Html.DisplayFor(model=>model.Governorate)</p>
+        </div>
+        <div class="form-group">
+            <label class="display-8">Directorate Name</label>
+            <p>@Html.DisplayFor(model=>model.Directorate)</p>
+        </div>
+        <div class="form-group">
+            <label class="display-8">Judiciary Name</label>
+            <p>@Html.DisplayFor(model=>model.Judiciary)</p>
+        </div>
+        <div class="form-group">
+            <label class="display-8">District Name</label>
+            <p>@Html.DisplayFor(model=>model.District)</p>
+        </div>
+        <div class="form-group">
+            <label class="display-8">Village Name</label>
+            <p>@Html.DisplayFor(model=>model.Village)</p>
+        </div>
+        <div class="form-group">
+            <label class="display-8">FacilityType Name</label>
+            <p>@Html.DisplayFor(model=>model.FacilityType)</p>
+        </div>
+        <div class="form-group">
+            <label class="display-8">Health Institution Name</label>
+            <p>@Html.DisplayFor(model=>model.HealthInstitution)</p>
+        </div>
+    </div>
+</div>

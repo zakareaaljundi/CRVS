@@ -1,0 +1,146 @@
+﻿@model CRVS.Core.Models.BirthCertificate
+@{
+    ViewData["Title"] = "Create";
+}
+
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="border-bottom title-part-padding">
+                <h4 class="card-title mb-0 text-center">Create</h4>
+            </div>
+            <div class="card-body wizard-content">
+                <form asp-action="Create" class="login-form validation-wizard wizard-circle mt-5" enctype="multipart/form-data" method="post">
+                    <!-- Step 1 -->
+                    <h6>Step 1</h6>
+                    <section>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <input asp-for="Governorate" class="form-control" value="@ViewBag.Governorate" placeholder="Governorate" readonly />
+                                    <span asp-validation-for="Governorate" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <input asp-for="Directorate" class="form-control" value="@ViewBag.Directorate" placeholder="Directorate" readonly />
+                                    <span asp-validation-for="Directorate" class="text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <input asp-for="Judiciary" class="form-control" value="@ViewBag.Judiciary" placeholder="Judiciary" readonly />
+                                    <span asp-validation-for="Judiciary" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <input asp-for="District" class="form-control" value="@ViewBag.District" placeholder="District" readonly />
+                                    <span asp-validation-for="District" class="text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <input asp-for="Village" class="form-control" value="@ViewBag.Village" placeholder="Village" readonly />
+                                    <span asp-validation-for="Village" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <input asp-for="FacilityType" class="form-control" value="@ViewBag.FacilityType" placeholder="FacilityType" readonly />
+                                    <span asp-validation-for="FacilityType" class="text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <input asp-for="HealthInstitution" class="form-control" value="@ViewBag.HealthInstitution" placeholder="HealthInstitution" readonly />
+                                    <span asp-validation-for="HealthInstitution" class="text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                    <!-- Step 2 -->
+                    <h6>Step 2</h6>
+                    <section>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <input asp-for="ChildName" class="form-control" placeholder="ChildName" />
+                                    <span asp-validation-for="ChildName" class="text-danger"></span>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label asp-for="Venu" class="control-label"></label>
+                                        <select asp-for="Venu" class="form-control" asp-items="Html.GetEnumSelectList<CRVS.Core.Models.BirthCertificate.Venus>()">
+                                            <option vlaue="-1" disabled selected hidden>--- Select Gender ---</option>
+                                        </select>
+                                        <span asp-validation-for="Venu" class="text-danger"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                    <!-- Step 3 -->
+                    <h6>Step 3</h6>
+                    <section>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <input asp-for="FatherName" class="form-control" placeholder="FatherName" />
+                                    <span asp-validation-for="FatherName" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <input asp-for="FatherJob" class="form-control" placeholder="FatherJob" />
+                                    <span asp-validation-for="FatherJob" class="text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <input asp-for="FatherReligion" class="form-control" placeholder="FatherReligion" />
+                                    <span asp-validation-for="FatherReligion" class="text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                    <!-- Step 4 -->
+                    <h6>Step 4</h6>
+                    <section>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <input asp-for="MotherName" class="form-control" placeholder="MotherName" />
+                                    <span asp-validation-for="MotherName" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <input asp-for="MotherJob" class="form-control" placeholder="MotherJob" />
+                                    <span asp-validation-for="MotherJob" class="text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <input asp-for="MotherReligion" class="form-control" placeholder="MotherReligion" />
+                                    <span asp-validation-for="MotherReligion" class="text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                    <input type="submit" value="Create" class="bottom-0 btn btn-primary position-absolute start-0" />
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

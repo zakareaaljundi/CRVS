@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -31,5 +32,18 @@ namespace CRVS.Core.Models.ViewModels
         public string? ConfirmPassword { get; set; }
         public string? Phone { get; set; }
         public IFormFile? Img { get; set; }
+        [ForeignKey("Governorate")]
+        [Display(Name = "Governorate Name")]
+        public int GovernorateId { get; set; }
+        public Governorate? Governorate { get; set; }
+        public int DirectorateId { get; set; }
+        public int JudiciaryId { get; set; }
+        public int DistrictId { get; set; }
+        public string? Village { get; set; }
+        [ForeignKey("FacilityType")]
+        [Display(Name = "Facility Type Name")]
+        public int FacilityTypeId { get; set; }
+        public FacilityType? FacilityType { get; set; }
+        public int HealthInstitutionId { get; set; }
     }
 }

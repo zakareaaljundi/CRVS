@@ -1,0 +1,49 @@
+﻿@model IEnumerable<CRVS.Core.Models.BirthCertificate>
+
+@{
+    ViewData["Title"] = "Index";
+}
+<h1 class="text-center mt-5">Certificates List</h1>
+
+@*<table class="table table-dark table-responsive-lg mb-4" id="myTable">*@
+<table class="table table-bordered table-responsive-lg mt-3">
+    <thead>
+        <tr>
+            <th>Child Name</th>
+            <th>Gender</th>
+            <th>Governorate</th>
+            <th>Directorate</th>
+            <th>Judiciary</th>
+            <th>District</th>
+            <th>Village</th>
+            <th>Father Name</th>
+            <th>Father Job</th>
+            <th>Father Religion</th>
+            <th>Mother Name</th>
+            <th>Mother Job</th>
+            <th>Mother Religion</th>
+            <th>Approval</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var certificate in Model)
+        {
+            <tr>
+                <td>@certificate.ChildName</td>
+                <td>@certificate.Venu</td>
+                <td>@certificate.Governorate</td>
+                <td>@certificate.Directorate</td>
+                <td>@certificate.Judiciary</td>
+                <td>@certificate.District</td>
+                <td>@certificate.Village</td>
+                <td>@certificate.FatherName</td>
+                <td>@certificate.FatherJob</td>
+                <td>@certificate.FatherReligion</td>
+                <td>@certificate.MotherName</td>
+                <td>@certificate.MotherJob</td>
+                <td>@certificate.MotherReligion</td>
+                <td>@certificate.Approval</td>
+            </tr>
+        }
+    </tbody>
+</table>
