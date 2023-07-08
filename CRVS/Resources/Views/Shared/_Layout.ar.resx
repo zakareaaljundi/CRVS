@@ -120,8 +120,23 @@
   <data name="AccountSetting" xml:space="preserve">
     <value>إعدادات الحساب</value>
   </data>
+  <data name="AllCertificates" xml:space="preserve">
+    <value>جميع الشهادات</value>
+  </data>
+  <data name="ApprovedCertificates" xml:space="preserve">
+    <value>موافق عليهم</value>
+  </data>
   <data name="Arabic" xml:space="preserve">
     <value>عربي</value>
+  </data>
+  <data name="BirthCertificates" xml:space="preserve">
+    <value>شهادات الميلاد</value>
+  </data>
+  <data name="BlockedUsers" xml:space="preserve">
+    <value>المحظورين</value>
+  </data>
+  <data name="DeletedCertificates" xml:space="preserve">
+    <value>المحذوفة</value>
   </data>
   <data name="Inbox" xml:space="preserve">
     <value>صندوق الوارد</value>
@@ -132,10 +147,49 @@
   <data name="Logout" xml:space="preserve">
     <value>تسجيل الخروج</value>
   </data>
+  <data name="Manage" xml:space="preserve">
+    <value>إدارة</value>
+  </data>
   <data name="MyBalance" xml:space="preserve">
     <value>رصيدي</value>
   </data>
+  <data name="NewCertificate" xml:space="preserve">
+    <value>إصدار شهادة</value>
+  </data>
+  <data name="NewRole" xml:space="preserve">
+    <value>إنشاء وظيفة</value>
+  </data>
+  <data name="NewUser" xml:space="preserve">
+    <value>إضافة موظف</value>
+  </data>
   <data name="Profile" xml:space="preserve">
     <value>الصفحة الشخصية</value>
+  </data>
+  <data name="RejectedCertificates" xml:space="preserve">
+    <value>المرفوضة</value>
+  </data>
+  <data name="Roles" xml:space="preserve">
+    <value>الوظائف</value>
+  </data>
+  <data name="RolesList" xml:space="preserve">
+    <value>قائمة الوظائف</value>
+  </data>
+  <data name="SecondStageCertificates" xml:space="preserve">
+    <value>معلقة للتدقيق</value>
+  </data>
+  <data name="ToApprove" xml:space="preserve">
+    <value>معلقة للموافقة</value>
+  </data>
+  <data name="UnCompletedCertificates" xml:space="preserve">
+    <value>غير مكتملة</value>
+  </data>
+  <data name="Users" xml:space="preserve">
+    <value>الموظفين</value>
+  </data>
+  <data name="UsersList" xml:space="preserve">
+    <value>قائمة الموظفين</value>
+  </data>
+  <data name="UsersMessages" xml:space="preserve">
+    <value>الرسائل</value>
   </data>
 </root>

@@ -15,11 +15,13 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using System.Reflection;
 using System;
+using System.Data;
 
 
 namespace CRVS.Controllers
 {
-    [Authorize]
+    //[Authorize]
+
     public class AccountController : Controller
     {
         #region Configuration
@@ -56,6 +58,9 @@ namespace CRVS.Controllers
         [HttpGet]
         public IActionResult Register()
         {
+            var roles = _roleManager.Roles.ToList();
+            ViewBag.Roles = new SelectList(roles, "Id", "Name");
+
             var governorates = _context.Governorates.ToList();
             ViewBag.Governorates = new SelectList(governorates, "GovernorateId", "GovernorateName");
             var directorates = _context.Directorates.ToList();
@@ -125,6 +130,7 @@ namespace CRVS.Controllers
                     LName = model.LName,
                     Phone = model.Phone,
                     Img = ImgName,
+                    RegisterDate = DateTime.Now,
                     Governorate = GovernorateName,
                     Directorate = DirectorateName,
                     Judiciary = JudiciaryName,
@@ -135,7 +141,9 @@ namespace CRVS.Controllers
                 };
                 var result = await _userManager.CreateAsync(user, model.Password!);
                 if (result.Succeeded)
-                {
+                {/*
+                var role = _roleManager.FindByIdAsync(model.Roles!);*/
+                    /*await _userManager.AddToRoleAsync(user, Roles!);*/
                     _context.Add(newUser);
                     _context.SaveChanges();
                     return RedirectToAction("Register", "Account");
@@ -155,26 +163,44 @@ namespace CRVS.Controllers
         }
         [HttpPost]
         [AllowAnonymous]
+        /*  public async Task<IActionResult> Login(LoginViewModel model)
+          {
+              if (ModelState.IsValid)
+              {
+                  var user = await _userManager.FindByEmailAsync(model.Email!);
+                  if (user != null && await _userManager.CheckPasswordAsync(user, model.Password!))
+                  {
+                      var roles = await _userManager.GetRolesAsync(user);
+                      var claims = new List<Claim>        //  Claims represent pieces of information about the authenticated user
+                      {
+                          new Claim(ClaimTypes.Name, user.UserName!),
+                      };
+                      foreach (var role in roles)
+                      {
+                          claims.Add(new Claim(ClaimTypes.Role, role));   // Adding the current user's role as a claim to be recognized as a part of this role
+                      }
+                      var identity = new ClaimsIdentity(claims, JwtBearerDefaults.AuthenticationScheme);      //  This identity represents the user's identity within the system
+                      var principal = new ClaimsPrincipal(identity);      // which encapsulates the user's identity and allows it to be associated with an authenticated request.
+
+                      await HttpContext.SignInAsync("Identity.Application", principal);           // It creates an authentication cookie for the user with the specified authentication scheme ("Identity.Application") and the principal (user's identity).
+                      return RedirectToAction("Index", "Home");
+                  }
+                  ModelState.AddModelError("", "Invalid user or password");
+              }
+              return BadRequest(ModelState);
+          }*/
+
         public async Task<IActionResult> Login(LoginViewModel model)
         {
             if (ModelState.IsValid)
             {
-                var user = await _userManager.FindByEmailAsync(model.Email!);
-                if (user != null && await _userManager.CheckPasswordAsync(user, model.Password!))
+                var result = await _signInManager.PasswordSignInAsync(model.Email!, model.Password!, false, false);
+                if (result.Succeeded)
                 {
-                    /*var token = GenerateToken(user);*/
-                    var claims = new List<Claim>                 //  Claims represent pieces of information about the authenticated user
-                    {
-                        new Claim(ClaimTypes.Name, user.UserName!),
-                    };
-                    var identity = new ClaimsIdentity(claims, JwtBearerDefaults.AuthenticationScheme); //  This identity represents the user's identity within the system
-                    var principal = new ClaimsPrincipal(identity);                 // which encapsulates the user's identity and allows it to be associated with an authenticated request.
-                    await HttpContext.SignInAsync("Identity.Application", principal);       // It creates an authentication cookie for the user with the specified authentication scheme ("Identity.Application") and the principal (user's identity).
-
-
                     return RedirectToAction("Index", "Home");
                 }
                 ModelState.AddModelError("", "Invalid user or password");
+                return View(model);
             }
             return BadRequest(ModelState);
         }
@@ -193,6 +219,7 @@ namespace CRVS.Controllers
         {
             if (ModelState.IsValid)
             {
+                /*var user = await _userManager.GetUserAsync((System.Security.Claims.ClaimsPrincipal)User);*/
                 var user = await _userManager.GetUserAsync(HttpContext.User);
                 if (user == null)
                 {
@@ -239,11 +266,18 @@ namespace CRVS.Controllers
         #endregion
         #region Roles
 
+        /*This way should allow only users that in "Admin" Or "Registrar" role to access
+        [Authorize(Roles = "Admin, Registrar")]*/
+
+        /*This way should allow only users that in "Admin" And "Registrar" role to access 
+        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Registrar")]*/
+
         [HttpGet]
-        /*[Authorize(Roles = "Admin")]*/
+        [Authorize(Roles = "Admin")]
         public IActionResult CreateRole()
-        {
-            /*if (_signInManager.IsSignedIn(User) && User.IsInRole("Admin"))
+        {/*
+            if (_signInManager.IsSignedIn(User) && User.IsInRole("Admin"))
             {
                 return View();
             }
@@ -251,7 +285,7 @@ namespace CRVS.Controllers
             {
                 return RedirectToAction("AccessDenied");
             }*/
-                return View();
+            return View();
         }
 
 
@@ -280,7 +314,7 @@ namespace CRVS.Controllers
         }
 
         [HttpGet]
-        /*[Authorize(Roles = "Admin")]*/
+        [Authorize(Roles = "Admin")]
         public IActionResult RolesList()
         {
             return View(_roleManager.Roles);
@@ -293,7 +327,7 @@ namespace CRVS.Controllers
         }
 
         [HttpGet]
-        /*[Authorize(Roles = "Admin")]*/
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> EditRole(string id)
         {
             if (id == null)
@@ -310,7 +344,7 @@ namespace CRVS.Controllers
                 RoleId = role.Id,
                 RoleName = role.Name
             };
-            foreach (var user in _userManager.Users)
+            foreach (var user in _userManager.Users.ToList())
             {
                 if (await _userManager.IsInRoleAsync(user, role.Name!))
                 {
@@ -365,7 +399,7 @@ namespace CRVS.Controllers
                 return RedirectToAction(nameof(ErrorPage));
             }
             List<UserRoleViewModel> models = new List<UserRoleViewModel>();
-            foreach (var user in _userManager.Users)
+            foreach (var user in _userManager.Users.ToList())
             {
                 UserRoleViewModel userRole = new UserRoleViewModel
                 {
@@ -438,7 +472,7 @@ namespace CRVS.Controllers
             return RedirectToAction("RolesList");
         }
         [HttpGet]
-        /*[Authorize(Roles = "Admin")]*/
+        [Authorize(Roles = "Admin")]
         public IActionResult Permissions(string id)
         {
             if (id == null)
@@ -498,7 +532,7 @@ namespace CRVS.Controllers
         }
 
         [HttpPost]
-        /*[Authorize(Roles = "Admin")]*/
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Permissions(RolePermissionsViewModel model)
         {
             if (!ModelState.IsValid)

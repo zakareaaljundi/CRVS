@@ -16,6 +16,7 @@ namespace CRVS.Core.Models
         public string? Phone { get; set; }
         public string? Img { get; set; }
         public bool IsBlocked { get; set; }
+        public DateTime? RegisterDate { get; set; }
         public string? Governorate { get; set; }
         public string? Directorate { get; set; }
         public string? Judiciary { get; set; }

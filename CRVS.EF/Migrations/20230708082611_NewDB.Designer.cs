@@ -4,6 +4,7 @@ using CRVS.EF;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CRVS.EF.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230708082611_NewDB")]
+    partial class NewDB
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -37,8 +40,8 @@ namespace CRVS.EF.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Creator")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("Creator")
+                        .HasColumnType("int");
 
                     b.Property<string>("Directorate")
                         .HasColumnType("nvarchar(max)");
@@ -58,14 +61,14 @@ namespace CRVS.EF.Migrations
                     b.Property<string>("FatherReligion")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool>("FirstStage")
-                        .HasColumnType("bit");
-
                     b.Property<string>("Governorate")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("HealthInstitution")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsCompleted")
+                        .HasColumnType("bit");
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
@@ -81,9 +84,6 @@ namespace CRVS.EF.Migrations
 
                     b.Property<string>("MotherReligion")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("SecondStage")
-                        .HasColumnType("bit");
 
                     b.Property<int>("Venu")
                         .HasColumnType("int");

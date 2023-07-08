@@ -28,6 +28,11 @@ builder.Services.AddIdentity<IdentityUser, IdentityRole>()
     .AddEntityFrameworkStores<ApplicationDbContext>()
     .AddDefaultTokenProviders();
 
+/* New Addtion*//*
+builder.Services.AddIdentityCore<IdentityUser>()
+    .AddRoles<IdentityRole>();*/
+/* New Addtion*/
+
 builder.Services.AddScoped<JwtSettings>();
 // Generate and assign the secret key to the configuration
 var secretKey = SecretKeyGenerator.GenerateSecretKey();

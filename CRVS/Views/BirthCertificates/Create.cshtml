@@ -17,13 +17,13 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <input asp-for="Governorate" class="form-control" value="@ViewBag.Governorate" placeholder="Governorate" readonly />
+                                    <input asp-for="Governorate" class="form-control required" value="@ViewBag.Governorate" placeholder="Governorate" readonly />
                                     <span asp-validation-for="Governorate" class="text-danger"></span>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <input asp-for="Directorate" class="form-control" value="@ViewBag.Directorate" placeholder="Directorate" readonly />
+                                    <input asp-for="Directorate" class="form-control required" value="@ViewBag.Directorate" placeholder="Directorate" readonly />
                                     <span asp-validation-for="Directorate" class="text-danger"></span>
                                 </div>
                             </div>
@@ -31,13 +31,13 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <input asp-for="Judiciary" class="form-control" value="@ViewBag.Judiciary" placeholder="Judiciary" readonly />
+                                    <input asp-for="Judiciary" class="form-control required" value="@ViewBag.Judiciary" placeholder="Judiciary" readonly />
                                     <span asp-validation-for="Judiciary" class="text-danger"></span>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <input asp-for="District" class="form-control" value="@ViewBag.District" placeholder="District" readonly />
+                                    <input asp-for="District" class="form-control required" value="@ViewBag.District" placeholder="District" readonly />
                                     <span asp-validation-for="District" class="text-danger"></span>
                                 </div>
                             </div>
@@ -45,13 +45,13 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <input asp-for="Village" class="form-control" value="@ViewBag.Village" placeholder="Village" readonly />
+                                    <input asp-for="Village" class="form-control required" value="@ViewBag.Village" placeholder="Village" readonly />
                                     <span asp-validation-for="Village" class="text-danger"></span>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <input asp-for="FacilityType" class="form-control" value="@ViewBag.FacilityType" placeholder="FacilityType" readonly />
+                                    <input asp-for="FacilityType" class="form-control required" value="@ViewBag.FacilityType" placeholder="FacilityType" readonly />
                                     <span asp-validation-for="FacilityType" class="text-danger"></span>
                                 </div>
                             </div>
@@ -59,7 +59,7 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <input asp-for="HealthInstitution" class="form-control" value="@ViewBag.HealthInstitution" placeholder="HealthInstitution" readonly />
+                                    <input asp-for="HealthInstitution" class="form-control required" value="@ViewBag.HealthInstitution" placeholder="HealthInstitution" readonly />
                                     <span asp-validation-for="HealthInstitution" class="text-danger"></span>
                                 </div>
                             </div>
@@ -71,13 +71,13 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <input asp-for="ChildName" class="form-control" placeholder="ChildName" />
+                                    <input asp-for="ChildName" class="form-control required" placeholder="ChildName" />
                                     <span asp-validation-for="ChildName" class="text-danger"></span>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label asp-for="Venu" class="control-label"></label>
-                                        <select asp-for="Venu" class="form-control" asp-items="Html.GetEnumSelectList<CRVS.Core.Models.BirthCertificate.Venus>()">
+                                        <select asp-for="Venu" class="form-control required" asp-items="Html.GetEnumSelectList<CRVS.Core.Models.BirthCertificate.Venus>()">
                                             <option vlaue="-1" disabled selected hidden>--- Select Gender ---</option>
                                         </select>
                                         <span asp-validation-for="Venu" class="text-danger"></span>
@@ -92,13 +92,13 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <input asp-for="FatherName" class="form-control" placeholder="FatherName" />
+                                    <input asp-for="FatherName" class="form-control required" placeholder="FatherName" />
                                     <span asp-validation-for="FatherName" class="text-danger"></span>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <input asp-for="FatherJob" class="form-control" placeholder="FatherJob" />
+                                    <input asp-for="FatherJob" class="form-control required" placeholder="FatherJob" />
                                     <span asp-validation-for="FatherJob" class="text-danger"></span>
                                 </div>
                             </div>
@@ -106,7 +106,7 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <input asp-for="FatherReligion" class="form-control" placeholder="FatherReligion" />
+                                    <input asp-for="FatherReligion" class="form-control required" placeholder="FatherReligion" />
                                     <span asp-validation-for="FatherReligion" class="text-danger"></span>
                                 </div>
                             </div>
@@ -118,13 +118,13 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <input asp-for="MotherName" class="form-control" placeholder="MotherName" />
+                                    <input asp-for="MotherName" class="form-control required" placeholder="MotherName" />
                                     <span asp-validation-for="MotherName" class="text-danger"></span>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <input asp-for="MotherJob" class="form-control" placeholder="MotherJob" />
+                                    <input asp-for="MotherJob" class="form-control required" placeholder="MotherJob" />
                                     <span asp-validation-for="MotherJob" class="text-danger"></span>
                                 </div>
                             </div>
@@ -132,7 +132,7 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <input asp-for="MotherReligion" class="form-control" placeholder="MotherReligion" />
+                                    <input asp-for="MotherReligion" class="form-control required" placeholder="MotherReligion" />
                                     <span asp-validation-for="MotherReligion" class="text-danger"></span>
                                 </div>
                             </div>

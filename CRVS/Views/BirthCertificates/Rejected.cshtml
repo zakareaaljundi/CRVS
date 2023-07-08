@@ -1,14 +1,11 @@
 ﻿@model IEnumerable<CRVS.Core.Models.BirthCertificate>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Rejected";
 }
-<h1 class="text-center mt-5">Certificates List</h1>
- @if (ViewBag.canAdd)
-{
-    <a asp-action="Create" >Create</a>
-}
-@*<table class="table table-dark table-responsive-lg mb-4" id="myTable">*@
+
+<h1 class="text-center mt-5">Rejected Certificates List</h1>
+
 <table class="table table-bordered table-responsive-lg mt-3">
     <thead>
         <tr>
@@ -36,10 +33,7 @@
                 <td>@certificate.Village</td>
                 <td>@certificate.Approval</td>
                 <td>
-                    @if (ViewBag.canDelete)
-                    {
-                        <a asp-action="Delete" asp-route-id="@certificate.BirthCertificateId">Delete</a>
-                    }
+                    <a asp-action="Edit" asp-controller="BirthCertificates" asp-area="" asp-route-id="@certificate.BirthCertificateId" class="btn btn-danger">Edit</a>
                 </td>
             </tr>
         }

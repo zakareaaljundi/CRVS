@@ -31,6 +31,7 @@ namespace CRVS.Core.Models.ViewModels
         [Compare("Password", ErrorMessage = "Confirm And Password Not Match")]
         public string? ConfirmPassword { get; set; }
         public string? Phone { get; set; }
+        public string? Roles { get; set; }
         public IFormFile? Img { get; set; }
         [ForeignKey("Governorate")]
         [Display(Name = "Governorate Name")]

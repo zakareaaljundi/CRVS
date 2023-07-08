@@ -1,6 +1,6 @@
 ﻿@model IEnumerable<CRVS.Core.Models.BirthCertificate>
 @{
-    ViewData["Title"] = "Pending";
+    ViewData["Title"] = "Second Stage";
 }
 
 <h1 class="text-center mt-5">Pending Certificates List</h1>
@@ -16,12 +16,6 @@
             <th>Judiciary</th>
             <th>District</th>
             <th>Village</th>
-            <th>Father Name</th>
-            <th>Father Job</th>
-            <th>Father Religion</th>
-            <th>Mother Name</th>
-            <th>Mother Job</th>
-            <th>Mother Religion</th>
             <th>Approval</th>
             <th>Operation</th>
         </tr>
@@ -37,16 +31,10 @@
                 <td>@certificate.Judiciary</td>
                 <td>@certificate.District</td>
                 <td>@certificate.Village</td>
-                <td>@certificate.FatherName</td>
-                <td>@certificate.FatherJob</td>
-                <td>@certificate.FatherReligion</td>
-                <td>@certificate.MotherName</td>
-                <td>@certificate.MotherJob</td>
-                <td>@certificate.MotherReligion</td>
                 <td>@certificate.Approval</td>
                 <td>
-                    <a asp-action="Reject" asp-controller="BirthCertificates" asp-area="" asp-route-id="@certificate.BirthCertificateId" class="btn btn-danger">Reject</a>
-                    <a asp-action="Approve" asp-controller="BirthCertificates" asp-area="" asp-route-id="@certificate.BirthCertificateId" class="btn btn-success">Approve</a>
+                    <a asp-action="SecondStageReject" asp-controller="BirthCertificates" asp-area="" asp-route-id="@certificate.BirthCertificateId" class="btn btn-warning">Reject</a>
+                    <a asp-action="ToApprovalStage" asp-controller="BirthCertificates" asp-area="" asp-route-id="@certificate.BirthCertificateId" class="btn btn-success">To Approve</a>
                 </td>
             </tr>
         }

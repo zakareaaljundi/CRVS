@@ -34,7 +34,9 @@ namespace CRVS.Core.Models
         public string? MotherJob { get; set; }
         public string? MotherReligion { get; set; }
         public bool IsDeleted { get; set; }
-        public bool IsCompleted { get; set; }
+        public bool FirstStage { get; set; }
+        public bool SecondStage { get; set; }
         public bool Approval { get; set; }
+        public string? Creator { get; set; }
     }
 }

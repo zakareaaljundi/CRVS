@@ -120,8 +120,20 @@
   <data name="AccountSetting" xml:space="preserve">
     <value>Mîhengkirina Hesabê</value>
   </data>
+  <data name="AllCertificates" xml:space="preserve">
+    <value />
+  </data>
+  <data name="ApprovedCertificates" xml:space="preserve">
+    <value />
+  </data>
   <data name="Arabic" xml:space="preserve">
     <value>عربي</value>
+  </data>
+  <data name="BirthCertificates" xml:space="preserve">
+    <value />
+  </data>
+  <data name="BlockedUsers" xml:space="preserve">
+    <value />
   </data>
   <data name="Inbox" xml:space="preserve">
     <value>Inbox</value>
@@ -132,10 +144,49 @@
   <data name="Logout" xml:space="preserve">
     <value>Derkeve</value>
   </data>
+  <data name="Manage" xml:space="preserve">
+    <value />
+  </data>
   <data name="MyBalance" xml:space="preserve">
     <value>Balansa min</value>
   </data>
+  <data name="NewCertificate" xml:space="preserve">
+    <value />
+  </data>
+  <data name="NewRole" xml:space="preserve">
+    <value />
+  </data>
+  <data name="NewUser" xml:space="preserve">
+    <value />
+  </data>
   <data name="Profile" xml:space="preserve">
     <value>Tengal</value>
+  </data>
+  <data name="RejectedCertificates" xml:space="preserve">
+    <value />
+  </data>
+  <data name="Roles" xml:space="preserve">
+    <value />
+  </data>
+  <data name="RolesList" xml:space="preserve">
+    <value />
+  </data>
+  <data name="SecondStageCertificates" xml:space="preserve">
+    <value />
+  </data>
+  <data name="ToApprove" xml:space="preserve">
+    <value />
+  </data>
+  <data name="UnCompletedCertificates" xml:space="preserve">
+    <value />
+  </data>
+  <data name="Users" xml:space="preserve">
+    <value />
+  </data>
+  <data name="UsersList" xml:space="preserve">
+    <value />
+  </data>
+  <data name="UsersMessages" xml:space="preserve">
+    <value />
   </data>
 </root>
