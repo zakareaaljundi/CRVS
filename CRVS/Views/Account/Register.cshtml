@@ -53,7 +53,7 @@
                             </div>
                             <div class="form-group">
                                 <label for="Roles">Roles</label>
-                                <select id="Roles" name="Roles" class="form-control required">
+                                <select id="Roles" name="Roles" asp-for="Roles" class="form-control required">
                                     <option value="" disabled selected hidden>-- Select Roles *--</option>
                                     @foreach (var item in ViewBag.Roles)
                                     {
@@ -63,29 +63,29 @@
                             </div>
                         </div>
                     </div>
-                    @*show this row at first *@
-                    <div class="row mt-4">
-                        <div class="col">
-                            <div class="form-group">
-                                <label for="GovernorateId">Governorate</label>
-                                <select id="GovernorateId" name="GovernorateId" class="form-control required" onchange="showNextDropdown(this, 'row2')">
-                                    <option value="" disabled selected hidden>-- Select Governorate *--</option>
-                                    @foreach (var item in ViewBag.Governorates)
-                                    {
-                                        <option value="@item.Value">@item.Text</option>
-                                    }
-                                </select>
+                    @if (ViewBag.status)
+                    {
+                        <div class="row mt-4">
+                            <div class="col">
+                                <div class="form-group">
+                                    <label for="GovernorateId">Governorate*</label>
+                                    <select id="GovernorateId" asp-for="GovernorateId" name="GovernorateId" class="form-control">
+                                        <option value="" disabled selected hidden>-- Select Governorate --</option>
+                                        @foreach (var item in ViewBag.Governorates)
+                                        {
+                                            <option value="@item.Value">@item.Text</option>
+                                        }
+                                    </select>
                             </div>
                         </div>
                     </div>
-                    @*then show this row after choosing the row before it*@
-                    <div class="row" id="row2" @*style="display: none;"*@>
+                    <div class="row" id="row2">
                         <div class="col">
                             <div class="form-group">
-                                <label for="DirectorateId">Directorate</label>
-                                <select id="DirectorateId" name="DirectorateId" class="form-control required" onchange="showNextDropdown(this, 'row3')">
+                                <label for="DohId">Directorate</label>
+                                <select id="DohId" asp-for="DohId" name="DohId" class="form-control ">
                                     <option value="" disabled selected hidden>-- Select Directorate *--</option>
-                                    @foreach (var item in ViewBag.Directorates)
+                                    @foreach (var item in ViewBag.Dohs)
                                     {
                                         <option value="@item.Value">@item.Text</option>
                                     }
@@ -93,27 +93,11 @@
                             </div>
                         </div>
                     </div>
-                    @*then show this row after choosing the row before it*@
-                    <div class="row" id="row2" @*style="display: none;"*@>
-                        <div class="col">
-                            <div class="form-group">
-                                <label for="JudiciaryId">Judiciary</label>
-                                <select id="JudiciaryId" name="JudiciaryId" class="form-control required" onchange="showNextDropdown(this, 'row4')">
-                                    <option value="" disabled selected hidden>-- Select Judiciary *--</option>
-                                    @foreach (var item in ViewBag.Judiciaries)
-                                    {
-                                        <option value="@item.Value">@item.Text</option>
-                                    }
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                    @*then show this row after choosing the row before it*@
-                    <div class="row" id="row2" @*style="display: none;"*@>
+                    <div class="row" id="row2">
                         <div class="col">
                             <div class="form-group">
                                 <label for="DistrictId">District</label>
-                                <select id="DistrictId" name="DistrictId" class="form-control required">
+                                <select id="DistrictId" asp-for="DistrictId" name="DistrictId" class="form-control ">
                                     <option value="" disabled selected hidden>-- Select District *--</option>
                                     @foreach (var item in ViewBag.Districts)
                                     {
@@ -123,8 +107,21 @@
                             </div>
                         </div>
                     </div>
-                    @*then show this row after choosing the row before it*@
-                    <div class="row" id="row2" @*style="display: none;"*@>
+                    <div class="row" id="row2">
+                        <div class="col">
+                            <div class="form-group">
+                                <label for="NahiaId">Nahia</label>
+                                <select id="NahiaId" name="NahiaId" asp-for="NahiaId" class="form-control ">
+                                    <option value="" disabled selected hidden>-- Select Nahia *--</option>
+                                    @foreach (var item in ViewBag.Nahias)
+                                    {
+                                        <option value="@item.Value">@item.Text</option>
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row" id="row2">
                         <div class="col">
                             <div class="form-group">
                                 <input asp-for="Village" class="form-control required" placeholder="Village *" />
@@ -136,7 +133,7 @@
                         <div class="col">
                             <div class="form-group">
                                 <label for="FacilityTypeId">Facility Type</label>
-                                <select id="FacilityTypeId" name="FacilityTypeId" class="form-control required">
+                                <select id="FacilityTypeId" name="FacilityTypeId" asp-for="FacilityTypeId" class="form-control ">
                                     <option value="" disabled selected hidden>-- Select Facility Type *--</option>
                                     @foreach (var item in ViewBag.FacilityTypes)
                                     {
@@ -146,12 +143,11 @@
                             </div>
                         </div>
                     </div>
-                    @*then show this row after choosing the row before it*@
-                    <div class="row" id="row2" @*style="display: none;"*@>
+                    <div class="row" id="row2">
                         <div class="col">
                             <div class="form-group">
                                 <label for="HealthInstitutionId">Health Institution</label>
-                                <select id="HealthInstitutionId" name="HealthInstitutionId" class="form-control required">
+                                <select id="HealthInstitutionId" name="HealthInstitutionId" asp-for="HealthInstitutionId" class="form-control ">
                                     <option value="" disabled selected hidden>-- Select Health Institution *--</option>
                                     @foreach (var item in ViewBag.HealthInstitutions)
                                     {
@@ -160,7 +156,9 @@
                                 </select>
                             </div>
                         </div>
-                    </div>@*
+                    </div>
+                    }
+                    @*
                     </section>
                     <!-- Step 2 -->
                     <h6>Step 2</h6>
@@ -186,7 +184,7 @@
                     <div class="row">
                     </div>
                     </section>*@
-                    <input type="submit" value="Create" class="btn btn-primary" @*bottom-0 position-absolute start-0" *@/>
+                    <input type="submit" value="Create" class="btn btn-primary" @*bottom-0 position-absolute start-0" *@ />
                 </form>
             </div>
         </div>
@@ -208,26 +206,26 @@
             reader.readAsDataURL(input.files[0]);
         }
     </script>
-    @*Filtering Directorates after selecting Governorate*@
+    @*Filtering Doh after selecting Governorate*@
     <script>
         $(document).ready(function () {
             $('#GovernorateId').change(function () {
                 var selectedGovernorateId = $(this).val();
                 $.ajax({
-                    url: '/Account/GetDirectorates',
+                    url: '/Account/GetDohs',
                     type: 'GET',
                     data: { governorateId: selectedGovernorateId },
                     dataType: 'json',
                     success: function (data) {
-                        var directorateDropdown = $('#DirectorateId');
+                        var directorateDropdown = $('#DohId');
                         directorateDropdown.empty();
-                        var selectOption = $('<option></option>').val('').text('-- Select Directorate --');
+                        var selectOption = $('<option></option>').val('').text('-- Select Doh --');
                         selectOption.prop('disabled', true);
                         selectOption.prop('hidden', true);
                         selectOption.prop('selected', true);
                         directorateDropdown.append(selectOption);
                         $.each(data, function (index, item) {
-                            var option = $('<option></option>').val(item.directorateId).text(item.directorateName);
+                            var option = $('<option></option>').val(item.dohId).text(item.dohName);
                             directorateDropdown.append(option);
                         });
                     },
@@ -238,50 +236,20 @@
             });
         });
     </script>
-    @*Filtering Judiciaries after selecting Directorate*@
+    @*Filtering Districts after selecting Doh*@
     <script>
         $(document).ready(function () {
-            $('#DirectorateId').change(function () {
-                var selectedDirectorateId = $(this).val();
-                $.ajax({
-                    url: '/Account/GetJudiciaries',
-                    type: 'GET',
-                    data: { directorateId: selectedDirectorateId },
-                    dataType: 'json',
-                    success: function (data) {
-                        var judiciaryDropdown = $('#JudiciaryId');
-                        judiciaryDropdown.empty();
-                        var selectOption = $('<option></option>').val('').text('-- Select Judiciary --');
-                        selectOption.prop('disabled', true);
-                        selectOption.prop('hidden', true);
-                        selectOption.prop('selected', true);
-                        judiciaryDropdown.append(selectOption);
-                        $.each(data, function (index, item) {
-                            var option = $('<option></option>').val(item.judiciaryId).text(item.judiciaryName);
-                            judiciaryDropdown.append(option);
-                        });
-                    },
-                    error: function (xhr, status, error) {
-                        console.log(xhr.responseText);
-                    }
-                });
-            });
-        });
-    </script>
-    @*Filtering Districts after selecting Judiciary*@
-    <script>
-        $(document).ready(function () {
-            $('#JudiciaryId').change(function () {
-                var selectedJudiciaryId = $(this).val();
+            $('#DohId').change(function () {
+                var selectedDohId = $(this).val();
                 $.ajax({
                     url: '/Account/GetDistricts',
                     type: 'GET',
-                    data: { judiciaryId: selectedJudiciaryId },
+                    data: { dohId: selectedDohId },
                     dataType: 'json',
                     success: function (data) {
                         var districtDropdown = $('#DistrictId');
                         districtDropdown.empty();
-                        var selectOption = $('<option></option>').val('').text('-- Select District --');
+                        var selectOption = $('<option></option>').val('').text('-- Select Districts --');
                         selectOption.prop('disabled', true);
                         selectOption.prop('hidden', true);
                         selectOption.prop('selected', true);
@@ -298,20 +266,85 @@
             });
         });
     </script>
+    @*Filtering Nahia after selecting Districts*@
+    @*<script>
+        $(document).ready(function () {
+            $('#DistrictId').change(function () {
+                var selectedDistrictId = $(this).val();
+                $.ajax({
+                    url: '/Account/GetNahias',
+                    type: 'GET',
+                    data: { districtId: selectedDistrictId },
+                    dataType: 'json',
+                    success: function (data) {
+                        var nahiaDropdown = $('#NahiaId');
+                        nahiaDropdown.empty();
+                        var selectOption = $('<option></option>').val('').text('-- Select Nahia --');
+                        selectOption.prop('disabled', true);
+                        selectOption.prop('hidden', true);
+                        selectOption.prop('selected', true);
+                        nahiaDropdown.append(selectOption);
+                        $.each(data, function (index, item) {
+                            var option = $('<option></option>').val(item.nahiaId).text(item.nahiaName);
+                            nahiaDropdown.append(option);
+                        });
+                    },
+                    error: function (xhr, status, error) {
+                        console.log(xhr.responseText);
+                    }
+                });
+            });
+        });
+    </script>*@
+    <script>
+        $(document).ready(function () {
+            $('#DistrictId').change(function () {
+                var selectedDistrictId = $(this).val();
+                var selectedDohId = $('#DohId').val();
+                var selectedGovernorateId = $('#GovernorateId').val();
+
+                $.ajax({
+                    url: '/Account/GetNahias',
+                    type: 'GET',
+                    data: { districtId: selectedDistrictId, dohId: selectedDohId, governorateId: selectedGovernorateId },
+                    dataType: 'json',
+                    success: function (data) {
+                        var nahiaDropdown = $('#NahiaId');
+                        nahiaDropdown.empty();
+                        var selectOption = $('<option></option>').val('').text('-- Select Nahia --');
+                        selectOption.prop('disabled', true);
+                        selectOption.prop('hidden', true);
+                        selectOption.prop('selected', true);
+                        nahiaDropdown.append(selectOption);
+                        $.each(data, function (index, item) {
+                            var option = $('<option></option>').val(item.nahiaId).text(item.nahiaName);
+                            nahiaDropdown.append(option);
+                        });
+                    },
+                    error: function (xhr, status, error) {
+                        console.log(xhr.responseText);
+                    }
+                });
+            });
+        });
+    </script>
+
     @*Filtering HealthInstitutions after selecting FacilityType*@
     <script>
         $(document).ready(function () {
             $('#FacilityTypeId').change(function () {
                 var selectedFacilityTypeId = $(this).val();
+                var selectedDohId = $('#DohId').val();
+                var selectedGovernorateId = $('#GovernorateId').val();
                 $.ajax({
                     url: '/Account/GetHealthInstitutions',
                     type: 'GET',
-                    data: { facilityTypeId: selectedFacilityTypeId },
+                    data: { facilityTypeId: selectedFacilityTypeId, dohId: selectedDohId, governorateId: selectedGovernorateId },
                     dataType: 'json',
                     success: function (data) {
                         var healthInstitutionDropdown = $('#HealthInstitutionId');
                         healthInstitutionDropdown.empty();
-                        var selectOption = $('<option></option>').val('').text('-- Select Directorate --');
+                        var selectOption = $('<option></option>').val('').text('-- Select Health Institutions --');
                         selectOption.prop('disabled', true);
                         selectOption.prop('hidden', true);
                         selectOption.prop('selected', true);

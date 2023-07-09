@@ -13,6 +13,8 @@ namespace CRVS.Core.Models
     {
         public int HealthInstitutionId { get; set; }
         public string? HealthInstitutionName { get; set; }
+        public int GovernorateId { get; set; }
+        public int DohId { get; set; }
         public int FacilityTypeId { get; set; }
     }
 }

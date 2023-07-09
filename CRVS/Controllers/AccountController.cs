@@ -56,50 +56,48 @@ namespace CRVS.Controllers
         #region Users
 
         [HttpGet]
-        public IActionResult Register()
+        public async Task<IActionResult> Register()
         {
-            var roles = _roleManager.Roles.ToList();
-            ViewBag.Roles = new SelectList(roles, "Id", "Name");
+            var user = await _userManager.GetUserAsync(HttpContext.User);
+            bool status = await _userManager.IsInRoleAsync(user!, "Admin");
+            ViewBag.status = !status;
+            ViewBag.Roles = new SelectList(_roleManager.Roles.ToList(), "Id", "Name");
 
-            var governorates = _context.Governorates.ToList();
-            ViewBag.Governorates = new SelectList(governorates, "GovernorateId", "GovernorateName");
-            var directorates = _context.Directorates.ToList();
-            ViewBag.Directorates = new SelectList(directorates, "DirectorateId", "DirectorateName");
-            var judiciaries = _context.Judiciaries.ToList();
-            ViewBag.Judiciaries = new SelectList(judiciaries, "JudiciaryId", "JudiciaryName");
-            var districts = _context.Districts.ToList();
-            ViewBag.Districts = new SelectList(districts, "DistrictId", "DistrictName");
-            var facilityTypes = _context.FacilityTypes.ToList();
-            ViewBag.FacilityTypes = new SelectList(facilityTypes, "FacilityTypeId", "FacilityTypeName");
-            var healthInstitutions = _context.HealthInstitutions.ToList();
-            ViewBag.HealthInstitutions = new SelectList(healthInstitutions, "HealthInstitutionId", "HealthInstitutionName");
+            ViewBag.Governorates = new SelectList(_context.Governorates.ToList(), "GovernorateId", "GovernorateName");
+            ViewBag.Dohs = new SelectList(_context.Dohs.ToList(), "DohId", "DohName");
+            ViewBag.Districts = new SelectList(_context.Districts.ToList(), "DistrictId", "DistrictName");
+            ViewBag.Nahias = new SelectList(_context.Nahias.ToList(), "NahiaId", "NahiaName");
+            ViewBag.FacilityTypes = new SelectList(_context.FacilityTypes.ToList(), "FacilityTypeId", "FacilityTypeName");
+            ViewBag.HealthInstitutions = new SelectList(_context.HealthInstitutions.ToList(), "HealthInstitutionId", "HealthInstitutionName");
             return View();
         }
-        public ActionResult GetDirectorates(int governorateId)
+        public ActionResult GetDohs(int governorateId)
         {
-            var filteredDirectorates = _context.Directorates
+            var filteredDohs = _context.Dohs
                 .Where(d => d.GovernorateId == governorateId)
-                .Select(d => new { directorateId = d.DirectorateId, directorateName = d.DirectorateName });
-            return Json(filteredDirectorates);
+                .Select(d => new { dohId = d.DohId, dohName = d.DohName });
+            return Json(filteredDohs);
         }
-        public ActionResult GetJudiciaries(int directorateId)
-        {
-            var filteredJudiciaries = _context.Judiciaries
-                .Where(d => d.DirectorateId == directorateId)
-                .Select(d => new { judiciaryId = d.JudiciaryId, judiciaryName = d.JudiciaryName });
-            return Json(filteredJudiciaries);
-        }
-        public ActionResult GetDistricts(int judiciaryId)
+        public ActionResult GetDistricts(int dohId)
         {
             var filteredDistricts = _context.Districts
-                .Where(d => d.JudiciaryId == judiciaryId)
+                .Where(d => d.DohId == dohId)
                 .Select(d => new { districtId = d.DistrictId, districtName = d.DistrictName });
             return Json(filteredDistricts);
         }
-        public ActionResult GetHealthInstitutions(int facilityTypeId)
+        public ActionResult GetNahias(int districtId, int dohId, int governorateId)
+        {
+            var filteredNahias = _context.Nahias
+                .Where(d => d.DistrictId == districtId && d.DohId == dohId && d.GovernorateId == governorateId)
+                .Select(d => new { nahiaId = d.NahiaId, nahiaName = d.NahiaName });
+
+            return Json(filteredNahias);
+        }
+
+        public ActionResult GetHealthInstitutions(int facilityTypeId, int dohId, int governorateId)
         {
             var filteredHealthInstitutions = _context.HealthInstitutions
-                .Where(d => d.FacilityTypeId == facilityTypeId)
+                .Where(d => d.FacilityTypeId == facilityTypeId && d.DohId == dohId && d.GovernorateId == governorateId)
                 .Select(d => new { healthInstitutionId = d.HealthInstitutionId, healthInstitutionName = d.HealthInstitutionName });
             return Json(filteredHealthInstitutions);
         }
@@ -115,12 +113,44 @@ namespace CRVS.Controllers
                     Email = model.Email,
                     PhoneNumber = model.Phone,
                 };
-                var GovernorateName = _context.Governorates.Find(model.GovernorateId)!.GovernorateName;
-                var DirectorateName = _context.Directorates.Find(model.DirectorateId)!.DirectorateName;
-                var JudiciaryName = _context.Judiciaries.Find(model.JudiciaryId)!.JudiciaryName;
-                var DistrictName = _context.Districts.Find(model.DistrictId)!.DistrictName;
-                var FacilityTypeName = _context.FacilityTypes.Find(model.FacilityTypeId)!.FacilityTypeName;
-                var HealthInstitutionName = _context.HealthInstitutions.Find(model.HealthInstitutionId)!.HealthInstitutionName;
+                var CurrentUser = await _userManager.GetUserAsync(User);
+                bool IsAdmin = await _userManager.IsInRoleAsync(CurrentUser!, "Admin");
+                var admin = _context.Users.FirstOrDefault(e => e.UserId == CurrentUser!.Id);
+
+                var GovernorateName = "";
+                var DohName = "";
+                var DistrictName = "";
+                var NahiaName = "";
+                var VillageName = "";
+                var FacilityTypeName = "";
+                var HealthInstitutionName = "";
+                if (IsAdmin)
+                {
+                    admin.Governorate = GovernorateName;
+                    admin.Directorate = DohName;
+                    admin.District = DistrictName;
+                    admin.Judiciary = NahiaName;
+                    admin.Village = NahiaName;
+                    admin.FacilityType = FacilityTypeName;
+                    admin.HealthInstitution = HealthInstitutionName;
+                }
+                else
+                {
+                    ViewBag.Roles = new SelectList(_roleManager.Roles.ToList(), "Id", "Name");
+                    ViewBag.Governorates = new SelectList(_context.Governorates.ToList(), "GovernorateId", "GovernorateName");
+                    ViewBag.Dohs = new SelectList(_context.Dohs.ToList(), "DohId", "DohName");
+                    ViewBag.Districts = new SelectList(_context.Districts.ToList(), "DistrictId", "DistrictName");
+                    ViewBag.Nahias = new SelectList(_context.Nahias.ToList(), "NahiaId", "NahiaName");
+                    ViewBag.FacilityTypes = new SelectList(_context.FacilityTypes.ToList(), "FacilityTypeId", "FacilityTypeName");
+                    ViewBag.HealthInstitutions = new SelectList(_context.HealthInstitutions.ToList(), "HealthInstitutionId", "HealthInstitutionName");
+
+                    GovernorateName = _context.Governorates.Find(model.GovernorateId)!.GovernorateName;
+                    DohName = _context.Dohs.Find(model.DohId)!.DohName;
+                    DistrictName = _context.Districts.Find(model.DistrictId)!.DistrictName;
+                    NahiaName = _context.Nahias.Find(model.NahiaId)!.NahiaName;
+                    FacilityTypeName = _context.FacilityTypes.Find(model.FacilityTypeId)!.FacilityTypeName;
+                    HealthInstitutionName = _context.HealthInstitutions.Find(model.HealthInstitutionId)!.HealthInstitutionName;
+                }
                 string ImgName = FileUpload(model);
                 User newUser = new User
                 {
@@ -132,18 +162,18 @@ namespace CRVS.Controllers
                     Img = ImgName,
                     RegisterDate = DateTime.Now,
                     Governorate = GovernorateName,
-                    Directorate = DirectorateName,
-                    Judiciary = JudiciaryName,
+                    Directorate = DohName,
                     District = DistrictName,
-                    Village = model.Village,
+                    Judiciary = NahiaName,
+                    Village = VillageName,
                     FacilityType = FacilityTypeName,
                     HealthInstitution = HealthInstitutionName
                 };
                 var result = await _userManager.CreateAsync(user, model.Password!);
                 if (result.Succeeded)
-                {/*
-                var role = _roleManager.FindByIdAsync(model.Roles!);*/
-                    /*await _userManager.AddToRoleAsync(user, Roles!);*/
+                {
+                    var role = await _roleManager.FindByIdAsync(model.Roles!);
+                    await _userManager.AddToRoleAsync(user, role!.Name!);
                     _context.Add(newUser);
                     _context.SaveChanges();
                     return RedirectToAction("Register", "Account");
@@ -274,7 +304,7 @@ namespace CRVS.Controllers
         [Authorize(Roles = "Registrar")]*/
 
         [HttpGet]
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "الادارة العليا")]
         public IActionResult CreateRole()
         {/*
             if (_signInManager.IsSignedIn(User) && User.IsInRole("Admin"))
@@ -290,7 +320,7 @@ namespace CRVS.Controllers
 
 
         [HttpPost]
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "الادارة العليا")]
         public async Task<IActionResult> CreateRole(CreateRoleViewModel model)
         {
             if (ModelState.IsValid)
@@ -314,7 +344,7 @@ namespace CRVS.Controllers
         }
 
         [HttpGet]
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "الادارة العليا")]
         public IActionResult RolesList()
         {
             return View(_roleManager.Roles);
@@ -327,7 +357,7 @@ namespace CRVS.Controllers
         }
 
         [HttpGet]
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "الادارة العليا")]
         public async Task<IActionResult> EditRole(string id)
         {
             if (id == null)
@@ -472,7 +502,7 @@ namespace CRVS.Controllers
             return RedirectToAction("RolesList");
         }
         [HttpGet]
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "الادارة العليا")]
         public IActionResult Permissions(string id)
         {
             if (id == null)
@@ -532,7 +562,7 @@ namespace CRVS.Controllers
         }
 
         [HttpPost]
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "الادارة العليا")]
         public async Task<IActionResult> Permissions(RolePermissionsViewModel model)
         {
             if (!ModelState.IsValid)

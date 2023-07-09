@@ -19,8 +19,8 @@ namespace CRVS.Core.Models
         public DateTime? RegisterDate { get; set; }
         public string? Governorate { get; set; }
         public string? Directorate { get; set; }
-        public string? Judiciary { get; set; }
         public string? District { get; set; }
+        public string? Judiciary { get; set; }
         public string? Village { get; set; }
         public string? FacilityType { get; set; }
         public string? HealthInstitution { get; set; }

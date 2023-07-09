@@ -4,6 +4,7 @@ using CRVS.EF;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CRVS.EF.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230709105226_5new")]
+    partial class _5new
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -164,6 +167,18 @@ namespace CRVS.EF.Migrations
                     b.HasKey("GovernorateId");
 
                     b.ToTable("Governorates");
+
+                    b.HasData(
+                        new
+                        {
+                            GovernorateId = 19,
+                            GovernorateName = "محافظة1"
+                        },
+                        new
+                        {
+                            GovernorateId = 20,
+                            GovernorateName = "محافظة2"
+                        });
                 });
 
             modelBuilder.Entity("CRVS.Core.Models.HealthInstitution", b =>

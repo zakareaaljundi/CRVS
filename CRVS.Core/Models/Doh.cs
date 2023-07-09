@@ -9,10 +9,10 @@ using System.Xml.Linq;
 
 namespace CRVS.Core.Models
 {
-    public class Directorate
+    public class Doh
     {
-        public int DirectorateId { get; set; }
-        public string? DirectorateName { get; set; }
+        public int DohId { get; set; }
+        public string? DohName { get; set; }
         public int GovernorateId { get; set; }
     }
 }

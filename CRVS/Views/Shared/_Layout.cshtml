@@ -256,7 +256,7 @@
                             <i class="mdi mdi-dots-horizontal"></i>
                             <span class="hide-menu">@Localizer["Manage"]</span>
                         </li>
-                        @if (User.IsInRole("Admin"))
+                        @if (User.IsInRole("الادارة العليا"))
                         {
                             <li class="sidebar-item">
                                 <a class="sidebar-link has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false">
@@ -280,6 +280,9 @@
                                     </li>
                                 </ul>
                             </li>
+                        }
+                        @if (User.IsInRole("Admin") || User.IsInRole("الادارة العليا"))
+                        {
                             <li class="sidebar-item">
                                 <a class="sidebar-link has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false">
                                     <i data-feather="clipboard" class="feather-icon"></i><span class="hide-menu">@Localizer["Users"]</span>
@@ -322,7 +325,7 @@
                             </a>
                             <ul aria-expanded="false" class="collapse  first-level">
                                 @*@if (ViewBag.canAdd)*@
-                                @if (!(User.IsInRole("Admin")))
+                                @if (!(User.IsInRole("Admin")) || !User.IsInRole("الادارة العليا"))
                                 {
                                     <li class="sidebar-item">
                                         <a asp-area="" asp-controller="BirthCertificates" asp-action="Create" class="sidebar-link">
@@ -337,6 +340,9 @@
                                             <i class="mdi mdi-format-align-left"></i><span class="hide-menu">@Localizer["ToApprove"]</span>
                                         </a>
                                     </li>
+                                }
+                                @if ((User.IsInRole("Admin")) || User.IsInRole("الادارة العليا"))
+                                {
                                     <li class="sidebar-item">
                                         <a asp-area="" asp-controller="BirthCertificates" asp-action="Approved" class="sidebar-link">
                                             <i class="mdi mdi-format-align-left"></i><span class="hide-menu">@Localizer["ApprovedCertificates"]</span>
@@ -351,7 +357,7 @@
                                         </a>
                                     </li>
                                 }
-                                @if (User.IsInRole("Admin"))
+                                @if ((User.IsInRole("Admin")) || User.IsInRole("الادارة العليا"))
                                 {
                                     <li class="sidebar-item">
                                         <a asp-area="" asp-controller="BirthCertificates" asp-action="UnCompleted" class="sidebar-link">
