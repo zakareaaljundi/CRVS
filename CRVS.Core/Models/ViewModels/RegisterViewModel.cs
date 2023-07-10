@@ -33,18 +33,12 @@ namespace CRVS.Core.Models.ViewModels
         public string? Phone { get; set; }
         public string? Roles { get; set; }
         public IFormFile? Img { get; set; }
-        [ForeignKey("Governorate")]
-        [Display(Name = "Governorate Name")]
         public int GovernorateId { get; set; }
-        public Governorate? Governorate { get; set; }
         public int DohId { get; set; }
         public int DistrictId { get; set; }
         public int NahiaId { get; set; }
         public string? Village { get; set; }
-        [ForeignKey("FacilityType")]
-        [Display(Name = "Facility Type Name")]
         public int FacilityTypeId { get; set; }
-        public FacilityType? FacilityType { get; set; }
         public int HealthInstitutionId { get; set; }
     }
 }

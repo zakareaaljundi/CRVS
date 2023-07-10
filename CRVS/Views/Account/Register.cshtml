@@ -28,6 +28,8 @@
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
+                                @*<input type="hidden" name="isAdmin" value="@ViewBag.IsAdmin" />*@
+                                @*<input type="hidden" name="userId" value="@ViewBag.userId" />*@
                                 <input asp-for="FName" class="form-control required" placeholder="First Name *" />
                                 <span asp-validation-for="FName" class="text-danger"></span>
                             </div>
@@ -53,17 +55,17 @@
                             </div>
                             <div class="form-group">
                                 <label for="Roles">Roles</label>
-                                <select id="Roles" name="Roles" asp-for="Roles" class="form-control required">
-                                    <option value="" disabled selected hidden>-- Select Roles *--</option>
-                                    @foreach (var item in ViewBag.Roles)
-                                    {
-                                        <option value="@item.Value">@item.Text</option>
-                                    }
+                                    <select id="Roles" name="Roles" asp-for="Roles" class="form-control required">
+                                <option value="" disabled selected hidden>-- Select Roles *--</option>
+                                @foreach (var item in ViewBag.Roles)
+                                {
+                                <option value="@item.Value">@item.Text</option>
+                                }
                                 </select>
                             </div>
                         </div>
                     </div>
-                    @if (ViewBag.status)
+                    @if (ViewBag.IsAdmin)
                     {
                         <div class="row mt-4">
                             <div class="col">
@@ -76,87 +78,87 @@
                                             <option value="@item.Value">@item.Text</option>
                                         }
                                     </select>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="row" id="row2">
-                        <div class="col">
-                            <div class="form-group">
-                                <label for="DohId">Directorate</label>
-                                <select id="DohId" asp-for="DohId" name="DohId" class="form-control ">
-                                    <option value="" disabled selected hidden>-- Select Directorate *--</option>
-                                    @foreach (var item in ViewBag.Dohs)
-                                    {
-                                        <option value="@item.Value">@item.Text</option>
-                                    }
-                                </select>
+                        <div class="row" id="row2">
+                            <div class="col">
+                                <div class="form-group">
+                                    <label for="DohId">Directorate</label>
+                                    <select id="DohId" asp-for="DohId" name="DohId" class="form-control ">
+                                        <option value="" disabled selected hidden>-- Select Doh*--</option>
+                                        @foreach (var item in ViewBag.Dohs)
+                                        {
+                                            <option value="@item.Value">@item.Text</option>
+                                        }
+                                    </select>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="row" id="row2">
-                        <div class="col">
-                            <div class="form-group">
-                                <label for="DistrictId">District</label>
-                                <select id="DistrictId" asp-for="DistrictId" name="DistrictId" class="form-control ">
-                                    <option value="" disabled selected hidden>-- Select District *--</option>
-                                    @foreach (var item in ViewBag.Districts)
-                                    {
-                                        <option value="@item.Value">@item.Text</option>
-                                    }
-                                </select>
+                        <div class="row" id="row2">
+                            <div class="col">
+                                <div class="form-group">
+                                    <label for="DistrictId">District</label>
+                                    <select id="DistrictId" asp-for="DistrictId" name="DistrictId" class="form-control ">
+                                        <option value="" disabled selected hidden>-- Select District*--</option>
+                                        @foreach (var item in ViewBag.Districts)
+                                        {
+                                            <option value="@item.Value">@item.Text</option>
+                                        }
+                                    </select>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="row" id="row2">
-                        <div class="col">
-                            <div class="form-group">
-                                <label for="NahiaId">Nahia</label>
-                                <select id="NahiaId" name="NahiaId" asp-for="NahiaId" class="form-control ">
-                                    <option value="" disabled selected hidden>-- Select Nahia *--</option>
-                                    @foreach (var item in ViewBag.Nahias)
-                                    {
-                                        <option value="@item.Value">@item.Text</option>
-                                    }
-                                </select>
+                        <div class="row" id="row2">
+                            <div class="col">
+                                <div class="form-group">
+                                    <label for="NahiaId">Nahia</label>
+                                    <select id="NahiaId" name="NahiaId" asp-for="NahiaId" class="form-control ">
+                                        <option value="" disabled selected hidden>-- Select Nahia*--</option>
+                                        @foreach (var item in ViewBag.Nahias)
+                                        {
+                                            <option value="@item.Value">@item.Text</option>
+                                        }
+                                    </select>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="row" id="row2">
-                        <div class="col">
-                            <div class="form-group">
-                                <input asp-for="Village" class="form-control required" placeholder="Village *" />
-                                <span asp-validation-for="Village" class="text-danger"></span>
+                        <div class="row" id="row2">
+                            <div class="col">
+                                <div class="form-group">
+                                    <input asp-for="Village" class="form-control required" placeholder="Village*" />
+                                    <span asp-validation-for="Village" class="text-danger"></span>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="row">
-                        <div class="col">
-                            <div class="form-group">
-                                <label for="FacilityTypeId">Facility Type</label>
-                                <select id="FacilityTypeId" name="FacilityTypeId" asp-for="FacilityTypeId" class="form-control ">
-                                    <option value="" disabled selected hidden>-- Select Facility Type *--</option>
-                                    @foreach (var item in ViewBag.FacilityTypes)
-                                    {
-                                        <option value="@item.Value">@item.Text</option>
-                                    }
-                                </select>
+                        <div class="row">
+                            <div class="col">
+                                <div class="form-group">
+                                    <label for="FacilityTypeId">Facility Type</label>
+                                    <select id="FacilityTypeId" name="FacilityTypeId" asp-for="FacilityTypeId" class="form-control ">
+                                        <option value="" disabled selected hidden>-- Select Facility Type*--</option>
+                                        @foreach (var item in ViewBag.FacilityTypes)
+                                        {
+                                            <option value="@item.Value">@item.Text</option>
+                                        }
+                                    </select>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="row" id="row2">
-                        <div class="col">
-                            <div class="form-group">
-                                <label for="HealthInstitutionId">Health Institution</label>
-                                <select id="HealthInstitutionId" name="HealthInstitutionId" asp-for="HealthInstitutionId" class="form-control ">
-                                    <option value="" disabled selected hidden>-- Select Health Institution *--</option>
-                                    @foreach (var item in ViewBag.HealthInstitutions)
-                                    {
-                                        <option value="@item.Value">@item.Text</option>
-                                    }
-                                </select>
+                        <div class="row" id="row2">
+                            <div class="col">
+                                <div class="form-group">
+                                    <label for="HealthInstitutionId">Health Institution</label>
+                                    <select id="HealthInstitutionId" name="HealthInstitutionId" asp-for="HealthInstitutionId" class="form-control ">
+                                        <option value="" disabled selected hidden>-- Select Health Institution*--</option>
+                                        @foreach (var item in ViewBag.HealthInstitutions)
+                                        {
+                                            <option value="@item.Value">@item.Text</option>
+                                        }
+                                    </select>
+                                </div>
                             </div>
                         </div>
-                    </div>
                     }
                     @*
                     </section>
@@ -219,7 +221,7 @@
                     success: function (data) {
                         var directorateDropdown = $('#DohId');
                         directorateDropdown.empty();
-                        var selectOption = $('<option></option>').val('').text('-- Select Doh --');
+                        var selectOption = $('<option></option>').val('').text('-- Select Doh* --');
                         selectOption.prop('disabled', true);
                         selectOption.prop('hidden', true);
                         selectOption.prop('selected', true);
@@ -249,7 +251,7 @@
                     success: function (data) {
                         var districtDropdown = $('#DistrictId');
                         districtDropdown.empty();
-                        var selectOption = $('<option></option>').val('').text('-- Select Districts --');
+                        var selectOption = $('<option></option>').val('').text('-- Select Districts* --');
                         selectOption.prop('disabled', true);
                         selectOption.prop('hidden', true);
                         selectOption.prop('selected', true);
@@ -311,7 +313,7 @@
                     success: function (data) {
                         var nahiaDropdown = $('#NahiaId');
                         nahiaDropdown.empty();
-                        var selectOption = $('<option></option>').val('').text('-- Select Nahia --');
+                        var selectOption = $('<option></option>').val('').text('-- Select Nahia* --');
                         selectOption.prop('disabled', true);
                         selectOption.prop('hidden', true);
                         selectOption.prop('selected', true);
@@ -344,7 +346,7 @@
                     success: function (data) {
                         var healthInstitutionDropdown = $('#HealthInstitutionId');
                         healthInstitutionDropdown.empty();
-                        var selectOption = $('<option></option>').val('').text('-- Select Health Institutions --');
+                        var selectOption = $('<option></option>').val('').text('-- Select Health Institutions* --');
                         selectOption.prop('disabled', true);
                         selectOption.prop('hidden', true);
                         selectOption.prop('selected', true);
@@ -374,37 +376,32 @@
             }
         }
     </script>*@
-
+    @*
     <script>
         function showNextDropdown(selectElement, nextRowClass) {
             var selectedValue = selectElement.value;
-            var currentRow = selectElement.parentNode.parentNode; // Get the current row element
-            var nextRowElement = currentRow.nextElementSibling; // Get the next row element with the specified class
+            var currentRow = selectElement.parentNode.parentNode;
+            var nextRowElement = currentRow.nextElementSibling;
 
             while (nextRowElement) {
-                // Hide the subsequent rows
                 nextRowElement.style.display = 'none';
 
-                // Reset the value of the dropdown in the subsequent row
                 var nextDropdown = nextRowElement.querySelector('select');
                 nextDropdown.value = '';
 
-                // Move to the next row
                 nextRowElement = nextRowElement.nextElementSibling;
 
-                // Check if the row has the specified class
                 if (nextRowElement && nextRowElement.classList.contains(nextRowClass)) {
-                    break; // Stop iterating if the class is found
+                    break;
                 }
             }
 
             if (selectedValue !== '') {
-                // Show the next row
                 if (nextRowElement) {
                     nextRowElement.style.display = 'block';
                 }
             }
         }
-    </script>
+    </script>*@
 
 }

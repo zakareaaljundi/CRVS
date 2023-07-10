@@ -4,6 +4,7 @@ using CRVS.EF;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CRVS.EF.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230710080848_14new")]
+    partial class _14new
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -227,14 +230,8 @@ namespace CRVS.EF.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("NotificationId"));
 
-                    b.Property<int>("CertificateId")
-                        .HasColumnType("int");
-
                     b.Property<string>("CurrentUser")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("DAT")
-                        .HasColumnType("datetime2");
 
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
@@ -242,7 +239,7 @@ namespace CRVS.EF.Migrations
                     b.Property<string>("HeadLine")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool>("IsGoodFeedBack")
+                    b.Property<bool>("IsFeedBackMessage")
                         .HasColumnType("bit");
 
                     b.Property<bool>("IsRead")
@@ -250,6 +247,9 @@ namespace CRVS.EF.Migrations
 
                     b.Property<bool>("IsSettingMessage")
                         .HasColumnType("bit");
+
+                    b.Property<TimeSpan>("Time")
+                        .HasColumnType("time");
 
                     b.HasKey("NotificationId");
 
@@ -295,10 +295,10 @@ namespace CRVS.EF.Migrations
                     b.Property<string>("UserId")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<string>("District")
+                    b.Property<string>("Directorate")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Doh")
+                    b.Property<string>("District")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Email")
@@ -322,10 +322,10 @@ namespace CRVS.EF.Migrations
                     b.Property<bool>("IsBlocked")
                         .HasColumnType("bit");
 
-                    b.Property<string>("LName")
+                    b.Property<string>("Judiciary")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Nahia")
+                    b.Property<string>("LName")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Phone")
@@ -333,9 +333,6 @@ namespace CRVS.EF.Migrations
 
                     b.Property<DateTime?>("RegisterDate")
                         .HasColumnType("datetime2");
-
-                    b.Property<string>("RoleName")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Village")
                         .HasColumnType("nvarchar(max)");

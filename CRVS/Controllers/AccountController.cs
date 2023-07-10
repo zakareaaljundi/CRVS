@@ -58,17 +58,21 @@ namespace CRVS.Controllers
         [HttpGet]
         public async Task<IActionResult> Register()
         {
-            var user = await _userManager.GetUserAsync(HttpContext.User);
-            bool status = await _userManager.IsInRoleAsync(user!, "Admin");
-            ViewBag.status = !status;
+            var user = await _userManager.GetUserAsync(User);/*
+            var currentRole = await _userManager.GetRolesAsync(user!);*/
+            bool isAdmin = await _userManager.IsInRoleAsync(user!, "Admin");
+            ViewBag.IsAdmin = !isAdmin;
+            /*  ViewBag.userId = user!.Id;*/
             ViewBag.Roles = new SelectList(_roleManager.Roles.ToList(), "Id", "Name");
-
+            if (!isAdmin)
+            {
             ViewBag.Governorates = new SelectList(_context.Governorates.ToList(), "GovernorateId", "GovernorateName");
             ViewBag.Dohs = new SelectList(_context.Dohs.ToList(), "DohId", "DohName");
             ViewBag.Districts = new SelectList(_context.Districts.ToList(), "DistrictId", "DistrictName");
             ViewBag.Nahias = new SelectList(_context.Nahias.ToList(), "NahiaId", "NahiaName");
             ViewBag.FacilityTypes = new SelectList(_context.FacilityTypes.ToList(), "FacilityTypeId", "FacilityTypeName");
             ViewBag.HealthInstitutions = new SelectList(_context.HealthInstitutions.ToList(), "HealthInstitutionId", "HealthInstitutionName");
+            }
             return View();
         }
         public ActionResult GetDohs(int governorateId)
@@ -115,6 +119,7 @@ namespace CRVS.Controllers
                 };
                 var CurrentUser = await _userManager.GetUserAsync(User);
                 bool IsAdmin = await _userManager.IsInRoleAsync(CurrentUser!, "Admin");
+
                 var admin = _context.Users.FirstOrDefault(e => e.UserId == CurrentUser!.Id);
 
                 var GovernorateName = "";
@@ -126,17 +131,16 @@ namespace CRVS.Controllers
                 var HealthInstitutionName = "";
                 if (IsAdmin)
                 {
-                    admin.Governorate = GovernorateName;
-                    admin.Directorate = DohName;
-                    admin.District = DistrictName;
-                    admin.Judiciary = NahiaName;
-                    admin.Village = NahiaName;
-                    admin.FacilityType = FacilityTypeName;
-                    admin.HealthInstitution = HealthInstitutionName;
+                    GovernorateName = admin.Governorate;
+                    DohName = admin.Doh;
+                    DistrictName = admin.District;
+                    NahiaName = admin.Nahia;
+                    VillageName = admin.Village;
+                    FacilityTypeName = admin.FacilityType;
+                    HealthInstitutionName = admin.HealthInstitution;
                 }
                 else
                 {
-                    ViewBag.Roles = new SelectList(_roleManager.Roles.ToList(), "Id", "Name");
                     ViewBag.Governorates = new SelectList(_context.Governorates.ToList(), "GovernorateId", "GovernorateName");
                     ViewBag.Dohs = new SelectList(_context.Dohs.ToList(), "DohId", "DohName");
                     ViewBag.Districts = new SelectList(_context.Districts.ToList(), "DistrictId", "DistrictName");
@@ -148,6 +152,7 @@ namespace CRVS.Controllers
                     DohName = _context.Dohs.Find(model.DohId)!.DohName;
                     DistrictName = _context.Districts.Find(model.DistrictId)!.DistrictName;
                     NahiaName = _context.Nahias.Find(model.NahiaId)!.NahiaName;
+                    VillageName = model.Village;
                     FacilityTypeName = _context.FacilityTypes.Find(model.FacilityTypeId)!.FacilityTypeName;
                     HealthInstitutionName = _context.HealthInstitutions.Find(model.HealthInstitutionId)!.HealthInstitutionName;
                 }
@@ -162,9 +167,9 @@ namespace CRVS.Controllers
                     Img = ImgName,
                     RegisterDate = DateTime.Now,
                     Governorate = GovernorateName,
-                    Directorate = DohName,
+                    Doh = DohName,
                     District = DistrictName,
-                    Judiciary = NahiaName,
+                    Nahia = NahiaName,
                     Village = VillageName,
                     FacilityType = FacilityTypeName,
                     HealthInstitution = HealthInstitutionName
@@ -172,9 +177,20 @@ namespace CRVS.Controllers
                 var result = await _userManager.CreateAsync(user, model.Password!);
                 if (result.Succeeded)
                 {
+                    ViewBag.Roles = new SelectList(_roleManager.Roles.ToList(), "Id", "Name");
                     var role = await _roleManager.FindByIdAsync(model.Roles!);
+                    newUser.RoleName = role!.Name;
                     await _userManager.AddToRoleAsync(user, role!.Name!);
+                    Notification notification = new Notification
+                    {
+                        HeadLine = "تمت العملية بنجاح",
+                        Description = "لقد قمت بإضافة موظف جديد",
+                        CurrentUser = CurrentUser!.Id,
+                        DAT = DateTime.Now,
+                        IsGoodFeedBack = true
+                    };
                     _context.Add(newUser);
+                    _context.Add(notification);
                     _context.SaveChanges();
                     return RedirectToAction("Register", "Account");
                 }
@@ -248,8 +264,8 @@ namespace CRVS.Controllers
         public async Task<IActionResult> ChangePassword(ChangePasswordViewModel model)
         {
             if (ModelState.IsValid)
-            {
-                /*var user = await _userManager.GetUserAsync((System.Security.Claims.ClaimsPrincipal)User);*/
+            {/*
+                var CurrentUser = await _userManager.GetUserAsync(User);*/
                 var user = await _userManager.GetUserAsync(HttpContext.User);
                 if (user == null)
                 {
@@ -259,6 +275,16 @@ namespace CRVS.Controllers
                 if (result.Succeeded)
                 {
                     TempData["PassMessage"] = "Your Password Changed successfully.";
+                    Notification notification = new Notification
+                    {
+                        HeadLine = "تمت العملية بنجاح",
+                        Description = "لقد قمت بتحديث كلمة السر",
+                        CurrentUser = user!.Id,
+                        DAT = DateTime.Now,
+                        IsGoodFeedBack = true
+                    };
+                    _context.Add(notification);
+                    _context.SaveChanges();
                     return RedirectToAction("Index", "Home");
                 }
 
@@ -519,6 +545,7 @@ namespace CRVS.Controllers
             var classes = Assembly.GetExecutingAssembly().GetTypes()
                 .Where(type => typeof(Controller).IsAssignableFrom(type))
                 .Where(type => type.Name != "AccountController")
+                .Where(type => type.Name != "NotificationController")
                 .Where(type => type.Name != "HomeController")
                 .Where(type => type.Name != "DashboardController")
                 .Select(type => type.Name.Replace("Controller", ""))

@@ -23,5 +23,6 @@ namespace CRVS.EF
         public DbSet<Nahia> Nahias { get; set; }
         public DbSet<FacilityType> FacilityTypes { get; set; }
         public DbSet<HealthInstitution> HealthInstitutions { get; set; }
+        public DbSet<Notification> Notifications { get; set; }
     }
 }

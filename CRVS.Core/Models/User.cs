@@ -18,11 +18,12 @@ namespace CRVS.Core.Models
         public bool IsBlocked { get; set; }
         public DateTime? RegisterDate { get; set; }
         public string? Governorate { get; set; }
-        public string? Directorate { get; set; }
+        public string? Doh { get; set; }
         public string? District { get; set; }
-        public string? Judiciary { get; set; }
+        public string? Nahia { get; set; }
         public string? Village { get; set; }
         public string? FacilityType { get; set; }
         public string? HealthInstitution { get; set; }
+        public string? RoleName { get; set; }
     }
 }

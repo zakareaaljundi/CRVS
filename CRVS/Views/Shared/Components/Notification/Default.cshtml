@@ -1,0 +1,99 @@
+﻿@model IEnumerable<CRVS.Core.Models.Notification>
+
+<li class="nav-item dropdown">
+    <a class="nav-link dropdown-toggle waves-effect waves-dark" href="#" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" id="notification-dropdown">
+        <i data-feather="bell"></i>
+        @if (ViewBag.notificationCount != 0)
+        {
+            <div class="notify">
+                <span class="heartbit"></span>
+                <span class="point align-items-center d-flex justify-content-center text-light">@ViewBag.notificationCount</span>
+            </div>
+        }
+    </a>
+    <div class="dropdown-menu dropdown-menu-end mailbox dropdown-menu-animate-up">
+        <ul class="list-style-none">
+            <li>
+                <div class="border-bottom rounded-top py-3 px-4">
+                    <div class="mb-0 font-weight-medium fs-4">Notifications</div>
+                </div>
+            </li>
+            <li>
+                <div class="message-center notifications position-relative" style="height:230px;">
+                    @foreach (var notification in Model)
+                    {
+                        <a href="javascript:void(0)" class="message-item d-flex align-items-center border-bottom px-2 py-2">
+                            <div style="width: 3rem">
+                                @{
+                                    if (notification.IsGoodFeedBack)
+                                    {
+                                        <img class="w-100" src="~/Images/good-feedback.jpg">
+                                    }
+                                    else
+                                    {
+                                        <img class="w-100" src="~/Images/bad-feedback.jpg">
+                                    }
+                                }
+                            </div>
+                            <div class="w-75 d-inline-block v-middle ps-2">
+                                <h5 class="message-title mb-0 mt-1 fs-3 fw-bold">@notification.HeadLine</h5>
+                                <span class="fs-2 text-nowrap d-block time text-truncate fw-normal text-muted mt-1">
+                                    @notification.Description
+                                </span>
+                                <span class="fs-2 text-nowrap d-block subtext text-muted">
+                                    @{
+                                        DateTime currentDate = DateTime.Today;
+                                        DateTime notificationDate = notification.DAT;
+                                        if (notificationDate.Date == currentDate)
+                                        {
+                                            @notificationDate.ToString("HH:mm tt")
+                                        }
+                                        else
+                                        {
+                                            @notificationDate.ToString("yyyy-MM-dd HH:mm tt")
+                                        }
+                                    }
+                                </span>
+
+                            </div>
+                        </a>
+                    }
+                </div>
+            </li>
+            <li>
+                <a class="nav-link border-top text-center text-dark pt-3"
+                   href="javascript:void(0);">
+                    <strong>Check all notifications</strong> <i data-feather="chevron-right" class="feather-sm"></i>
+                </a>
+            </li>
+        </ul>
+    </div>
+</li>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $('#notification-dropdown').on('click', function () {
+            $.ajax({
+                url: '/Notification/MarkAllAsRead',
+                type: 'POST',
+                success: function (response) {
+                    // Make another AJAX call to update the notification count
+                    $.ajax({
+                        url: '/Notification/GetNotificationCount',
+                        type: 'GET',
+                        success: function (countResponse) {
+                            // Update the notification count in the UI
+                            $('.point').text(countResponse);
+                        },
+                        error: function (xhr, status, error) {
+                            // Handle the error if needed
+                        }
+                    });
+                },
+                error: function (xhr, status, error) {
+                    // Handle the error if needed
+                }
+            });
+        });
+    });
+</script>

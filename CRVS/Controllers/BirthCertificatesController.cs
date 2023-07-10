@@ -28,7 +28,7 @@ namespace CRVS.Controllers
         public async Task<IActionResult> Index()
         {
             var currentUser = await _userManager.GetUserAsync(User);
-            var currentRoles = await _userManager.GetRolesAsync(currentUser);
+            var currentRoles = await _userManager.GetRolesAsync(currentUser!);
             var roleId = "";
             if (currentRoles.Count > 0)
             {
@@ -40,7 +40,6 @@ namespace CRVS.Controllers
                     roleId = role.Id;
                 }
             }
-
             var controllerName = this.ControllerContext.RouteData.Values["controller"]!.ToString();
 
             var rolePermissions = await _context.RolePermissions.FirstOrDefaultAsync(p => p.RoleId! == roleId && p.TableName == controllerName);
@@ -57,8 +56,23 @@ namespace CRVS.Controllers
             ViewBag.CanDelete = canDelete;
             ViewBag.canApprove = canApprove;
 
+            bool IsAdmin = await _userManager.IsInRoleAsync(currentUser!, "Admin");
+            if (IsAdmin)
+            {
+                var admin = await _context.Users.FirstOrDefaultAsync(x => x.UserId == currentUser.Id);
+                var adminCertificates = _context.BirthCertificates.Where(x => x.HealthInstitution == admin!.HealthInstitution).ToList();
+                return View(adminCertificates);
+
+            }
+            else
+            {
+                var user = await _context.Users.FirstOrDefaultAsync(x => x.UserId == currentUser.Id);
+                var adminCertificates = _context.BirthCertificates.Where(x => x.Creator == user!.UserId).ToList();
+                return View(adminCertificates);
+            }/*
+            var admin = _context.Users.FirstOrDefault(e => e.UserId == CurrentUser!.Id);
             var certificates = await _certificatesRepository.GetAllAsync();
-            return View(certificates);
+            return View(certificates);*/
         }
         public async Task<IActionResult> SecondStage()
         {
@@ -81,7 +95,7 @@ namespace CRVS.Controllers
         public async Task<IActionResult> UnCompleted()
         {
             var certificates = await _certificatesRepository.GetAllAsync();
-            var unCompletedCertificates = certificates.Where(x => x.Approval == false).Where(x=>x.IsDeleted == false);
+            var unCompletedCertificates = certificates.Where(x => x.Approval == false).Where(x => x.IsDeleted == false);
             return View(unCompletedCertificates);
         }
         public async Task<IActionResult> Deleted()
@@ -108,6 +122,22 @@ namespace CRVS.Controllers
             var certificate = await _certificatesRepository.GetByIdAsync(id);
             certificate.Approval = true;
             _certificatesRepository.Update(certificate);
+            var forNotification = _context.Notifications.FirstOrDefault(x => x.CertificateId == certificate.BirthCertificateId);
+            if(forNotification != null)
+            {
+                var userForNotification = _context.Users.FirstOrDefault(x => x.UserId == certificate.Creator);
+                Notification notification = new Notification
+                {
+                    HeadLine = "تم قبول الشهادة",
+                    Description = "لقد تم قبول شهادة الميلاد, من قِبل مكتب التسجيل.",
+                    CurrentUser = userForNotification!.UserId,
+                    CertificateId = certificate.BirthCertificateId,
+                    DAT = DateTime.Now,
+                    IsGoodFeedBack = true
+                };
+                _context.Notifications.Add(notification);
+                _context.SaveChanges();
+            }
             return RedirectToAction("ApprovalStage");
         }
         public async Task<IActionResult> SecondStageReject(int id)
@@ -150,8 +180,8 @@ namespace CRVS.Controllers
             var userId = _userManager.GetUserName(HttpContext.User);
             var currentUser = await _context.Users.FirstOrDefaultAsync(x => x.Email == userId);
             ViewBag.Governorate = currentUser!.Governorate;
-            ViewBag.Directorate = currentUser!.Directorate;
-            ViewBag.Judiciary = currentUser!.Judiciary;
+            ViewBag.Directorate = currentUser!.Doh;
+            ViewBag.Judiciary = currentUser!.Nahia;
             ViewBag.District = currentUser!.District;
             ViewBag.Village = currentUser!.Village;
             ViewBag.FacilityType = currentUser!.FacilityType;
@@ -163,8 +193,19 @@ namespace CRVS.Controllers
         {
             if (ModelState.IsValid)
             {
-                birthCertificate.Creator = _userManager.GetUserId(HttpContext.User);
+                var currentUser = await _userManager.GetUserAsync(User);
+                birthCertificate.Creator = currentUser!.Id;
                 birthCertificate.FirstStage = true;
+                Notification notification = new Notification
+                {
+                    HeadLine = "تمت العملية بنجاح",
+                    Description = "لقد قمت بإضافة شهادة ميلاد جديدة, يرجى إنتظار الموافقة.",
+                    CurrentUser = currentUser!.Id,
+                    CertificateId = birthCertificate.BirthCertificateId,
+                    DAT = DateTime.Now,
+                    IsGoodFeedBack = true
+                };
+                _context.Add(notification);
                 await _certificatesRepository.AddAsync(birthCertificate);
                 return RedirectToAction("Create");
             }

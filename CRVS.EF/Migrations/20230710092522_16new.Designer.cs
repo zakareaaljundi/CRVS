@@ -4,6 +4,7 @@ using CRVS.EF;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CRVS.EF.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230710092522_16new")]
+    partial class _16new
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -227,9 +230,6 @@ namespace CRVS.EF.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("NotificationId"));
 
-                    b.Property<int>("CertificateId")
-                        .HasColumnType("int");
-
                     b.Property<string>("CurrentUser")
                         .HasColumnType("nvarchar(max)");
 
@@ -242,7 +242,7 @@ namespace CRVS.EF.Migrations
                     b.Property<string>("HeadLine")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool>("IsGoodFeedBack")
+                    b.Property<bool>("IsFeedBackMessage")
                         .HasColumnType("bit");
 
                     b.Property<bool>("IsRead")
@@ -333,9 +333,6 @@ namespace CRVS.EF.Migrations
 
                     b.Property<DateTime?>("RegisterDate")
                         .HasColumnType("datetime2");
-
-                    b.Property<string>("RoleName")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Village")
                         .HasColumnType("nvarchar(max)");

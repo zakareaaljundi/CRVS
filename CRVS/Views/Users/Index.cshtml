@@ -3,14 +3,14 @@
 @{
     ViewData["Title"] = "Index";
 }
-<h1 class="text-center my-3">Users List</h1>
+<h1 class="text-center my-3">@Localizer["UsersList"]</h1>
 
 <div class="widget-content searchable-container list">
     <div class="card card-body">
         <div class="row">
             <div class="col-md-4 col-xl-2">
                 <form>
-                    <input type="text" class="form-control product-search" id="input-search" placeholder="Search Contacts...">
+                    <input type="text" class="form-control product-search" id="input-search" placeholder="@Localizer["Search"]...">
                 </form>
             </div>
             <div class="col-md-8 col-xl-10 text-end d-flex justify-content-md-end justify-content-center mt-3 mt-md-0">
@@ -42,11 +42,12 @@
                         </div>
                     </div>
                 </th>
-                <th>Name</th>
-                <th>Email</th>
-                <th>Location</th>
-                <th>Phone</th>
-                <th>Action</th>
+                <th>@Localizer["Name"]</th>
+                <th>@Localizer["Position"]</th>
+                <th>@Localizer["Email"]</th>
+                <th>@Localizer["Location"]</th>
+                <th>@Localizer["Phone"]</th>
+                <th>@Localizer["Action"]</th>
                 </thead>
                 <tbody>
                     @foreach (var user in Model)
@@ -72,10 +73,13 @@
                                 </div>
                             </td>
                             <td>
+                                <span>@user.RoleName</span>
+                            </td>
+                            <td>
                                 <span class="usr-email-addr" data-email="allen@mail.com">@user.Email</span>
                             </td>
                             <td>
-                                <span class="usr-location" data-location="Sydney, Australia">@user.Governorate, @user.Directorate</span>
+                                <span class="usr-location" data-location="Sydney, Australia">@user.Governorate, @user.Doh</span>
                             </td>
                             <td>
                                 <span class="usr-ph-no" data-phone="+91 (125) 450-1500">@user.Phone</span>
@@ -110,8 +114,8 @@
                                                                         @user.LName
                                                                         @user.Email
                                                                         @user.Governorate
-                                                                        @user.Directorate
-                                                                        @user.Judiciary
+                                                                        @user.Doh
+                                                                        @user.Nahia
                                                                         @user.District
                                                                         @user.Village
                                                                         @user.FacilityType
