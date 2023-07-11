@@ -4,6 +4,7 @@ using CRVS.EF;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CRVS.EF.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230711115756_21new")]
+    partial class _21new
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -300,22 +303,6 @@ namespace CRVS.EF.Migrations
                     b.ToTable("BirthCertificates");
                 });
 
-            modelBuilder.Entity("CRVS.Core.Models.Disable", b =>
-                {
-                    b.Property<int>("DisableId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("DisableId"));
-
-                    b.Property<string>("DisableName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("DisableId");
-
-                    b.ToTable("Disables");
-                });
-
             modelBuilder.Entity("CRVS.Core.Models.District", b =>
                 {
                     b.Property<int>("DistrictId")
@@ -414,22 +401,6 @@ namespace CRVS.EF.Migrations
                     b.ToTable("HealthInstitutions");
                 });
 
-            modelBuilder.Entity("CRVS.Core.Models.Job", b =>
-                {
-                    b.Property<int>("JobId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("JobId"));
-
-                    b.Property<string>("JobName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("JobId");
-
-                    b.ToTable("Jobs");
-                });
-
             modelBuilder.Entity("CRVS.Core.Models.Nahia", b =>
                 {
                     b.Property<int>("NahiaId")
@@ -453,22 +424,6 @@ namespace CRVS.EF.Migrations
                     b.HasKey("NahiaId");
 
                     b.ToTable("Nahias");
-                });
-
-            modelBuilder.Entity("CRVS.Core.Models.Nationality", b =>
-                {
-                    b.Property<int>("NationalityId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("NationalityId"));
-
-                    b.Property<string>("NationalityName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("NationalityId");
-
-                    b.ToTable("Nationalities");
                 });
 
             modelBuilder.Entity("CRVS.Core.Models.Notification", b =>
@@ -506,22 +461,6 @@ namespace CRVS.EF.Migrations
                     b.HasKey("NotificationId");
 
                     b.ToTable("Notifications");
-                });
-
-            modelBuilder.Entity("CRVS.Core.Models.Religion", b =>
-                {
-                    b.Property<int>("ReligionId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ReligionId"));
-
-                    b.Property<string>("ReligionName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("ReligionId");
-
-                    b.ToTable("Religions");
                 });
 
             modelBuilder.Entity("CRVS.Core.Models.RolePermission", b =>

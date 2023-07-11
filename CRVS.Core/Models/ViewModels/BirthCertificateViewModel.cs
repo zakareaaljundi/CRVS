@@ -6,9 +6,9 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 
-namespace CRVS.Core.Models
+namespace CRVS.Core.Models.ViewModels
 {
-    public class BirthCertificate
+    public class BirthCertificateViewModel
     {
         public int BirthCertificateId { get; set; }
         public string? HealthId { get; set; }
@@ -45,18 +45,18 @@ namespace CRVS.Core.Models
         public string? FatherLName { get; set; }
         public DateTime FatherDOB { get; set; }
         public string? FatherAge { get; set; }
-        public string? FatherJob { get; set; }
-        public string? FatherNationality { get; set; }
-        public string? FatherReligion { get; set; }
+        public int FatherJobId { get; set; }
+        public int FatherNationalityId { get; set; }
+        public int FatherReligionId { get; set; }
         public string? FatherMobile { get; set; }
         public string? MotherFName { get; set; }
         public string? MotherMName { get; set; }
         public string? MotherLName { get; set; }
         public DateTime MotherDOB { get; set; }
         public string? MotherAge { get; set; }
-        public string? MotherJob { get; set; }
-        public string? MotherNationality { get; set; }
-        public string? MotherReligion { get; set; }
+        public int MotherJobId { get; set; }
+        public int MotherNationalityId { get; set; }
+        public int MotherReligionId { get; set; }
         public string? MotherMobile { get; set; }
         public bool Relative { get; set; }
         public int Alive { get; set; }
@@ -65,7 +65,7 @@ namespace CRVS.Core.Models
         public int BornDisable { get; set; }
         public int NoAbortion { get; set; }
         public bool IsDisabled { get; set; }
-        public string? DisabledType { get; set; }
+        public int DisabledTypeId { get; set; }
         public int DurationOfPregnancy { get; set; }
         public decimal? BabyWeight { get; set; }
         public PlaceOfBirths PlaceOfBirth { get; set; }

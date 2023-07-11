@@ -24,5 +24,9 @@ namespace CRVS.EF
         public DbSet<FacilityType> FacilityTypes { get; set; }
         public DbSet<HealthInstitution> HealthInstitutions { get; set; }
         public DbSet<Notification> Notifications { get; set; }
+        public DbSet<Job> Jobs { get; set; }
+        public DbSet<Religion> Religions { get; set; }
+        public DbSet<Nationality> Nationalities { get; set; }
+        public DbSet<Disable> Disables { get; set; }
     }
 }
