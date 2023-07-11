@@ -81,9 +81,9 @@ namespace CRVS.Core.Models.ViewModels
         public string? KabilaName { get; set; }
         public string? LicenseNo { get; set; }
         public DateTime LicenseYear { get; set; }
-        public string? FamilyGovernorate { get; set; }
-        public string? FamilyDistrict { get; set; }
-        public string? FamilyNahia { get; set; }
+        public int FamilyGovernorateId { get; set; }
+        public int FamilyDistrictId { get; set; }
+        public int FamilyNahiaId { get; set; }
         public string? FamilyMahala { get; set; }
         public string? FamilyDOH { get; set; }
         public string? FamilySector { get; set; }

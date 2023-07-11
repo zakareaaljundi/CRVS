@@ -196,29 +196,21 @@ namespace CRVS.Controllers
             ViewBag.Disables = new SelectList(_context.Disables.ToList(), "DisableId", "DisableName");
             
             ViewBag.Governorates = new SelectList(_context.Governorates.ToList(), "GovernorateId", "GovernorateName");
-            ViewBag.Dohs = new SelectList(_context.Dohs.ToList(), "DohId", "DohName");
             ViewBag.Districts = new SelectList(_context.Districts.ToList(), "DistrictId", "DistrictName");
             ViewBag.Nahias = new SelectList(_context.Nahias.ToList(), "NahiaId", "NahiaName");
             return View();
         }
-        public ActionResult GetDohs(int governorateId)
-        {
-            var filteredDohs = _context.Dohs
-                .Where(d => d.GovernorateId == governorateId)
-                .Select(d => new { dohId = d.DohId, dohName = d.DohName });
-            return Json(filteredDohs);
-        }
-        public ActionResult GetDistricts(int dohId)
+        public ActionResult GetDistricts(int familyGovernorateId)
         {
             var filteredDistricts = _context.Districts
-                .Where(d => d.DohId == dohId)
+                .Where(d => d.GovernorateId == familyGovernorateId)
                 .Select(d => new { districtId = d.DistrictId, districtName = d.DistrictName });
             return Json(filteredDistricts);
         }
-        public ActionResult GetNahias(int districtId, int dohId, int governorateId)
+        public ActionResult GetNahias(int familyDistrictId, int familyGovernorateId)
         {
             var filteredNahias = _context.Nahias
-                .Where(d => d.DistrictId == districtId && d.DohId == dohId && d.GovernorateId == governorateId)
+                .Where(d => d.DistrictId == familyDistrictId && d.GovernorateId == familyGovernorateId)
                 .Select(d => new { nahiaId = d.NahiaId, nahiaName = d.NahiaName });
 
             return Json(filteredNahias);
@@ -241,6 +233,12 @@ namespace CRVS.Controllers
                 var motherNationality = _context.Nationalities.FirstOrDefault(x => x.NationalityId == birthCertificateViewModel.MotherNationalityId);
                 var DisableType = _context.Disables.FirstOrDefault(x => x.DisableId == birthCertificateViewModel.DisabledTypeId);
 
+                ViewBag.Governorates = new SelectList(_context.Governorates.ToList(), "GovernorateId", "GovernorateName");
+                ViewBag.Districts = new SelectList(_context.Districts.ToList(), "DistrictId", "DistrictName");
+                ViewBag.Nahias = new SelectList(_context.Nahias.ToList(), "NahiaId", "NahiaName");
+                var governorate = _context.Governorates.FirstOrDefault(x => x.GovernorateId == birthCertificateViewModel.FamilyGovernorateId);
+                var district = _context.Districts.FirstOrDefault(x => x.DistrictId == birthCertificateViewModel.FamilyDistrictId);
+                var nahia = _context.Nahias.FirstOrDefault(x => x.NahiaId == birthCertificateViewModel.FamilyNahiaId);
                 BirthCertificate birthCertificate = new BirthCertificate
                 {
                     BirthCertificateId = birthCertificateViewModel.BirthCertificateId,
@@ -292,9 +290,9 @@ namespace CRVS.Controllers
                     KabilaName = birthCertificateViewModel.KabilaName,
                     LicenseNo = birthCertificateViewModel.LicenseNo,
                     LicenseYear = birthCertificateViewModel.LicenseYear,
-                    FamilyGovernorate = birthCertificateViewModel.FamilyGovernorate,
-                    FamilyDistrict = birthCertificateViewModel.FamilyDistrict,
-                    FamilyNahia = birthCertificateViewModel.FamilyNahia,
+                    FamilyGovernorate = governorate!.GovernorateName,
+                    FamilyDistrict = district!.DistrictName,
+                    FamilyNahia = nahia!.NahiaName,
                     FamilyMahala = birthCertificateViewModel.FamilyMahala,
                     FamilyDOH = birthCertificateViewModel.FamilyDOH,
                     FamilySector = birthCertificateViewModel.FamilySector,
