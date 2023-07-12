@@ -7,25 +7,31 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Hosting;
 
 namespace CRVS.Controllers
 {
+    [Authorize]
     public class BirthCertificatesController : Controller
     {
         private readonly IBaseRepository<BirthCertificate> _certificatesRepository;
         private UserManager<IdentityUser> _userManager;
         private RoleManager<IdentityRole> _roleManager;
         private ApplicationDbContext _context;
+        private IWebHostEnvironment _webHostEnvironment;
 
         public BirthCertificatesController(IBaseRepository<BirthCertificate> certificatesRepository,
                                             UserManager<IdentityUser> userManager,
                                             RoleManager<IdentityRole> roleManager,
-                                            ApplicationDbContext context)
+                                            ApplicationDbContext context,
+                                            IWebHostEnvironment webHostEnvironment)
         {
             _certificatesRepository = certificatesRepository;
             _userManager = userManager;
             _context = context;
             _roleManager = roleManager;
+            _webHostEnvironment = webHostEnvironment;
         }
         public async Task<IActionResult> Index()
         {
@@ -179,6 +185,7 @@ namespace CRVS.Controllers
         [HttpGet]
         public async Task<IActionResult> Create()
         {
+            ViewBag.HId = Guid.NewGuid();
             var userId = _userManager.GetUserName(HttpContext.User);
             var currentUser = await _context.Users.FirstOrDefaultAsync(x => x.Email == userId);
             ViewBag.Governorate = currentUser!.Governorate;
@@ -187,17 +194,17 @@ namespace CRVS.Controllers
             ViewBag.Nahia = currentUser!.Nahia;
             ViewBag.Village = currentUser!.Village;
             ViewBag.FacilityType = currentUser!.FacilityType;
-            var FT = _context.FacilityTypes.FirstOrDefault(x => x.FacilityTypeName == currentUser.FacilityType);
-            ViewBag.IsOffice = FT!.FacilityTypeId == 11;
             ViewBag.HealthInstitution = currentUser!.HealthInstitution;
+
             ViewBag.Jobs = new SelectList(_context.Jobs.ToList(), "JobId", "JobName");
             ViewBag.Religions = new SelectList(_context.Religions.ToList(), "ReligionId", "ReligionName");
             ViewBag.Nationalities = new SelectList(_context.Nationalities.ToList(), "NationalityId", "NationalityName");
-            ViewBag.Disables = new SelectList(_context.Disables.ToList(), "DisableId", "DisableName");
-            
+            ViewBag.Disabilities = new SelectList(_context.Disabilities.ToList(), "Id", "QName");
+
             ViewBag.Governorates = new SelectList(_context.Governorates.ToList(), "GovernorateId", "GovernorateName");
             ViewBag.Districts = new SelectList(_context.Districts.ToList(), "DistrictId", "DistrictName");
             ViewBag.Nahias = new SelectList(_context.Nahias.ToList(), "NahiaId", "NahiaName");
+
             return View();
         }
         public ActionResult GetDistricts(int familyGovernorateId)
@@ -224,14 +231,14 @@ namespace CRVS.Controllers
                 ViewBag.Jobs = new SelectList(_context.Jobs.ToList(), "JobId", "JobName");
                 ViewBag.Religions = new SelectList(_context.Religions.ToList(), "ReligionId", "ReligionName");
                 ViewBag.Nationalities = new SelectList(_context.Nationalities.ToList(), "NationalityId", "NationalityName");
-                ViewBag.Disables = new SelectList(_context.Disables.ToList(), "DisableId", "DisableName");
+                ViewBag.Disabilities = new SelectList(_context.Disabilities.ToList(), "Id", "QName");
                 var fatherJob = _context.Jobs.FirstOrDefault(x => x.JobId == birthCertificateViewModel.FatherJobId);
                 var fatherReligion = _context.Religions.FirstOrDefault(x => x.ReligionId == birthCertificateViewModel.FatherReligionId);
                 var fatherNationality = _context.Nationalities.FirstOrDefault(x => x.NationalityId == birthCertificateViewModel.FatherNationalityId);
                 var motherJob = _context.Jobs.FirstOrDefault(x => x.JobId == birthCertificateViewModel.MotherJobId);
                 var motherReligion = _context.Religions.FirstOrDefault(x => x.ReligionId == birthCertificateViewModel.MotherReligionId);
                 var motherNationality = _context.Nationalities.FirstOrDefault(x => x.NationalityId == birthCertificateViewModel.MotherNationalityId);
-                var DisableType = _context.Disables.FirstOrDefault(x => x.DisableId == birthCertificateViewModel.DisabledTypeId);
+                var DisableType = _context.Disabilities.FirstOrDefault(x => x.Id == birthCertificateViewModel.DisabledTypeId);
 
                 ViewBag.Governorates = new SelectList(_context.Governorates.ToList(), "GovernorateId", "GovernorateName");
                 ViewBag.Districts = new SelectList(_context.Districts.ToList(), "DistrictId", "DistrictName");
@@ -239,12 +246,23 @@ namespace CRVS.Controllers
                 var governorate = _context.Governorates.FirstOrDefault(x => x.GovernorateId == birthCertificateViewModel.FamilyGovernorateId);
                 var district = _context.Districts.FirstOrDefault(x => x.DistrictId == birthCertificateViewModel.FamilyDistrictId);
                 var nahia = _context.Nahias.FirstOrDefault(x => x.NahiaId == birthCertificateViewModel.FamilyNahiaId);
+
+                /*string ImgName = FileUpload(birthCertificateViewModel);*/
+                string imgBirthCertificate = FileUpload(birthCertificateViewModel.ImageBirthCertificate!, birthCertificateViewModel.ImageBirthCertificate!.FileName);
+                string imgMarriageCertificate = FileUpload(birthCertificateViewModel.ImageMarriageCertificate!, birthCertificateViewModel.ImageMarriageCertificate!.FileName);
+                string imgFatherUnifiedNationalIdFront = FileUpload(birthCertificateViewModel.ImageFatherUnifiedNationalIdFront!, birthCertificateViewModel.ImageFatherUnifiedNationalIdFront!.FileName);
+                string imgFatherUnifiedNationalIdBack = FileUpload(birthCertificateViewModel.ImageFatherUnifiedNationalIdBack!, birthCertificateViewModel.ImageFatherUnifiedNationalIdBack!.FileName);
+                string imgMotherUnifiedNationalIdFront = FileUpload(birthCertificateViewModel.ImageMotherUnifiedNationalIdFront!, birthCertificateViewModel.ImageMotherUnifiedNationalIdFront!.FileName);
+                string imgMotherUnifiedNationalIdBack = FileUpload(birthCertificateViewModel.ImageMotherUnifiedNationalIdBack!, birthCertificateViewModel.ImageMotherUnifiedNationalIdBack!.FileName);
+                string imgResidencyCardFront = FileUpload(birthCertificateViewModel.ImageResidencyCardFront!, birthCertificateViewModel.ImageResidencyCardFront!.FileName);
+                string imgResidencyCardBack = FileUpload(birthCertificateViewModel.ImageResidencyCardBack!, birthCertificateViewModel.ImageResidencyCardBack!.FileName);
+
                 BirthCertificate birthCertificate = new BirthCertificate
                 {
                     BirthCertificateId = birthCertificateViewModel.BirthCertificateId,
                     HealthId = birthCertificateViewModel.HealthId,
                     ChildName = birthCertificateViewModel.ChildName,
-                    /*Gender = birthCertificateViewModel.SelectedGender,*/
+                    Gender = (BirthCertificate.Genders)birthCertificateViewModel.Gender,
                     Governorate = birthCertificateViewModel.Governorate,
                     Doh = birthCertificateViewModel.Doh,
                     District = birthCertificateViewModel.District,
@@ -252,8 +270,8 @@ namespace CRVS.Controllers
                     Village = birthCertificateViewModel.Village,
                     FacilityType = birthCertificateViewModel.FacilityType,
                     HealthInstitution = birthCertificateViewModel.HealthInstitution,
-                    /*BirthType = BirthCertificate.BirthTypes,*/
-                    /*NumberOfBirth = ,*/
+                    BirthType = (BirthCertificate.BirthTypes)birthCertificateViewModel.BirthType,
+                    NumberOfBirth = (BirthCertificate.NumberOfBirths)birthCertificateViewModel.NumberOfBirth,
                     BirthHour = birthCertificateViewModel.BirthHour,
                     DOB = birthCertificateViewModel.DOB,
                     DOBText = birthCertificateViewModel.DOBText,
@@ -275,18 +293,18 @@ namespace CRVS.Controllers
                     MotherReligion = motherReligion!.ReligionName,
                     MotherNationality = motherNationality!.NationalityName,
                     MotherMobile = birthCertificateViewModel.MotherMobile,
-                    Relative = birthCertificateViewModel.Relative,
+                    Relative = (BirthCertificate.Relatives)birthCertificateViewModel.Relative,
                     Alive = birthCertificateViewModel.Alive,
                     BornAliveThenDied = birthCertificateViewModel.BornAliveThenDied,
                     StillBirth = birthCertificateViewModel.StillBirth,
                     BornDisable = birthCertificateViewModel.BornDisable,
                     NoAbortion = birthCertificateViewModel.NoAbortion,
-                    IsDisabled = birthCertificateViewModel.IsDisabled,
-                    DisabledType = DisableType!.DisableName,
+                    IsDisabled = (BirthCertificate.IsDisableds)birthCertificateViewModel.IsDisabled,
+                    DisabledType = DisableType!.QName,
                     DurationOfPregnancy = birthCertificateViewModel.DurationOfPregnancy,
                     BabyWeight = birthCertificateViewModel.BabyWeight,
-                    /*PlaceOfBirth = BirthCertificate.PlaceOfBirths,
-                    BirthOccurredBy = BirthCertificate.BirthOccurredBys,*/
+                    PlaceOfBirth = birthCertificateViewModel.PlaceOfBirth,
+                    BirthOccurredBy = (BirthCertificate.BirthOccurredBys)birthCertificateViewModel.BirthOccurredBy,
                     KabilaName = birthCertificateViewModel.KabilaName,
                     LicenseNo = birthCertificateViewModel.LicenseNo,
                     LicenseYear = birthCertificateViewModel.LicenseYear,
@@ -299,12 +317,12 @@ namespace CRVS.Controllers
                     FamilyPHC = birthCertificateViewModel.FamilyPHC,
                     FamilyZigag = birthCertificateViewModel.FamilyZigag,
                     FamilyHomeNo = birthCertificateViewModel.FamilyHomeNo,
-                    /*DocumentType = BirthCertificate.DocumentTypes,*/
+                    DocumentType = (BirthCertificate.DocumentTypes)birthCertificateViewModel.DocumentType,
                     RecordNumber = birthCertificateViewModel.RecordNumber,
                     PageNumber = birthCertificateViewModel.PageNumber,
                     CivilStatusDirectorate = birthCertificateViewModel.CivilStatusDirectorate,
                     GovernorateCivilStatusDirectorate = birthCertificateViewModel.GovernorateCivilStatusDirectorate,
-                    /*NationalIdFor = BirthCertificate.NationalIdFors,*/
+                    NationalIdFor = (BirthCertificate.NationalIdFors)birthCertificateViewModel.NationalIdFor,
                     NationalId = birthCertificateViewModel.NationalId,
                     PassportNo = birthCertificateViewModel.PassportNo,
                     InformerName = birthCertificateViewModel.InformerName,
@@ -315,14 +333,14 @@ namespace CRVS.Controllers
                     HospitalManagerName = birthCertificateViewModel.HospitalManagerName,
                     HospitalManagerSig = birthCertificateViewModel.HospitalManagerSig,
                     RationCard = birthCertificateViewModel.RationCard,
-                    ImgBirthCertificate = birthCertificateViewModel.ImgBirthCertificate,
-                    ImgMarriageCertificate = birthCertificateViewModel.ImgMarriageCertificate,
-                    ImgFatherUnifiedNationalIdFront = birthCertificateViewModel.ImgFatherUnifiedNationalIdFront,
-                    ImgFatherUnifiedNationalIdBack = birthCertificateViewModel.ImgFatherUnifiedNationalIdBack,
-                    ImgMotherUnifiedNationalIdFront = birthCertificateViewModel.ImgMotherUnifiedNationalIdFront,
-                    ImgMotherUnifiedNationalIdBack = birthCertificateViewModel.ImgMotherUnifiedNationalIdBack,
-                    ImgResidencyCardFront = birthCertificateViewModel.ImgResidencyCardFront,
-                    ImgResidencyCardBack = birthCertificateViewModel.ImgResidencyCardBack,
+                    ImgBirthCertificate = imgBirthCertificate,
+                    ImgMarriageCertificate = imgMarriageCertificate,
+                    ImgFatherUnifiedNationalIdFront = imgFatherUnifiedNationalIdFront,
+                    ImgFatherUnifiedNationalIdBack = imgFatherUnifiedNationalIdBack,
+                    ImgMotherUnifiedNationalIdFront = imgMotherUnifiedNationalIdFront,
+                    ImgMotherUnifiedNationalIdBack = imgMotherUnifiedNationalIdBack,
+                    ImgResidencyCardFront = imgResidencyCardFront,
+                    ImgResidencyCardBack = imgResidencyCardBack,
                     FirstStage = true,
                     CreationDate = DateTime.Now,
                     Creator = currentUser!.Id,
@@ -342,7 +360,46 @@ namespace CRVS.Controllers
                 return RedirectToAction("Create");
             }
             return View(birthCertificateViewModel);
+        }/*
+        public string FileUpload(BirthCertificateViewModel model)
+        {
+            string wwwPath = _webHostEnvironment.WebRootPath;
+            if (string.IsNullOrEmpty(wwwPath)) { }
+            string contentPath = _webHostEnvironment.ContentRootPath;
+            if (string.IsNullOrEmpty(contentPath)) { }
+            string p = Path.Combine(wwwPath, "Images");
+            if (!Directory.Exists(p))
+            {
+                Directory.CreateDirectory(p);
+            }
+            string fileName = Path.GetFileNameWithoutExtension(model.ImageBirthCertificate!.FileName);
+            string newImgName = model.BirthCertificateId + "_" + fileName + "_" + Guid.NewGuid().ToString() + Path.GetExtension(model.ImageBirthCertificate!.FileName);
+            using (FileStream fileStream = new FileStream(Path.Combine(p, newImgName), FileMode.Create))
+            {
+                model.ImageBirthCertificate.CopyTo(fileStream);
+            };
+            return "\\Images\\" + newImgName;
+        }*/
+        public string FileUpload(IFormFile file, string desiredFileName)
+        {
+            string wwwPath = _webHostEnvironment.WebRootPath;
+            if (string.IsNullOrEmpty(wwwPath)) { }
+            string contentPath = _webHostEnvironment.ContentRootPath;
+            if (string.IsNullOrEmpty(contentPath)) { }
+            string p = Path.Combine(wwwPath, "Images");
+            if (!Directory.Exists(p))
+            {
+                Directory.CreateDirectory(p);
+            }
+            string fileName = Path.GetFileNameWithoutExtension(desiredFileName);
+            string newImgName = fileName + "_" + Guid.NewGuid().ToString() + Path.GetExtension(desiredFileName);
+            using (FileStream fileStream = new FileStream(Path.Combine(p, newImgName), FileMode.Create))
+            {
+                file.CopyTo(fileStream);
+            }
+            return "\\Images\\" + newImgName;
         }
+
     }
     /*
     public IActionResult Index()

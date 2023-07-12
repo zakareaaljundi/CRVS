@@ -58,20 +58,29 @@ namespace CRVS.Core.Models
         public string? MotherNationality { get; set; }
         public string? MotherReligion { get; set; }
         public string? MotherMobile { get; set; }
-        public bool Relative { get; set; }
+        public Relatives Relative { get; set; }
+        public enum Relatives
+        {
+            يوجد, لا_يوجد
+        }
         public int Alive { get; set; }
         public int BornAliveThenDied { get; set; }
         public int StillBirth { get; set; }
         public int BornDisable { get; set; }
         public int NoAbortion { get; set; }
-        public bool IsDisabled { get; set; }
+        public IsDisableds IsDisabled { get; set; }
+        public enum IsDisableds
+        {
+            نعم, لا
+        }
         public string? DisabledType { get; set; }
         public int DurationOfPregnancy { get; set; }
         public decimal? BabyWeight { get; set; }
-        public PlaceOfBirths PlaceOfBirth { get; set; }
-        public enum PlaceOfBirths
+        public string? PlaceOfBirth { get; set; }
+        public IsBirthInHomes IsBirthInHome { get; set; }
+        public enum IsBirthInHomes
         {
-            مستشفى_أو_مركز, مكتب, بيت
+            نعم, لا
         }
         public BirthOccurredBys BirthOccurredBy { get; set; }
         public enum BirthOccurredBys

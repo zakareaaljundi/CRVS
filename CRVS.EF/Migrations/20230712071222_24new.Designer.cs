@@ -4,6 +4,7 @@ using CRVS.EF;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CRVS.EF.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230712071222_24new")]
+    partial class _24new
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -208,14 +211,11 @@ namespace CRVS.EF.Migrations
                     b.Property<bool>("IsActive")
                         .HasColumnType("bit");
 
-                    b.Property<int>("IsBirthInHome")
-                        .HasColumnType("int");
-
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
-                    b.Property<int>("IsDisabled")
-                        .HasColumnType("int");
+                    b.Property<bool>("IsDisabled")
+                        .HasColumnType("bit");
 
                     b.Property<string>("KabilaName")
                         .HasColumnType("nvarchar(max)");
@@ -277,8 +277,8 @@ namespace CRVS.EF.Migrations
                     b.Property<string>("PassportNo")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("PlaceOfBirth")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("PlaceOfBirth")
+                        .HasColumnType("int");
 
                     b.Property<int>("RationCard")
                         .HasColumnType("int");
@@ -286,8 +286,8 @@ namespace CRVS.EF.Migrations
                     b.Property<int>("RecordNumber")
                         .HasColumnType("int");
 
-                    b.Property<int>("Relative")
-                        .HasColumnType("int");
+                    b.Property<bool>("Relative")
+                        .HasColumnType("bit");
 
                     b.Property<bool>("SecondStage")
                         .HasColumnType("bit");

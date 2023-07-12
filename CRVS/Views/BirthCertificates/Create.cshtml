@@ -61,12 +61,13 @@
                             </div>
                             <div class="col-md-3">
                                 <div class="form-group">
-                                    <input asp-for="HealthId" class="form-control" readonly />
+                                    <input asp-for="HealthId" class="form-control" value="@ViewBag.HId" readonly />
                                     <span asp-validation-for="HealthId" class="text-danger"></span>
                                 </div>
                             </div>
                         </div><hr />
                         <div class="row">
+                            <h3>معلومات المولود :</h3>
                             <div class="col-md-3">
                                 <div class="form-group">
                                     <input asp-for="ChildName" class="form-control required" placeholder="إسم المولود" />
@@ -75,7 +76,7 @@
                             </div>
                             <div class="col-md-3">
                                 <div class="form-group">
-                                    <select asp-for="Gender" class="form-control required" asp-items="Html.GetEnumSelectList<CRVS.Core.Models.BirthCertificate.Genders>()">
+                                    <select asp-for="Gender" class="form-control " asp-items="Html.GetEnumSelectList<CRVS.Core.Models.BirthCertificate.Genders>()">
                                         <option vlaue="-1" disabled selected hidden>--- حدد الجنس ---</option>
                                     </select>
                                     <span asp-validation-for="Gender" class="text-danger"></span>
@@ -83,7 +84,7 @@
                             </div>
                             <div class="col-md-3">
                                 <div class="form-group">
-                                    <select asp-for="BirthType" class="form-control required" asp-items="Html.GetEnumSelectList<CRVS.Core.Models.BirthCertificate.BirthTypes>()">
+                                    <select asp-for="BirthType" class="form-control " asp-items="Html.GetEnumSelectList<CRVS.Core.Models.BirthCertificate.BirthTypes>()">
                                         <option vlaue="-1" disabled selected hidden>--- حدد نوع الولادة ---</option>
                                     </select>
                                     <span asp-validation-for="Gender" class="text-danger"></span>
@@ -91,7 +92,7 @@
                             </div>
                             <div class="col-md-3">
                                 <div class="form-group">
-                                    <select asp-for="NumberOfBirth" class="form-control required" asp-items="Html.GetEnumSelectList<CRVS.Core.Models.BirthCertificate.NumberOfBirths>()">
+                                    <select asp-for="NumberOfBirth" class="form-control " asp-items="Html.GetEnumSelectList<CRVS.Core.Models.BirthCertificate.NumberOfBirths>()">
                                         <option vlaue="-1" disabled selected hidden>--- حدد عدد المواليد ---</option>
                                     </select>
                                     <span asp-validation-for="NumberOfBirth" class="text-danger"></span>
@@ -102,45 +103,46 @@
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label>حدد ساعة الولادة</label>
-                                    <input asp-for="BirthHour" class="form-control required" type="time" placeholder="ساعة الولادة" id="BH" />
+                                    <input asp-for="BirthHour" id="BirthHour" class="form-control required" type="time" />
                                     <span asp-validation-for="BirthHour" class="text-danger"></span>
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label>حدد تاريخ الولادة</label>
-                                    <input asp-for="DOB" class="form-control required" type="date" id="DOH" />
+                                    <input asp-for="DOB" id="DOB" class="form-control required" type="date" />
                                     <span asp-validation-for="DOB" class="text-danger"></span>
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label>التاريخ بالكلمات</label>
-                                    <input asp-for="DOBText" name="DOBText" class="form-control" readonly placeholder="DOBText" id="dobTextInput" />
+                                    <label>التاريخ بالكلمات(تلقائي)</label>
+                                    <input asp-for="DOBText" id="DOBText" class="form-control" readonly placeholder="التاريخ بالكلمات(تلقائي)" />
                                     <span asp-validation-for="DOBText" class="text-danger"></span>
                                 </div>
                             </div>
                         </div>
                     </section>
                     <!-- Step 2 -->
-                    <h6>معلومات الوالدين</h6>
+                    <h6>معلومات الأب</h6>
                     <section>
                         <div class="row">
+                            <h3>معلومات الأب :</h3>
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <input asp-for="FatherFName" class="form-control required" placeholder="إسم الأب الأول" />
+                                    <input asp-for="FatherFName" class="form-control " placeholder="إسم الأب الأول" />
                                     <span asp-validation-for="FatherFName" class="text-danger"></span>
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <input asp-for="FatherMName" class="form-control required" placeholder="أسم الأب الأوسط" />
+                                    <input asp-for="FatherMName" class="form-control " placeholder="إسم الأب الأوسط" />
                                     <span asp-validation-for="FatherMName" class="text-danger"></span>
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <input asp-for="FatherLName" class="form-control required" placeholder="أسم الأب الأخير" />
+                                    <input asp-for="FatherLName" class="form-control " placeholder="إسم الأب الأخير" />
                                     <span asp-validation-for="FatherLName" class="text-danger"></span>
                                 </div>
                             </div>
@@ -154,13 +156,13 @@
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <input asp-for="FatherAge" id="FatherAgeInput" class="form-control required" placeholder="عمر الأب" readonly />
+                                    <input asp-for="FatherAge" id="FatherAgeInput" class="form-control " placeholder="عمر الأب" readonly />
                                     <span asp-validation-for="FatherAge" class="text-danger"></span>
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <select asp-for="FatherJobId" class="form-control required">
+                                    <select asp-for="FatherJobId" class="form-control ">
                                         <option value="" disabled selected hidden>-- حدد وظيفة الأب *--</option>
                                         @foreach (var item in ViewBag.Jobs)
                                         {
@@ -173,7 +175,7 @@
                         <div class="row">
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <select asp-for="FatherReligionId" class="form-control required">
+                                    <select asp-for="FatherReligionId" class="form-control ">
                                         <option value="" disabled selected hidden>-- حدد ديانة الأب *--</option>
                                         @foreach (var item in ViewBag.Religions)
                                         {
@@ -184,7 +186,7 @@
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <select asp-for="FatherNationalityId" class="form-control required">
+                                    <select asp-for="FatherNationalityId" class="form-control ">
                                         <option value="" disabled selected hidden>-- حدد جنسية الأب *--</option>
                                         @foreach (var item in ViewBag.Nationalities)
                                         {
@@ -195,7 +197,7 @@
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <input asp-for="FatherMobile" class="form-control required" placeholder="رقم هاتف الأب" />
+                                    <input asp-for="FatherMobile" class="form-control " placeholder="رقم هاتف الأب" />
                                     <span asp-validation-for="FatherMobile" class="text-danger"></span>
 
                                 </div>
@@ -203,24 +205,25 @@
                         </div>
                     </section>
                     <!-- Step 3 -->
-                    <h6>Step 3</h6>
+                    <h6>معلومات الأم</h6>
                     <section>
                         <div class="row">
+                            <h3>معلومات الأم :</h3>
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <input asp-for="MotherFName" class="form-control required" placeholder="أسم الأم الأول" />
+                                    <input asp-for="MotherFName" class="form-control " placeholder="إسم الأم الأول" />
                                     <span asp-validation-for="MotherFName" class="text-danger"></span>
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <input asp-for="MotherMName" class="form-control required" placeholder="أسم الأم الأوسط" />
+                                    <input asp-for="MotherMName" class="form-control " placeholder="إسم الأم الأوسط" />
                                     <span asp-validation-for="MotherMName" class="text-danger"></span>
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <input asp-for="MotherLName" class="form-control required" placeholder="أسم الأم الأخير" />
+                                    <input asp-for="MotherLName" class="form-control " placeholder="إسم الأم الأخير" />
                                     <span asp-validation-for="MotherLName" class="text-danger"></span>
                                 </div>
                             </div>
@@ -234,13 +237,13 @@
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <input asp-for="MotherAge" class="form-control required" id="MotherAgeInput" placeholder="عمر الأم" readonly />
+                                    <input asp-for="MotherAge" class="form-control " id="MotherAgeInput" placeholder="عمر الأم" readonly />
                                     <span asp-validation-for="MotherAge" class="text-danger"></span>
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <select asp-for="MotherJobId" class="form-control required">
+                                    <select asp-for="MotherJobId" class="form-control ">
                                         <option value="" disabled selected hidden>-- حدد وظيفة الأم *--</option>
                                         @foreach (var item in ViewBag.Jobs)
                                         {
@@ -253,7 +256,7 @@
                         <div class="row">
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <select asp-for="MotherReligionId" class="form-control required">
+                                    <select asp-for="MotherReligionId" class="form-control ">
                                         <option value="" disabled selected hidden>-- حدد ديانة الأم *--</option>
                                         @foreach (var item in ViewBag.Religions)
                                         {
@@ -264,7 +267,7 @@
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <select asp-for="MotherNationalityId" class="form-control required">
+                                    <select asp-for="MotherNationalityId" class="form-control ">
                                         <option value="" disabled selected hidden>-- حدد جنسية الأم *--</option>
                                         @foreach (var item in ViewBag.Nationalities)
                                         {
@@ -275,20 +278,23 @@
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <input asp-for="MotherMobile" class="form-control required" placeholder="رقم هاتف الأم" />
+                                    <input asp-for="MotherMobile" class="form-control " placeholder="رقم هاتف الأم" />
                                     <span asp-validation-for="MotherMobile" class="text-danger"></span>
                                 </div>
                             </div>
                         </div>
                     </section>
                     <!-- Step 4 -->
-                    <h6>Step 4</h6>
+                    <h6>معلومات الولادة</h6>
                     <section>
                         <div class="row">
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <input asp-for="Relative" type="checkbox" />
                                     <label style="font-size: 22px">هل هنالك صلة قرابة بين الأم والأب؟</label>
+                                    <select asp-for="Relative" class="form-control required" asp-items="Html.GetEnumSelectList<CRVS.Core.Models.BirthCertificate.Relatives>()">
+                                        <option vlaue="-1" disabled selected hidden>هل هنالك صلة قرابة بين الأم والأب؟</option>
+                                    </select>
+                                    <span asp-validation-for="Relative" class="text-danger"></span>
                                 </div>
                             </div><hr />
                             <h3>عدد المواليد السابقة للأم عدا هذا الطفل؟</h3>
@@ -308,7 +314,7 @@
                         <div class="row">
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <input asp-for="StillBirth" class="form-control" placeholder="الذين و لدوا أمواتاً" />
+                                    <input asp-for="StillBirth" class="form-control required" placeholder="الذين و لدوا أمواتاً" />
                                     <span asp-validation-for="StillBirth" class="text-danger"></span>
                                 </div>
                             </div>
@@ -328,15 +334,19 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <input asp-for="IsDisabled" type="checkbox" />
                                     <label>هل الولادة الحالية معوقة؟</label>
+                                    <select asp-for="IsDisabled" class="form-control " asp-items="Html.GetEnumSelectList<CRVS.Core.Models.BirthCertificate.IsDisableds>()">
+                                        <option vlaue="-1" disabled selected hidden>هل الولادة الحالية معوقة؟</option>
+                                    </select>
+                                    <span asp-validation-for="IsDisabled" class="text-danger"></span>
                                 </div>
                             </div>
                             <div class="col-md-6">
-                                <div class="form-group">
-                                    <select asp-for="DisabledTypeId" class="form-control required">
+                                <div class="form-group" id="DisabledTypeIdContainer">
+                                    <label>حدد نوع الإعاقة</label>
+                                    <select asp-for="DisabledTypeId" class="form-control ">
                                         <option value="" disabled selected hidden>-- حدد نوع الإعاقة *--</option>
-                                        @foreach (var item in ViewBag.Disables)
+                                        @foreach (var item in ViewBag.Disabilities)
                                         {
                                             <option value="@item.Value">@item.Text</option>
                                         }
@@ -353,111 +363,98 @@
                             </div>
                             <div class="col-md-3">
                                 <div class="form-group">
-                                    <input asp-for="BabyWeight" class="form-control required" placeholder="وزن الطفل /غم" />
+                                    <input asp-for="BabyWeight" class="form-control " placeholder="وزن الطفل /غم" />
                                     <span asp-validation-for="BabyWeight" class="text-danger"></span>
                                 </div>
                             </div>
                         </div><hr />
+                        @{
+                            if (ViewBag.FacilityType == "مكتب تسجيل الولادات والوفيات")
+                            {
+                                ViewBag.PlaceOfBirth = "مكتب";
+                                ViewBag.IsOffice = true;
+                            }
+                            else
+                            {
+                                ViewBag.PlaceOfBirth = "مستشفى أو مركز";
+                                ViewBag.IsOffice = false;
+                            }
+                            var isOffice = ViewBag.IsOffice;
+                        }
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <select asp-for="PlaceOfBirth" class="form-control required" readonly asp-items="Html.GetEnumSelectList<CRVS.Core.Models.BirthCertificate.PlaceOfBirths>()">
-                                        <option vlaue="-1" disabled selected hidden>--- حدد مكان الولادة ---</option>
-                                    </select>
-                                    <span asp-validation-for="NumberOfBirth" class="text-danger"></span>
+                                    <label>مكان الولادة</label>
+                                    <input asp-for="PlaceOfBirth" class="form-control " value="@ViewBag.PlaceOfBirth" readonly placeholder="مكان الولادة" />
+                                    <span asp-validation-for="PlaceOfBirth" class="text-danger"></span>
                                 </div>
                             </div>
-                            @{
-                                var isOffice = ViewBag.IsOffice;
-                            }
-                            <input type="hidden" id="IsOffice" value="@isOffice" />
-
-                            <script>
-                                $(document).ready(function () {
-                                    var isOffice = $("#IsOffice").val();
-                                    var selectedValue = $("#PlaceOfBirth").val();
-
-                                    if (isOffice === "True") {
-                                        selectedValue = "1";
-                                    } else {
-                                        selectedValue = "0";
-                                    }
-
-                                    $("#PlaceOfBirth").val(selectedValue);
-                                });
-                            </script>
-                        @*    <script>
-                                $(document).ready(function () {
-                                    var selectedValue = $("#PlaceOfBirth").val();
-                                    if (ViewBag.IsOffice) {
-                                        selectedValue = "1";
-                                    } else {
-                                        selectedValue = "0";
-                                    }
-                                    $("#PlaceOfBirth").val(selectedValue);
-                                });
-                            </script>*@
                             <div class="col-md-6" id="BirthOccurredByContainer" style="display: none;">
                                 <div class="form-group">
-                                    <select asp-for="BirthOccurredBy" class="form-control required" asp-items="Html.GetEnumSelectList<CRVS.Core.Models.BirthCertificate.BirthOccurredBys>()">
+                                    <label>حدثت بواسطة؟</label>
+                                    <select asp-for="BirthOccurredBy" class="form-control " asp-items="Html.GetEnumSelectList<CRVS.Core.Models.BirthCertificate.BirthOccurredBys>()">
                                         <option vlaue="-1" disabled selected hidden>--- حدثت الولادة بواسطة ---</option>
                                     </select>
                                     <span asp-validation-for="BirthOccurredBy" class="text-danger"></span>
                                 </div>
                             </div>
+                            <div class="col-md-6" id="additionalInputs" style="display: none">
+                                <div class="form-group">
+                                    <label>هل حدثت بالبيت؟</label>
+                                    <select asp-for="IsBirthInHome" class="form-control " readonly asp-items="Html.GetEnumSelectList<CRVS.Core.Models.BirthCertificate.IsBirthInHomes>()">
+                                        <option vlaue="-1" disabled selected hidden>--- هل حدثت الولادة بالمنزل؟ ---</option>
+                                    </select>
+                                    <span asp-validation-for="IsBirthInHome" class="text-danger"></span>
+                                </div>
+                            </div>
                         </div>
-                        <div class="row" id="additionalInputs" style="display: none">
+                        <div class="row" id="additionalInputs2" style="display: none">
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <input asp-for="KabilaName" class="form-control required" placeholder="KabilaName" />
+                                    <label>إسم القابلة</label>
+                                    <input asp-for="KabilaName" class="form-control " placeholder="إسم القابلة" />
                                     <span asp-validation-for="KabilaName" class="text-danger"></span>
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <input asp-for="LicenseNo" class="form-control required" placeholder="LicenseNo" />
+                                    <label>رقم الرخصة</label>
+                                    <input asp-for="LicenseNo" class="form-control " placeholder="رقم الرخصة" />
                                     <span asp-validation-for="LicenseNo" class="text-danger"></span>
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <input asp-for="LicenseYear" class="form-control required" placeholder="LicenseYear" />
+                                    <label>تاريخ إنتهاء الرخصة</label>
+                                    <input asp-for="LicenseYear" class="form-control required" />
                                     <span asp-validation-for="LicenseYear" class="text-danger"></span>
                                 </div>
                             </div>
                         </div>
                         <script>
                             $(document).ready(function () {
-                                $("#PlaceOfBirth").change(function () {
-                                    var selectedValue = $(this).val();
-                                    if (selectedValue === "0") {
-                                        $("#BirthOccurredByContainer").show();
-                                        $("#additionalInputs").hide();
-                                        $("#KabilaName").val("");
-                                        $("#LicenseNo").val("");
-                                        $("#LicenseYear").val("");
-                                    } else {
-                                        $("#additionalInputs").show();
-                                        $("#BirthOccurredByContainer").hide();
-                                        $("#BirthOccurredBy").val("");
-                                    }
-                                    $("#BirthOccurredBy").change(function () {
-                                        if ($(this).val() === "") {
-                                            $(this).prepend('<option value="-1" disabled selected hidden>--- حدثت الولادة بواسطة ---</option>');
-                                        }
-                                    });
-                                });
+                                var isOffice = @Json.Serialize(ViewBag.IsOffice);
+
+                                if (isOffice) {
+                                    $("#additionalInputs").show();
+                                    $("#additionalInputs2").show();
+                                    $("#BirthOccurredByContainer").hide();
+                                } else {
+                                    $("#BirthOccurredByContainer").show();
+                                    $("#additionalInputs").hide();
+                                    $("#additionalInputs2").hide();
+                                }
                             });
                         </script>
                     </section>
                     <!-- Step 5 -->
-                    <h6>Step 5</h6>
+                    <h6>معلومات العائلة</h6>
                     <section>
                         <div class="row">
                             <h3>العنوان الدائم لعائلة المولود :</h3>
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <select asp-for="FamilyGovernorateId" class="form-control">
+                                    <select asp-for="FamilyGovernorateId" id="FamilyGovernorateId" class="form-control">
                                         <option value="" disabled selected hidden>-- حدد المحافظة --</option>
                                         @foreach (var item in ViewBag.Governorates)
                                         {
@@ -468,7 +465,7 @@
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <select asp-for="FamilyDistrictId" class="form-control">
+                                    <select asp-for="FamilyDistrictId" id="FamilyDistrictId" class="form-control">
                                         <option value="" disabled selected hidden>-- حدد القضاء --</option>
                                         @foreach (var item in ViewBag.Districts)
                                         {
@@ -479,7 +476,7 @@
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <select asp-for="FamilyNahiaId" class="form-control">
+                                    <select asp-for="FamilyNahiaId" id="FamilyNahiaId" class="form-control">
                                         <option value="" disabled selected hidden>-- حدد الناحية --</option>
                                         @foreach (var item in ViewBag.Nahias)
                                         {
@@ -492,27 +489,28 @@
                         <div class="row">
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <input asp-for="FamilyMahala" class="form-control required" placeholder="المحلة أو القرية" />
+                                    <input asp-for="FamilyMahala" class="form-control " placeholder="المحلة أو القرية" />
                                     <span asp-validation-for="FamilyMahala" class="text-danger"></span>
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <input asp-for="FamilyZigag" class="form-control required" placeholder="الزقاق" />
+                                    <input asp-for="FamilyZigag" class="form-control " placeholder="الزقاق" />
                                     <span asp-validation-for="FamilyZigag" class="text-danger"></span>
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <input asp-for="FamilyHomeNo" class="form-control required" placeholder="رقم البيت" />
+                                    <input asp-for="FamilyHomeNo" class="form-control " placeholder="رقم البيت" />
                                     <span asp-validation-for="FamilyHomeNo" class="text-danger"></span>
                                 </div>
                             </div>
                         </div><hr />
                         <div class="row">
+                            <h3>23 -معلومات خاصة بمديرية الجنسية والأحوال المدنية :</h3>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <select asp-for="DocumentType" class="form-control required" asp-items="Html.GetEnumSelectList<CRVS.Core.Models.BirthCertificate.DocumentTypes>()">
+                                    <select asp-for="DocumentType" class="form-control " asp-items="Html.GetEnumSelectList<CRVS.Core.Models.BirthCertificate.DocumentTypes>()">
                                         <option vlaue="-1" disabled selected hidden>--- Select National Id For---</option>
                                     </select>
                                     <span asp-validation-for="DocumentType" class="text-danger"></span>
@@ -520,7 +518,7 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-md-6" id="firstDocumentTypeOptionSub1" style="display: none">
+                            <div class="col-md-6" id="firstDocumentTypeOptionSub1" @*style="display: none"*@>
                                 <div class="form-group">
                                     <input asp-for="RecordNumber" class="form-control required" placeholder="رقم السجل" />
                                     <span asp-validation-for="RecordNumber" class="text-danger"></span>
@@ -530,7 +528,7 @@
                                     <span asp-validation-for="PageNumber" class="text-danger"></span>
                                 </div>
                             </div>
-                            <div class="col-md-6" id="firstDocumentTypeOptionSub2" style="display: none">
+                            <div class="col-md-6" id="firstDocumentTypeOptionSub2" @*style="display: none"*@>
                                 <div class="form-group">
                                     <input asp-for="CivilStatusDirectorate" class="form-control required" placeholder="دائرة جنسية وأحوال" />
                                     <span asp-validation-for="CivilStatusDirectorate" class="text-danger"></span>
@@ -541,10 +539,10 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="row" id="secondDocumentTypeOption" style="display: none">
+                        <div class="row" id="secondDocumentTypeOption" @*style="display: none"*@>
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <select asp-for="NationalIdFor" class="form-control required" asp-items="Html.GetEnumSelectList<CRVS.Core.Models.BirthCertificate.NationalIdFors>()">
+                                    <select asp-for="NationalIdFor" class="form-control " asp-items="Html.GetEnumSelectList<CRVS.Core.Models.BirthCertificate.NationalIdFors>()">
                                         <option vlaue="-1" disabled selected hidden>--- Select National Id For---</option>
                                     </select>
                                     <span asp-validation-for="NationalIdFor" class="text-danger"></span>
@@ -560,96 +558,65 @@
                         <div class="row" id="thirdDocumentTypeOption" style="display: none">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <input asp-for="PassportNo" class="form-control required" placeholder="رقم الجواز" />
+                                    <input asp-for="PassportNo" class="form-control " placeholder="رقم الجواز" />
                                     <span asp-validation-for="PassportNo" class="text-danger"></span>
                                 </div>
                             </div>
                         </div><hr />
-                        <script>
-                            $(document).ready(function () {
-                                $("#DocumentType").change(function () {
-                                    var selectedValue = $(this).val();
-                                    if (selectedValue === "0") {
-                                        $("#firstDocumentTypeOptionSub1").show();
-                                        $("#firstDocumentTypeOptionSub2").show();
-                                        $("#secondDocumentTypeOption").hide();
-                                        $("#thirdDocumentTypeOption").hide();
-                                        $("#NationalIdFor").val("");
-                                        $("#NationalId").val("");
-                                        $("#PassportNo").val("");
-                                    } else if (selectedValue === "1") {
-                                        $("#firstDocumentTypeOptionSub1").hide();
-                                        $("#firstDocumentTypeOptionSub2").show();
-                                        $("#secondDocumentTypeOption").show();
-                                        $("#thirdDocumentTypeOption").hide();
-                                        $("#RecordNumber").val("");
-                                        $("#PageNumber").val("");
-                                    } else {
-                                        $("#firstDocumentTypeOptionSub1").hide();
-                                        $("#firstDocumentTypeOptionSub2").hide();
-                                        $("#secondDocumentTypeOption").hide();
-                                        $("#thirdDocumentTypeOption").show();
-                                        $("#RecordNumber").val("");
-                                        $("#PageNumber").val("");
-                                        $("#CivilStatusDirectorate").val("");
-                                        $("#GovernorateCivilStatusDirectorate").val("");
-                                        $("#NationalIdFor").val("");
-                                        $("#NationalId").val("");
-                                    }
-                                });
-                            });
-                        </script>
                         <div class="row">
+                            <h3>24 -معلومات خاصة بالمخبر :</h3>
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <input asp-for="InformerName" class="form-control required" placeholder="إسم المخبر" />
+                                    <input asp-for="InformerName" class="form-control " placeholder="الإسم" />
                                     <span asp-validation-for="InformerName" class="text-danger"></span>
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <input asp-for="InformerJobTitle" class="form-control required" placeholder="‘عنوان المخبر" />
+                                    <input asp-for="InformerJobTitle" class="form-control " placeholder="‘العنوان" />
                                     <span asp-validation-for="InformerJobTitle" class="text-danger"></span>
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <input asp-for="KinshipOfTheNewborn" class="form-control required" placeholder="صلته بالوليد" />
+                                    <input asp-for="KinshipOfTheNewborn" class="form-control " placeholder="صلته بالوليد" />
                                     <span asp-validation-for="KinshipOfTheNewborn" class="text-danger"></span>
                                 </div>
                             </div>
                         </div><hr />
                         <div class="row">
+                            <h3>25 -أشهد بأنَ هذا الطفل ولد حياً في التاريخ المبين سابقاً : </h3>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <input asp-for="BirthPerformerName" class="form-control required" placeholder="إسم المولَد" />
+                                    <input asp-for="BirthPerformerName" class="form-control " placeholder="إسم المولَد" />
                                     <span asp-validation-for="BirthPerformerName" class="text-danger"></span>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <input asp-for="BirthPerformerWorkingAddress" class="form-control required" placeholder="عنوان الإشتغال" />
+                                    <input asp-for="BirthPerformerWorkingAddress" class="form-control " placeholder="عنوان الإشتغال" />
                                     <span asp-validation-for="BirthPerformerWorkingAddress" class="text-danger"></span>
                                 </div>
                             </div>
                         </div><hr />
                         <div class="row">
+                            <h3>مدير المستشفى أو من ينوب عنه:</h3>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <input asp-for="HospitalManagerName" class="form-control required" placeholder="مدير المستشفى" />
+                                    <input asp-for="HospitalManagerName" class="form-control " placeholder="الإسم" />
                                     <span asp-validation-for="HospitalManagerName" class="text-danger"></span>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <input asp-for="HospitalManagerSig" class="form-control required" placeholder="توقيعه" />
+                                    <input asp-for="HospitalManagerSig" class="form-control " placeholder="توقيعه" />
                                     <span asp-validation-for="HospitalManagerSig" class="text-danger"></span>
                                 </div>
                             </div>
                         </div>
                     </section>
                     <!-- Step 6 -->
-                    <h6>Step 6</h6>
+                    <h6>إثباتات</h6>
                     <section>
                         <div class="row">
                             <div class="col-md-6">
@@ -662,66 +629,90 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <input asp-for="ImgBirthCertificate" class="form-control required" placeholder="ImgBirthCertificate" />
-                                    <span asp-validation-for="ImgBirthCertificate" class="text-danger"></span>
+                                    <label>صورة شهادة الميلاد</label>
+                                    <input asp-for="ImageBirthCertificate" class="form-control required" />
+                                    <span asp-validation-for="ImageBirthCertificate" class="text-danger"></span>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <input asp-for="ImgMarriageCertificate" class="form-control required" placeholder="ImgMarriageCertificate" />
-                                    <span asp-validation-for="ImgMarriageCertificate" class="text-danger"></span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <input asp-for="ImgFatherUnifiedNationalIdFront" class="form-control required" placeholder="ImgFatherUnifiedNationalIdFront" />
-                                    <span asp-validation-for="ImgFatherUnifiedNationalIdFront" class="text-danger"></span>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <input asp-for="ImgFatherUnifiedNationalIdBack" class="form-control required" placeholder="ImgFatherUnifiedNationalIdBack" />
-                                    <span asp-validation-for="ImgFatherUnifiedNationalIdBack" class="text-danger"></span>
+                                    <label>صورة شهادة الزواج</label>
+                                    <input asp-for="ImageMarriageCertificate" class="form-control required" />
+                                    <span asp-validation-for="ImageMarriageCertificate" class="text-danger"></span>
                                 </div>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <input asp-for="ImgMotherUnifiedNationalIdFront" class="form-control required" placeholder="ImgMotherUnifiedNationalIdFront" />
-                                    <span asp-validation-for="ImgMotherUnifiedNationalIdFront" class="text-danger"></span>
+                                    <label>صورة هوية الأب الأمامية</label>
+                                    <input asp-for="ImageFatherUnifiedNationalIdFront" class="form-control required" />
+                                    <span asp-validation-for="ImageFatherUnifiedNationalIdFront" class="text-danger"></span>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <input asp-for="ImgMotherUnifiedNationalIdBack" class="form-control required" placeholder="ImgMotherUnifiedNationalIdBack" />
-                                    <span asp-validation-for="ImgMotherUnifiedNationalIdBack" class="text-danger"></span>
+                                    <label>صورة هوية الأب الخلفية</label>
+                                    <input asp-for="ImageFatherUnifiedNationalIdBack" class="form-control required" />
+                                    <span asp-validation-for="ImageFatherUnifiedNationalIdBack" class="text-danger"></span>
                                 </div>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <input asp-for="ImgResidencyCardFront" class="form-control required" placeholder="ImgResidencyCardFront" />
-                                    <span asp-validation-for="ImgResidencyCardFront" class="text-danger"></span>
+                                    <label>صورة هوية الأم الأمامية</label>
+                                    <input asp-for="ImageMotherUnifiedNationalIdFront" class="form-control required" />
+                                    <span asp-validation-for="ImageMotherUnifiedNationalIdFront" class="text-danger"></span>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <input asp-for="ImgResidencyCardBack" class="form-control required" placeholder="ImgResidencyCardBack" />
-                                    <span asp-validation-for="ImgResidencyCardBack" class="text-danger"></span>
+                                    <label>صورة هوية الأم الخلفية</label>
+                                    <input asp-for="ImageMotherUnifiedNationalIdBack" class="form-control required" />
+                                    <span asp-validation-for="ImageMotherUnifiedNationalIdBack" class="text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>صورة الإقامة الأمامية</label>
+                                    <input asp-for="ImageResidencyCardFront" class="form-control required" />
+                                    <span asp-validation-for="ImageResidencyCardFront" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>صورة الإقامة الخلفية</label>
+                                    <input asp-for="ImageResidencyCardBack" class="form-control required" />
+                                    <span asp-validation-for="ImageResidencyCardBack" class="text-danger"></span>
                                 </div>
                             </div>
                         </div>
                     </section>
-                    <input type="submit" value="Create" class="bottom-0 btn btn-primary position-absolute start-0" />
+                    <input type="submit" value="Create" class="btn btn-primary position-absolute start-0" style="bottom: -37px; z-index: 99;" />
                 </form>
             </div>
         </div>
     </div>
 </div>
+@* To Hide the DisabledType DropDown List except if he chose the first option from the emun above it?*@
+<script>
+    $(document).ready(function () {
+        $("#DisabledTypeIdContainer").hide();
+        $("#IsDisabled").change(function () {
+            var selectedValue = $(this).val();
+            if (selectedValue === "0") {
+                $("#DisabledTypeIdContainer").show();
+            } else {
+                $("#DisabledTypeIdContainer").hide();
+                $("#DisabledTypeId").val("");
+            }
+        });
+    });
+</script>
+
 @*Counting the age of the father and the mother*@
 <script>
     function calculateAge(dobInputId, ageInputId) {
@@ -740,20 +731,6 @@
         var ageInput = document.getElementById(ageInputId);
         ageInput.value = age + " سنة";
     }
-</script>
-@* To Hide the DisabledType DropDown List except if he check the box above it*@
-<script>
-    $(document).ready(function () {
-        $("#DisabledTypeId").hide();
-        $("#IsDisabled").change(function () {
-            if ($(this).is(":checked")) {
-                $("#DisabledTypeId").show();
-            } else {
-                $("#DisabledTypeId").hide();
-                $("#DisabledTypeId").val("");
-            }
-        });
-    });
 </script>
 @*Filtering Districts after selecting Governorate*@
 <script>
@@ -817,74 +794,233 @@
         });
     });
 </script>
-@*
+@*Change the inputs based on thr choosen from Document type *@
 <script>
-    // Function to convert the selected time to Arabic words
-    function convertTimeToArabic(timeInput) {
-        // Splitting the time into hours and minutes
-        var timeParts = timeInput.split(":");
-        var hours = parseInt(timeParts[0]);
-        var minutes = parseInt(timeParts[1]);
-
-        // Conversion logic to Arabic words (customize as per your needs)
-        var timeText = "";
-        if (hours > 12) {
-            timeText += (hours - 12) + " مساءً";
-        } else {
-            timeText += hours + " صباحًا";
-        }
-        if (minutes > 0) {
-            timeText += " و " + minutes + " دقيقة";
-        }
-        return timeText;
-    }
-
-    // Function to convert the selected date to Arabic words
-    function convertDateToArabic(dateInput) {
-        // Splitting the date into year, month, and day
-        var dateParts = dateInput.split("-");
-        var year = parseInt(dateParts[0]);
-        var month = parseInt(dateParts[1]);
-        var day = parseInt(dateParts[2]);
-
-        // Conversion logic to Arabic words (customize as per your needs)
-        var dateText = day + " " + getArabicMonthName(month) + " " + year;
-        return dateText;
-    }
-
-    // Function to get the Arabic month name based on the month number
-    function getArabicMonthName(month) {
-        var arabicMonths = [
-            "يناير",
-            "فبراير",
-            "مارس",
-            "أبريل",
-            "مايو",
-            "يونيو",
-            "يوليو",
-            "أغسطس",
-            "سبتمبر",
-            "أكتوبر",
-            "نوفمبر",
-            "ديسمبر"
-        ];
-        return arabicMonths[month - 1];
-    }
-
-    // Event handler for when the time or date input changes
-    var timeInput = document.querySelector('BH');
-    var dateInput = document.querySelector('DOH');
-    var dobTextOutput = document.querySelector('dobTextInput');
-
-    timeInput.addEventListener('change', function () {
-        var timeValue = this.value;
-        var timeText = convertTimeToArabic(timeValue);
-        dobTextOutput.value = timeText;
+    $(document).ready(function () {
+        $("#DocumentType").change(function () {
+            var selectedValue = $(this).val();
+            if (selectedValue === "0") {
+                $("#firstDocumentTypeOptionSub1").show();
+                $("#firstDocumentTypeOptionSub2").show();
+                $("#secondDocumentTypeOption").hide();
+                $("#thirdDocumentTypeOption").hide();
+                $("#NationalIdFor").val("");
+                $("#NationalId").val("");
+                $("#PassportNo").val("");
+            } else if (selectedValue === "1") {
+                $("#firstDocumentTypeOptionSub1").hide();
+                $("#firstDocumentTypeOptionSub2").show();
+                $("#secondDocumentTypeOption").show();
+                $("#thirdDocumentTypeOption").hide();
+                $("#RecordNumber").val("");
+                $("#PageNumber").val("");
+            } else {
+                $("#firstDocumentTypeOptionSub1").hide();
+                $("#firstDocumentTypeOptionSub2").hide();
+                $("#secondDocumentTypeOption").hide();
+                $("#thirdDocumentTypeOption").show();
+                $("#RecordNumber").val("");
+                $("#PageNumber").val("");
+                $("#CivilStatusDirectorate").val("");
+                $("#GovernorateCivilStatusDirectorate").val("");
+                $("#NationalIdFor").val("");
+                $("#NationalId").val("");
+            }
+        });
     });
+</script>
+@*To Disable the Days before 40 days*@
+<script>
+    var today = new Date();
+    var minDate = new Date();
+    minDate.setDate(today.getDate() - 40);
+    var minDateISO = minDate.toISOString().split('T')[0];
 
-    dateInput.addEventListener('change', function () {
-        var dateValue = this.value;
-        var dateText = convertDateToArabic(dateValue);
-        dobTextOutput.value = dateText;
+    document.getElementById('DOB').setAttribute('min', minDateISO);
+    document.getElementById('DOB').setAttribute('max', today.toISOString().split('T')[0]);
+</script>
+@*To Translate the Date to words*@
+<script>
+    $(document).ready(function () {
+        $("#BirthHour, #DOB").change(function () {
+            var birthHour = $("#BirthHour").val();
+            var dob = $("#DOB").val();
+
+            var birthHourText = convertTimeToWords(birthHour);
+            var dobText = convertDateToWords(dob);
+
+            var dobFullText = birthHourText + " " + dobText;
+
+            $("#DOBText").val(dobFullText);
+        });
+
+        function convertTimeToWords(time) {
+            var hour = parseInt(time.split(':')[0]);
+            var period = hour >= 12 ? "مساءً" : "صباحًا";
+            hour = hour > 12 ? hour - 12 : hour;
+
+            var hourText;
+            switch (hour) {
+                case 1:
+                    hourText = "الساعة الأولى";
+                    break;
+                case 2:
+                    hourText = "الساعة الثانية";
+                    break;
+                case 3:
+                    hourText = "الساعة الثالثة";
+                    break;
+                case 4:
+                    hourText = "الساعة الرابعة";
+                    break;
+                case 5:
+                    hourText = "الساعة الخامسة";
+                    break;
+                case 6:
+                    hourText = "الساعة السادسة";
+                    break;
+                case 7:
+                    hourText = "الساعة السابعة";
+                    break;
+                case 8:
+                    hourText = "الساعة الثامنة";
+                    break;
+                case 9:
+                    hourText = "الساعة التاسعة";
+                    break;
+                case 10:
+                    hourText = "الساعة العاشرة";
+                    break;
+                case 11:
+                    hourText = "الساعة الحادية عشرة";
+                    break;
+                case 12:
+                    hourText = "الساعة الثانية عشرة";
+                    break;
+                default:
+                    hourText = "الساعة غير معروفة";
+                    break;
+            }
+
+            return hourText + " " + period;
+        }
+
+        function convertDateToWords(date) {
+            var dateObj = new Date(date);
+            var day = dateObj.getDate();
+
+            var dayText;
+            if (day === 1) {
+                dayText = "الأول";
+            } else if (day === 2) {
+                dayText = "الثاني";
+            } else if (day === 3) {
+                dayText = "الثالث";
+            } else if (day === 4) {
+                dayText = "الرابع";
+            } else if (day === 5) {
+                dayText = "الخامس";
+            } else if (day === 6) {
+                dayText = "السادس";
+            } else if (day === 7) {
+                dayText = "السابع";
+            } else if (day === 8) {
+                dayText = "الثامن";
+            } else if (day === 9) {
+                dayText = "التاسع";
+            } else if (day === 10) {
+                dayText = "العاشر";
+            } else if (day === 11) {
+                dayText = "الحادي عشر";
+            } else if (day === 12) {
+                dayText = "الثاني عشر";
+            } else if (day === 13) {
+                dayText = "الثالث عشر";
+            } else if (day === 14) {
+                dayText = "الرابع عشر";
+            } else if (day === 15) {
+                dayText = "الخامس عشر";
+            } else if (day === 16) {
+                dayText = "السادس عشر";
+            } else if (day === 17) {
+                dayText = "السابع عشر";
+            } else if (day === 18) {
+                dayText = "الثامن عشر";
+            } else if (day === 19) {
+                dayText = "التاسع عشر";
+            } else if (day === 20) {
+                dayText = "العشرون";
+            } else if (day === 21) {
+                dayText = "الواحد وعشرون";
+            } else if (day === 22) {
+                dayText = "الثاني وعشرون";
+            } else if (day === 23) {
+                dayText = "الثالث وعشرون";
+            } else if (day === 24) {
+                dayText = "الرابع وعشرون";
+            } else if (day === 25) {
+                dayText = "الخامس وعشرون";
+            } else if (day === 26) {
+                dayText = "السادس وعشرون";
+            } else if (day === 27) {
+                dayText = "السابع وعشرون";
+            } else if (day === 28) {
+                dayText = "الثامن وعشرون";
+            } else if (day === 29) {
+                dayText = "التاسع وعشرون";
+            } else if (day === 30) {
+                dayText = "الثلاثون";
+            } else if (day === 31) {
+                dayText = "الواحد وثلاثون";
+            } else {
+                dayText = "غير معروف";
+            }
+
+            var months = ["الأول", "الثاني", "الثالث", "الرابع", "الخامس", "السادس", "السابع", "الثامن", "التاسع", "العاشر", "الحادي عشر", "الثاني عشر"];
+            var month = months[dateObj.getMonth()];
+
+            var year = dateObj.getFullYear();
+            var yearText = convertNumberToArabic(year);
+
+            var dateText = "من اليوم " + dayText + " من الشهر " + month + " من عام " + yearText;
+            return dateText;
+        }
+
+        function convertNumberToArabic(number) {
+            var units = ['', 'وواحد', 'واثنان', 'وثلاثة', 'وأربعة', 'وخمسة', 'وستة', 'وسبعة', 'وثمانية', 'وتسعة'];
+            var tens = ['', 'وعشرة', 'وعشرون', 'وثلاثون', 'وأربعون', 'وخمسون', 'وستون', 'وسبعون', 'وثمانون', 'وتسعون'];
+            var hundreds = ['', 'ومائة', 'ومئتان', 'ثلاثمائة', 'وأربعمائة', 'وخمسمائة', 'وستمائة', 'وسبعمائة', 'وثمانمائة', 'وتسعمائة'];
+            var thousands = ['', 'ألف', 'ألفان', 'ثلاثة آلاف', 'أربعة آلاف', 'خمسة آلاف', 'ستة آلاف', 'سبعة آلاف', 'ثمانية آلاف', 'تسعة آلاف'];
+
+            var numberText = '';
+            var numberText2 = '';
+            var numberText3 = '';
+            var numberText4 = '';
+
+            if (number >= 1000) {
+                var thousand = Math.floor(number / 1000);
+                numberText2 = ' ' + thousands[thousand];
+                number %= 1000;
+            }
+
+            if (number >= 100) {
+                var hundred = Math.floor(number / 100);
+                numberText3 = ' ' + hundreds[hundred];
+                number %= 100;
+            }
+
+            if (number >= 10) {
+                var ten = Math.floor(number / 10);
+                numberText4 = ' ' + tens[ten];
+                number %= 10;
+            }
+
+            if (number > 0) {
+                numberText = numberText2 + numberText3 + ' ' + units[number] + numberText4;
+            }
+
+            return numberText.trim();
+        }
+
     });
-</script>*@
+</script>

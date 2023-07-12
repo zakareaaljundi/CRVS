@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Http;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -58,20 +59,29 @@ namespace CRVS.Core.Models.ViewModels
         public int MotherNationalityId { get; set; }
         public int MotherReligionId { get; set; }
         public string? MotherMobile { get; set; }
-        public bool Relative { get; set; }
+        public Relatives Relative { get; set; }
+        public enum Relatives
+        {
+            يوجد, لا_يوجد
+        }
         public int Alive { get; set; }
         public int BornAliveThenDied { get; set; }
         public int StillBirth { get; set; }
         public int BornDisable { get; set; }
         public int NoAbortion { get; set; }
-        public bool IsDisabled { get; set; }
+        public IsDisableds IsDisabled { get; set; }
+        public enum IsDisableds
+        {
+            نعم, لا
+        }
         public int DisabledTypeId { get; set; }
         public int DurationOfPregnancy { get; set; }
         public decimal? BabyWeight { get; set; }
-        public PlaceOfBirths PlaceOfBirth { get; set; }
-        public enum PlaceOfBirths
+        public string? PlaceOfBirth { get; set; }
+        public IsBirthInHomes IsBirthInHome { get; set; }
+        public enum IsBirthInHomes
         {
-            مستشفى_أو_مركز, مكتب, بيت
+            نعم, لا
         }
         public BirthOccurredBys BirthOccurredBy { get; set; }
         public enum BirthOccurredBys
@@ -114,14 +124,14 @@ namespace CRVS.Core.Models.ViewModels
         public string? HospitalManagerName { get; set; }
         public string? HospitalManagerSig { get; set; }
         public int RationCard { get; set; }
-        public string? ImgBirthCertificate { get; set; }
-        public string? ImgMarriageCertificate { get; set; }
-        public string? ImgFatherUnifiedNationalIdFront { get; set; }
-        public string? ImgFatherUnifiedNationalIdBack { get; set; }
-        public string? ImgMotherUnifiedNationalIdFront { get; set; }
-        public string? ImgMotherUnifiedNationalIdBack { get; set; }
-        public string? ImgResidencyCardFront { get; set; }
-        public string? ImgResidencyCardBack { get; set; }
+        public IFormFile? ImageBirthCertificate { get; set; }
+        public IFormFile? ImageMarriageCertificate { get; set; }
+        public IFormFile? ImageFatherUnifiedNationalIdFront { get; set; }
+        public IFormFile? ImageFatherUnifiedNationalIdBack { get; set; }
+        public IFormFile? ImageMotherUnifiedNationalIdFront { get; set; }
+        public IFormFile? ImageMotherUnifiedNationalIdBack { get; set; }
+        public IFormFile? ImageResidencyCardFront { get; set; }
+        public IFormFile? ImageResidencyCardBack { get; set; }
         public bool FirstStage { get; set; }
         public bool SecondStage { get; set; }
         public bool Approval { get; set; }

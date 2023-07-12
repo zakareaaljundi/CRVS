@@ -131,7 +131,7 @@ namespace CRVS.Controllers
                 var HealthInstitutionName = "";
                 if (IsAdmin)
                 {
-                    GovernorateName = admin.Governorate;
+                    GovernorateName = admin!.Governorate;
                     DohName = admin.Doh;
                     DistrictName = admin.District;
                     NahiaName = admin.Nahia;
@@ -150,11 +150,32 @@ namespace CRVS.Controllers
 
                     GovernorateName = _context.Governorates.Find(model.GovernorateId)!.GovernorateName;
                     DohName = _context.Dohs.Find(model.DohId)!.DohName;
-                    DistrictName = _context.Districts.Find(model.DistrictId)!.DistrictName;
-                    NahiaName = _context.Nahias.Find(model.NahiaId)!.NahiaName;
+                    DistrictName = _context.Districts.FirstOrDefault(x => x.DistrictId == model.DistrictId && x.DohId == model.DohId && x.GovernorateId == model.GovernorateId)!.DistrictName;
+                    NahiaName = _context.Nahias.FirstOrDefault(x => x.NahiaId == model.NahiaId && x.DistrictId == model.DistrictId && x.DohId == model.DohId && x.GovernorateId == model.GovernorateId)!.NahiaName;
+                    /* foreach(var district in _context.Districts.ToList())
+                     {
+                         if(district.DistrictId == model.DistrictId && district.DohId == model.DohId && district.GovernorateId == model.GovernorateId)
+                         {
+                             DistrictName = district.DistrictName;
+                         }
+                     };
+                     foreach(var nahia in _context.Nahias.ToList())
+                     {
+                         if(nahia.NahiaId == model.NahiaId && nahia.DistrictId == model.DistrictId && nahia.DohId == model.DohId && nahia.GovernorateId == model.GovernorateId)
+                         {
+                             NahiaName = nahia.NahiaName;
+                         }
+                     };*/
                     VillageName = model.Village;
                     FacilityTypeName = _context.FacilityTypes.Find(model.FacilityTypeId)!.FacilityTypeName;
-                    HealthInstitutionName = _context.HealthInstitutions.Find(model.HealthInstitutionId)!.HealthInstitutionName;
+                    HealthInstitutionName = _context.HealthInstitutions.FirstOrDefault(x => x.HealthInstitutionId == model.HealthInstitutionId && x.FacilityTypeId == model.FacilityTypeId && x.DohId == model.DohId && x.GovernorateId == model.GovernorateId)!.HealthInstitutionName;
+                    /*foreach(var healthInstitution in _context.HealthInstitutions.ToList())
+                    {
+                        if(healthInstitution.HealthInstitutionId == model.HealthInstitutionId && healthInstitution.FacilityTypeId == model.FacilityTypeId && healthInstitution.DohId == model.DohId && healthInstitution.GovernorateId == model.GovernorateId)
+                        {
+                            HealthInstitutionName = healthInstitution.HealthInstitutionName;
+                        }
+                    };*/
                 }
                 string ImgName = FileUpload(model);
                 User newUser = new User

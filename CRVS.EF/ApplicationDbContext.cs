@@ -27,6 +27,6 @@ namespace CRVS.EF
         public DbSet<Job> Jobs { get; set; }
         public DbSet<Religion> Religions { get; set; }
         public DbSet<Nationality> Nationalities { get; set; }
-        public DbSet<Disable> Disables { get; set; }
+        public DbSet<Disability> Disabilities { get; set; }
     }
 }

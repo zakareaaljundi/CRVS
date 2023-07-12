@@ -6,9 +6,10 @@ using System.Threading.Tasks;
 
 namespace CRVS.Core.Models
 {
-    public class Disable
+    public class Disability
     {
-        public int DisableId { get; set; }
-        public string? DisableName { get; set; }
+        public int Id { get; set; }
+        public string? QID { get; set; }
+        public string? QName { get; set; }
     }
 }
