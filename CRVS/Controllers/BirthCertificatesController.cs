@@ -182,6 +182,23 @@ namespace CRVS.Controllers
             _certificatesRepository.Update(certificate);
             return RedirectToAction("Deleted");
         }
+        public async Task<IActionResult> PreCreate()
+        {
+            ViewBag.Phones = new SelectList(_context.BirthCertificates.ToList(), "BirthCertificateId", "FatherMobile");
+            return View();
+        }
+        [HttpPost]
+        public async Task<IActionResult> PreCreate(FindFamilyViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                ViewBag.Phones = new SelectList(_context.BirthCertificates.ToList(), "BirthCertificateId", "FatherMobile");
+                var BC = _context.BirthCertificates.FirstOrDefault(x => x.BirthCertificateId == model.FatherPhoneId);
+                return RedirectToAction("Create");
+            }
+            return View(model);
+        }
+
         [HttpGet]
         public async Task<IActionResult> Create()
         {
@@ -238,7 +255,12 @@ namespace CRVS.Controllers
                 var motherJob = _context.Jobs.FirstOrDefault(x => x.JobId == birthCertificateViewModel.MotherJobId);
                 var motherReligion = _context.Religions.FirstOrDefault(x => x.ReligionId == birthCertificateViewModel.MotherReligionId);
                 var motherNationality = _context.Nationalities.FirstOrDefault(x => x.NationalityId == birthCertificateViewModel.MotherNationalityId);
-                var DisableType = _context.Disabilities.FirstOrDefault(x => x.Id == birthCertificateViewModel.DisabledTypeId);
+                var disableTypeName = "Not Disable";
+                if (birthCertificateViewModel.DisabledTypeId != null)
+                {
+                    var DisableType = _context.Disabilities.FirstOrDefault(x => x.Id == birthCertificateViewModel.DisabledTypeId);
+                    disableTypeName = DisableType!.QName;
+                }
 
                 ViewBag.Governorates = new SelectList(_context.Governorates.ToList(), "GovernorateId", "GovernorateName");
                 ViewBag.Districts = new SelectList(_context.Districts.ToList(), "DistrictId", "DistrictName");
@@ -300,7 +322,7 @@ namespace CRVS.Controllers
                     BornDisable = birthCertificateViewModel.BornDisable,
                     NoAbortion = birthCertificateViewModel.NoAbortion,
                     IsDisabled = (BirthCertificate.IsDisableds)birthCertificateViewModel.IsDisabled,
-                    DisabledType = DisableType!.QName,
+                    DisabledType = disableTypeName,
                     DurationOfPregnancy = birthCertificateViewModel.DurationOfPregnancy,
                     BabyWeight = birthCertificateViewModel.BabyWeight,
                     PlaceOfBirth = birthCertificateViewModel.PlaceOfBirth,

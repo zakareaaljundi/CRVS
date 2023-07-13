@@ -1,0 +1,39 @@
+﻿@model CRVS.Core.Models.ViewModels.FindFamilyViewModel
+@{
+    ViewData["Title"] = "PreCreate";
+}
+
+<h1 class="mb-4">أول إصدار أم هناك إصدار قبل هذا؟</h1>
+
+<a asp-action="Create" class="btn btn-primary">أول إصدار</a>
+<a class="btn btn-info text-light-inverse" id="btn">تم إصدار شهادة من قبل</a>
+
+<form asp-action="Create" method="post" class="my-4 hide">
+    <div class="row">
+        <div class="col-md-4">
+            <div class="form-group">
+                <select asp-for="FatherPhoneId" class="select2" required>
+                    <option value="" disabled selected hidden>-- حدد رقم الهاتف --</option>
+                    @foreach (var item in ViewBag.Phones)
+                    {
+                        <option value="@item.Value">@item.Text</option>
+                    }
+                </select>
+            </div>
+        </div>
+    </div>
+    <input type="submit" value="تأكيد" class="btn btn-success"/>
+</form>
+
+<script>
+    $(document).ready(function () {
+        $('.select2').select2();
+    });
+</script>
+<script>
+    let form = document.querySelector("form");
+    let btn = document.querySelector("#btn");
+    btn.addEventListener("click", function(){
+        form.classList.toggle("hide");
+    });
+</script>

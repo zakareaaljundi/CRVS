@@ -30,7 +30,7 @@ namespace CRVS.EF.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("BirthCertificateId"));
 
-                    b.Property<int>("Alive")
+                    b.Property<int?>("Alive")
                         .HasColumnType("int");
 
                     b.Property<bool>("Approval")
@@ -39,7 +39,7 @@ namespace CRVS.EF.Migrations
                     b.Property<decimal?>("BabyWeight")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<DateTime>("BirthHour")
+                    b.Property<DateTime?>("BirthHour")
                         .HasColumnType("datetime2");
 
                     b.Property<int>("BirthOccurredBy")
@@ -54,26 +54,26 @@ namespace CRVS.EF.Migrations
                     b.Property<int>("BirthType")
                         .HasColumnType("int");
 
-                    b.Property<int>("BornAliveThenDied")
+                    b.Property<int?>("BornAliveThenDied")
                         .HasColumnType("int");
 
-                    b.Property<int>("BornDisable")
+                    b.Property<int?>("BornDisable")
                         .HasColumnType("int");
 
                     b.Property<string>("ChildName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("CivilStatusDirectorate")
+                    b.Property<int?>("CivilStatusDirectorate")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("CreationDate")
+                    b.Property<DateTime?>("CreationDate")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Creator")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("DOB")
+                    b.Property<DateTime?>("DOB")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("DOBText")
@@ -91,7 +91,7 @@ namespace CRVS.EF.Migrations
                     b.Property<string>("Doh")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("DurationOfPregnancy")
+                    b.Property<int?>("DurationOfPregnancy")
                         .HasColumnType("int");
 
                     b.Property<string>("FacilityType")
@@ -127,7 +127,7 @@ namespace CRVS.EF.Migrations
                     b.Property<string>("FatherAge")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("FatherDOB")
+                    b.Property<DateTime?>("FatherDOB")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("FatherFName")
@@ -160,7 +160,7 @@ namespace CRVS.EF.Migrations
                     b.Property<string>("Governorate")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("GovernorateCivilStatusDirectorate")
+                    b.Property<int?>("GovernorateCivilStatusDirectorate")
                         .HasColumnType("int");
 
                     b.Property<string>("HealthId")
@@ -226,13 +226,13 @@ namespace CRVS.EF.Migrations
                     b.Property<string>("LicenseNo")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("LicenseYear")
+                    b.Property<DateTime?>("LicenseYear")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("MotherAge")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("MotherDOB")
+                    b.Property<DateTime?>("MotherDOB")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("MotherFName")
@@ -259,19 +259,19 @@ namespace CRVS.EF.Migrations
                     b.Property<string>("Nahia")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("NationalId")
+                    b.Property<int?>("NationalId")
                         .HasColumnType("int");
 
                     b.Property<int>("NationalIdFor")
                         .HasColumnType("int");
 
-                    b.Property<int>("NoAbortion")
+                    b.Property<int?>("NoAbortion")
                         .HasColumnType("int");
 
                     b.Property<int>("NumberOfBirth")
                         .HasColumnType("int");
 
-                    b.Property<int>("PageNumber")
+                    b.Property<int?>("PageNumber")
                         .HasColumnType("int");
 
                     b.Property<string>("PassportNo")
@@ -280,10 +280,10 @@ namespace CRVS.EF.Migrations
                     b.Property<string>("PlaceOfBirth")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("RationCard")
+                    b.Property<int?>("RationCard")
                         .HasColumnType("int");
 
-                    b.Property<int>("RecordNumber")
+                    b.Property<int?>("RecordNumber")
                         .HasColumnType("int");
 
                     b.Property<int>("Relative")
@@ -292,7 +292,7 @@ namespace CRVS.EF.Migrations
                     b.Property<bool>("SecondStage")
                         .HasColumnType("bit");
 
-                    b.Property<int>("StillBirth")
+                    b.Property<int?>("StillBirth")
                         .HasColumnType("int");
 
                     b.Property<string>("Village")

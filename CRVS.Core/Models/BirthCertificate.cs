@@ -37,13 +37,13 @@ namespace CRVS.Core.Models
         {
             مفردة, ثنائية, ثلاثية, أكثر
         }
-        public DateTime BirthHour { get; set; }
-        public DateTime DOB { get; set; }
+        public DateTime? BirthHour { get; set; }
+        public DateTime? DOB { get; set; }
         public string? DOBText { get; set; }
         public string? FatherFName { get; set; }
         public string? FatherMName { get; set; }
         public string? FatherLName { get; set; }
-        public DateTime FatherDOB { get; set; }
+        public DateTime? FatherDOB { get; set; }
         public string? FatherAge { get; set; }
         public string? FatherJob { get; set; }
         public string? FatherNationality { get; set; }
@@ -52,7 +52,7 @@ namespace CRVS.Core.Models
         public string? MotherFName { get; set; }
         public string? MotherMName { get; set; }
         public string? MotherLName { get; set; }
-        public DateTime MotherDOB { get; set; }
+        public DateTime? MotherDOB { get; set; }
         public string? MotherAge { get; set; }
         public string? MotherJob { get; set; }
         public string? MotherNationality { get; set; }
@@ -63,18 +63,18 @@ namespace CRVS.Core.Models
         {
             يوجد, لا_يوجد
         }
-        public int Alive { get; set; }
-        public int BornAliveThenDied { get; set; }
-        public int StillBirth { get; set; }
-        public int BornDisable { get; set; }
-        public int NoAbortion { get; set; }
+        public int? Alive { get; set; }
+        public int? BornAliveThenDied { get; set; }
+        public int? StillBirth { get; set; }
+        public int? BornDisable { get; set; }
+        public int? NoAbortion { get; set; }
         public IsDisableds IsDisabled { get; set; }
         public enum IsDisableds
         {
             نعم, لا
         }
         public string? DisabledType { get; set; }
-        public int DurationOfPregnancy { get; set; }
+        public int? DurationOfPregnancy { get; set; }
         public decimal? BabyWeight { get; set; }
         public string? PlaceOfBirth { get; set; }
         public IsBirthInHomes IsBirthInHome { get; set; }
@@ -89,7 +89,7 @@ namespace CRVS.Core.Models
         }
         public string? KabilaName { get; set; }
         public string? LicenseNo { get; set; }
-        public DateTime LicenseYear { get; set; }
+        public DateTime? LicenseYear { get; set; }
         public string? FamilyGovernorate { get; set; }
         public string? FamilyDistrict { get; set; }
         public string? FamilyNahia { get; set; }
@@ -104,16 +104,16 @@ namespace CRVS.Core.Models
         {
             هوية_أحوال, بطاقة_موحدة, جواز_سفر
         }
-        public int RecordNumber { get; set; }
-        public int PageNumber { get; set; }
-        public int CivilStatusDirectorate { get; set; }
-        public int GovernorateCivilStatusDirectorate { get; set; }
+        public int? RecordNumber { get; set; }
+        public int? PageNumber { get; set; }
+        public int? CivilStatusDirectorate { get; set; }
+        public int? GovernorateCivilStatusDirectorate { get; set; }
         public NationalIdFors NationalIdFor { get; set; }
         public enum NationalIdFors
         {
             أب, أم
         }
-        public int NationalId { get; set; }
+        public int? NationalId { get; set; }
         public string? PassportNo { get; set; }
         public string? InformerName { get; set; }
         public string? InformerJobTitle { get; set; }
@@ -122,7 +122,7 @@ namespace CRVS.Core.Models
         public string? BirthPerformerWorkingAddress { get; set; }
         public string? HospitalManagerName { get; set; }
         public string? HospitalManagerSig { get; set; }
-        public int RationCard { get; set; }
+        public int? RationCard { get; set; }
         public string? ImgBirthCertificate { get; set; }
         public string? ImgMarriageCertificate { get; set; }
         public string? ImgFatherUnifiedNationalIdFront { get; set; }
@@ -136,7 +136,7 @@ namespace CRVS.Core.Models
         public bool Approval { get; set; }
         public bool IsDeleted { get; set; }
         public bool IsActive { get; set; }
-        public DateTime CreationDate { get; set; }
+        public DateTime? CreationDate { get; set; }
         public string? Creator { get; set; }
     }
 }

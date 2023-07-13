@@ -38,44 +38,44 @@ namespace CRVS.Core.Models.ViewModels
         {
             مفردة, ثنائية, ثلاثية, أكثر
         }
-        public DateTime BirthHour { get; set; }
-        public DateTime DOB { get; set; }
+        public DateTime? BirthHour { get; set; }
+        public DateTime? DOB { get; set; }
         public string? DOBText { get; set; }
         public string? FatherFName { get; set; }
         public string? FatherMName { get; set; }
         public string? FatherLName { get; set; }
-        public DateTime FatherDOB { get; set; }
+        public DateTime? FatherDOB { get; set; }
         public string? FatherAge { get; set; }
-        public int FatherJobId { get; set; }
-        public int FatherNationalityId { get; set; }
-        public int FatherReligionId { get; set; }
+        public int? FatherJobId { get; set; }
+        public int? FatherNationalityId { get; set; }
+        public int? FatherReligionId { get; set; }
         public string? FatherMobile { get; set; }
         public string? MotherFName { get; set; }
         public string? MotherMName { get; set; }
         public string? MotherLName { get; set; }
-        public DateTime MotherDOB { get; set; }
+        public DateTime? MotherDOB { get; set; }
         public string? MotherAge { get; set; }
-        public int MotherJobId { get; set; }
-        public int MotherNationalityId { get; set; }
-        public int MotherReligionId { get; set; }
+        public int? MotherJobId { get; set; }
+        public int? MotherNationalityId { get; set; }
+        public int? MotherReligionId { get; set; }
         public string? MotherMobile { get; set; }
         public Relatives Relative { get; set; }
         public enum Relatives
         {
             يوجد, لا_يوجد
         }
-        public int Alive { get; set; }
-        public int BornAliveThenDied { get; set; }
-        public int StillBirth { get; set; }
-        public int BornDisable { get; set; }
-        public int NoAbortion { get; set; }
+        public int? Alive { get; set; }
+        public int? BornAliveThenDied { get; set; }
+        public int? StillBirth { get; set; }
+        public int? BornDisable { get; set; }
+        public int? NoAbortion { get; set; }
         public IsDisableds IsDisabled { get; set; }
         public enum IsDisableds
         {
             نعم, لا
         }
-        public int DisabledTypeId { get; set; }
-        public int DurationOfPregnancy { get; set; }
+        public int? DisabledTypeId { get; set; }
+        public int? DurationOfPregnancy { get; set; }
         public decimal? BabyWeight { get; set; }
         public string? PlaceOfBirth { get; set; }
         public IsBirthInHomes IsBirthInHome { get; set; }
@@ -90,10 +90,10 @@ namespace CRVS.Core.Models.ViewModels
         }
         public string? KabilaName { get; set; }
         public string? LicenseNo { get; set; }
-        public DateTime LicenseYear { get; set; }
-        public int FamilyGovernorateId { get; set; }
-        public int FamilyDistrictId { get; set; }
-        public int FamilyNahiaId { get; set; }
+        public DateTime? LicenseYear { get; set; }
+        public int? FamilyGovernorateId { get; set; }
+        public int? FamilyDistrictId { get; set; }
+        public int? FamilyNahiaId { get; set; }
         public string? FamilyMahala { get; set; }
         public string? FamilyDOH { get; set; }
         public string? FamilySector { get; set; }
@@ -105,16 +105,16 @@ namespace CRVS.Core.Models.ViewModels
         {
             هوية_أحوال, بطاقة_موحدة, جواز_سفر
         }
-        public int RecordNumber { get; set; }
-        public int PageNumber { get; set; }
-        public int CivilStatusDirectorate { get; set; }
-        public int GovernorateCivilStatusDirectorate { get; set; }
+        public int? RecordNumber { get; set; }
+        public int? PageNumber { get; set; }
+        public int? CivilStatusDirectorate { get; set; }
+        public int? GovernorateCivilStatusDirectorate { get; set; }
         public NationalIdFors NationalIdFor { get; set; }
         public enum NationalIdFors
         {
             أب, أم
         }
-        public int NationalId { get; set; }
+        public int? NationalId { get; set; }
         public string? PassportNo { get; set; }
         public string? InformerName { get; set; }
         public string? InformerJobTitle { get; set; }
@@ -123,7 +123,7 @@ namespace CRVS.Core.Models.ViewModels
         public string? BirthPerformerWorkingAddress { get; set; }
         public string? HospitalManagerName { get; set; }
         public string? HospitalManagerSig { get; set; }
-        public int RationCard { get; set; }
+        public int? RationCard { get; set; }
         public IFormFile? ImageBirthCertificate { get; set; }
         public IFormFile? ImageMarriageCertificate { get; set; }
         public IFormFile? ImageFatherUnifiedNationalIdFront { get; set; }
@@ -137,7 +137,7 @@ namespace CRVS.Core.Models.ViewModels
         public bool Approval { get; set; }
         public bool IsDeleted { get; set; }
         public bool IsActive { get; set; }
-        public DateTime CreationDate { get; set; }
+        public DateTime? CreationDate { get; set; }
         public string? Creator { get; set; }
     }
 }

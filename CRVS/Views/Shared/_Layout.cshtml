@@ -51,6 +51,54 @@
             font-size: 11px;
             padding: 0 0 1px 1px;
         }
+
+        .select2-container {
+            height: calc(1.5em + 0.75rem + 2px);
+            padding: 0.375rem 0.75rem;
+            font-size: .9375rem;
+            font-weight: 300;
+            line-height: 1.5;
+            color: #67757c;
+            background-clip: padding-box;
+            border: 1px solid #e9ecef;
+            appearance: none;
+            border-radius: 4px;
+            transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+        }
+
+        .select2-container .select2-selection--single .select2-selection__rendered {
+            margin-top: -3px;
+        }
+
+        .select2 {
+            width: 100% !important;
+        }
+
+        .select2-container--default .select2-selection--single .select2-selection__arrow {
+            top: 5px;
+        }
+
+        .select2-container--default .select2-selection--single {
+            background-color: #fff;
+            border: 1px solid #aaa;
+            border-radius: 4px;
+            border: none !important;
+        }
+/*
+        .select2-parent > span:nth-child(3) {
+            display: none !important;
+        }*/
+        .select2-parent > :last-child {
+            display: none !important;
+        }
+
+        /*.actions > ul > li:last-child {
+            display: none !important;
+        }*/
+
+        .hide {
+            display: none !important;
+        }
     </style>
 </head>
 
@@ -262,7 +310,7 @@
                                 @if (!(User.IsInRole("Admin")) || !User.IsInRole("الادارة العليا"))
                                 {
                                     <li class="sidebar-item">
-                                        <a asp-area="" asp-controller="BirthCertificates" asp-action="Create" class="sidebar-link">
+                                        <a asp-area="" asp-controller="BirthCertificates" asp-action="PreCreate" class="sidebar-link">
                                             <i class="mdi mdi-format-align-left"></i><span class="hide-menu">@Localizer["NewCertificate"]</span>
                                         </a>
                                     </li>
@@ -758,6 +806,10 @@
     <script src="~/admin-pro/assets/libs/jquery-steps/build/jquery.steps.min.js"></script>
     <script src="~/admin-pro/assets/libs/jquery-validation/dist/jquery.validate.min.js"></script>
     <script src="~/admin-pro/dist/js/pages/contact/contact.js"></script>
+
+    <script src="~/admin-pro/assets/libs/select2/dist/js/select2.full.min.js"></script>
+    <script src="~/admin-pro/assets/libs/select2/dist/js/select2.min.js"></script>
+    <script src="~/admin-pro/dist/js/pages/forms/select2/select2.init.js"></script>
     <script>
         //Basic Example
         $("#example-basic").steps({
@@ -917,10 +969,10 @@
                 }
             }
         })
-    </script>
+    </script>@*
     <script src="~/admin-pro//dist/js/pages/forms/select2/select2.init.js"></script>
     <script src="~/admin-pro/assets/libs/select2/dist/js/select2.full.min.js"></script>
-    <script src="~/admin-pro/assets/libs/select2/dist/js/select2.min.js"></script>
+    <script src="~/admin-pro/assets/libs/select2/dist/js/select2.min.js"></script>*@
 
     @await RenderSectionAsync("Scripts", required: false)
 </body>
