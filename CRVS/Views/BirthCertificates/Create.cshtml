@@ -7,12 +7,12 @@
     <div class="col-12">
         <div class="card">
             <div class="border-bottom title-part-padding">
-                <h4 class="card-title mb-0 text-center">@Localizer["Create"]</h4>
+                <h4 class="card-title mb-0 text-center">@Localizer["CreateNewBirthCertificate"]</h4>
             </div>
             <div class="card-body wizard-content">
                 <form asp-action="Create" class="login-form validation-wizard wizard-circle mt-5 pb-5" enctype="multipart/form-data" method="post">
                     <!-- Step 1 -->
-                    <h6>معلومات الوليد</h6>
+                    <h6>@Localizer["NewBornInfo"]</h6>
                     <section>
                         <div class="row">
                             <div class="col-md-3">
@@ -67,33 +67,37 @@
                             </div>
                         </div><hr />
                         <div class="row">
-                            <h3>معلومات المولود :</h3>
+                            <h3 class="mb-5">1- @Localizer["NewBornInfo"] :</h3>
                             <div class="col-md-3">
                                 <div class="form-group">
-                                    <input asp-for="ChildName" class="form-control required" placeholder="إسم المولود" />
+                                    <label>A- @Localizer["NewBornName"]</label>
+                                    <input asp-for="ChildName" class="form-control " placeholder="@Localizer["NewBornName"]" />
                                     <span asp-validation-for="ChildName" class="text-danger"></span>
                                 </div>
                             </div>
                             <div class="col-md-3">
                                 <div class="form-group">
-                                    <select asp-for="Gender" class="form-control " asp-items="Html.GetEnumSelectList<CRVS.Core.Models.BirthCertificate.Genders>()">
-                                        <option vlaue="-1" disabled selected hidden>--- حدد الجنس ---</option>
+                                    <label>B- @Localizer["NewBornGender"]</label>
+                                    <select asp-for="Gender" class="form-select " asp-items="Html.GetEnumSelectList<CRVS.Core.Models.BirthCertificate.Genders>()">
+                                        <option vlaue="-1" disabled selected hidden>--- @Localizer["NewBornGender"] ---</option>
                                     </select>
                                     <span asp-validation-for="Gender" class="text-danger"></span>
                                 </div>
                             </div>
                             <div class="col-md-3">
                                 <div class="form-group">
-                                    <select asp-for="BirthType" class="form-control " asp-items="Html.GetEnumSelectList<CRVS.Core.Models.BirthCertificate.BirthTypes>()">
-                                        <option vlaue="-1" disabled selected hidden>--- حدد نوع الولادة ---</option>
+                                    <label>C- @Localizer["NewBornBirthType"]</label>
+                                    <select asp-for="BirthType" class="form-select " asp-items="Html.GetEnumSelectList<CRVS.Core.Models.BirthCertificate.BirthTypes>()">
+                                        <option vlaue="-1" disabled selected hidden>--- @Localizer["NewBornBirthType"] ---</option>
                                     </select>
                                     <span asp-validation-for="Gender" class="text-danger"></span>
                                 </div>
                             </div>
                             <div class="col-md-3">
                                 <div class="form-group">
-                                    <select asp-for="NumberOfBirth" class="form-control " asp-items="Html.GetEnumSelectList<CRVS.Core.Models.BirthCertificate.NumberOfBirths>()">
-                                        <option vlaue="-1" disabled selected hidden>--- حدد عدد المواليد ---</option>
+                                    <label>D- @Localizer["NewBornNumberOfBirth"]</label>
+                                    <select asp-for="NumberOfBirth" class="form-select " asp-items="Html.GetEnumSelectList<CRVS.Core.Models.BirthCertificate.NumberOfBirths>()">
+                                        <option vlaue="-1" disabled selected hidden>--- @Localizer["NewBornNumberOfBirth"] ---</option>
                                     </select>
                                     <span asp-validation-for="NumberOfBirth" class="text-danger"></span>
                                 </div>
@@ -102,47 +106,50 @@
                         <div class="row">
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label>حدد ساعة الولادة</label>
+                                    <label>E- @Localizer["NewBornBirthHour"]</label>
                                     <input asp-for="BirthHour" id="BirthHour" class="form-control " type="time" />
                                     <span asp-validation-for="BirthHour" class="text-danger"></span>
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label>حدد تاريخ الولادة</label>
+                                    <label>F- @Localizer["NewBornDOB"]</label>
                                     <input asp-for="DOB" id="DOB" class="form-control " type="date" />
                                     <span asp-validation-for="DOB" class="text-danger"></span>
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label>التاريخ بالكلمات(تلقائي)</label>
-                                    <input asp-for="DOBText" id="DOBText" class="form-control" readonly placeholder="التاريخ بالكلمات(تلقائي)" />
+                                    <label>H- @Localizer["NewBornDOBText"]</label>
+                                    <input asp-for="DOBText" id="DOBText" class="form-control" readonly placeholder="@Localizer["NewBornDOBText"]" />
                                     <span asp-validation-for="DOBText" class="text-danger"></span>
                                 </div>
                             </div>
                         </div>
                     </section>
                     <!-- Step 2 -->
-                    <h6>معلومات الأب</h6>
+                    <h6>@Localizer["FatherInfo"]</h6>
                     <section>
                         <div class="row">
-                            <h3>معلومات الأب :</h3>
+                            <h3 class="mb-5">2- @Localizer["FatherInfo"] :</h3>
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <input asp-for="FatherFName" class="form-control " placeholder="إسم الأب الأول" />
+                                    <label>A- @Localizer["FatherFName"]</label>
+                                    <input asp-for="FatherFName" class="form-control " placeholder="@Localizer["FatherFName"]" />
                                     <span asp-validation-for="FatherFName" class="text-danger"></span>
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <input asp-for="FatherMName" class="form-control " placeholder="إسم الأب الأوسط" />
+                                    <label>B- @Localizer["FatherMName"]</label>
+                                    <input asp-for="FatherMName" class="form-control " placeholder="@Localizer["FatherMName"]" />
                                     <span asp-validation-for="FatherMName" class="text-danger"></span>
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <input asp-for="FatherLName" class="form-control " placeholder="إسم الأب الأخير" />
+                                    <label>C- @Localizer["FatherLName"]</label>
+                                    <input asp-for="FatherLName" class="form-control " placeholder="@Localizer["FatherLName"]" />
                                     <span asp-validation-for="FatherLName" class="text-danger"></span>
                                 </div>
                             </div>
@@ -150,24 +157,23 @@
                         <div class="row">
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <input asp-for="FatherDOB" class="form-control " type="month" placeholder="FatherDOB" onchange="calculateAge('FatherDOB', 'FatherAgeInput')" />
+                                    <label>D- @Localizer["FatherDOB"]</label>
+                                    <input asp-for="FatherDOB" class="form-control " type="month" onchange="calculateAge('FatherDOB', 'FatherAgeInput')" />
                                     <span asp-validation-for="FatherDOB" class="text-danger"></span>
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <input asp-for="FatherAge" id="FatherAgeInput" class="form-control " placeholder="عمر الأب" readonly />
+                                    <label>E- @Localizer["FatherAge"]</label>
+                                    <input asp-for="FatherAge" id="FatherAgeInput" class="form-control " placeholder="@Localizer["FatherAge"]" readonly />
                                     <span asp-validation-for="FatherAge" class="text-danger"></span>
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group select2-parent">
-                                    <select asp-for="FatherJobId" class="select2 required">
-                                        <option value="" disabled selected hidden>-- حدد وظيفة الأب *--</option>
-                                        @foreach (var item in ViewBag.Jobs)
-                                        {
-                                            <option value="@item.Value">@item.Text</option>
-                                        }
+                                    <label>F- @Localizer["FatherJob"]</label>
+                                    <select asp-for="FatherJobId" class="select2 " asp-items="@ViewBag.MaleJobs">
+                                        <option value="" disabled selected hidden>-- @Localizer["FatherJob"] *--</option>
                                     </select>
                                 </div>
                             </div>
@@ -175,55 +181,58 @@
                         <div class="row">
                             <div class="col-md-4">
                                 <div class="form-group select2-parent">
-                                    <select asp-for="FatherReligionId" class="select2 required">
-                                        <option value="" disabled selected hidden>-- حدد ديانة الأب *--</option>
-                                        @foreach (var item in ViewBag.Religions)
-                                        {
-                                            <option value="@item.Value">@item.Text</option>
-                                        }
+                                    <label>G- @Localizer["FatherReligion"]</label>
+                                    <select asp-for="FatherReligionId" class="select2 " asp-items="@ViewBag.MaleReligions">
+                                        <option value="" disabled selected hidden>-- @Localizer["FatherReligion"] *--</option>
                                     </select>
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group select2-parent">
-                                    <select asp-for="FatherNationalityId" class="select2 required">
-                                        <option value="" disabled selected hidden>-- حدد جنسية الأب *--</option>
-                                        @foreach (var item in ViewBag.Nationalities)
-                                        {
-                                            <option value="@item.Value">@item.Text</option>
-                                        }
+                                    <label>H- @Localizer["FatherNationality"]</label>
+                                    <select asp-for="FatherNationalityId" class="select2 " asp-items="@ViewBag.Nationalities">
+                                        <option value="" disabled selected hidden>-- @Localizer["FatherNationality"] *--</option>
                                     </select>
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <input asp-for="FatherMobile" class="form-control " placeholder="رقم هاتف الأب" />
+                                    <label>I- @Localizer["FatherMobile"]</label>
+                                    <input asp-for="FatherMobile" class="form-control " placeholder="@Localizer["FatherMobile"]" />
                                     <span asp-validation-for="FatherMobile" class="text-danger"></span>
-
                                 </div>
                             </div>
                         </div>
                     </section>
+                    <script>
+                        $(document).ready(function () {
+                            $(".select2-container .select2-dropdown .select2-results ul li:first-child").addClass("hide");
+                        });
+                        //$(".select2-results > .select2-results__option > li:first-child").attr("hidden", true);
+                    </script>
                     <!-- Step 3 -->
-                    <h6>معلومات الأم</h6>
+                    <h6>@Localizer["MotherInfo"]</h6>
                     <section>
                         <div class="row">
-                            <h3>معلومات الأم :</h3>
+                            <h3 class="mb-5">3- @Localizer["MotherInfo"] :</h3>
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <input asp-for="MotherFName" class="form-control " placeholder="إسم الأم الأول" />
+                                    <label>A- @Localizer["MotherFName"]</label>
+                                    <input asp-for="MotherFName" class="form-control " placeholder="@Localizer["MotherFName"]" />
                                     <span asp-validation-for="MotherFName" class="text-danger"></span>
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <input asp-for="MotherMName" class="form-control " placeholder="إسم الأم الأوسط" />
+                                    <label>B- @Localizer["MotherMName"]</label>
+                                    <input asp-for="MotherMName" class="form-control " placeholder="@Localizer["MotherMName"]" />
                                     <span asp-validation-for="MotherMName" class="text-danger"></span>
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <input asp-for="MotherLName" class="form-control " placeholder="إسم الأم الأخير" />
+                                    <label>C- @Localizer["MotherLName"]</label>
+                                    <input asp-for="MotherLName" class="form-control " placeholder="@Localizer["MotherLName"]" />
                                     <span asp-validation-for="MotherLName" class="text-danger"></span>
                                 </div>
                             </div>
@@ -231,24 +240,23 @@
                         <div class="row">
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <input asp-for="MotherDOB" class="form-control " type="month" placeholder="MotherDOB" onchange="calculateAge('MotherDOB', 'MotherAgeInput')" />
+                                    <label>D- @Localizer["MotherDOB"]</label>
+                                    <input asp-for="MotherDOB" class="form-control " type="month" onchange="calculateAge('MotherDOB', 'MotherAgeInput')" />
                                     <span asp-validation-for="MotherDOB" class="text-danger"></span>
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <input asp-for="MotherAge" class="form-control " id="MotherAgeInput" placeholder="عمر الأم" readonly />
+                                    <label>E- @Localizer["MotherAge"]</label>
+                                    <input asp-for="MotherAge" class="form-control " id="MotherAgeInput" placeholder="@Localizer["MotherAge"]" readonly />
                                     <span asp-validation-for="MotherAge" class="text-danger"></span>
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group select2-parent">
-                                    <select asp-for="MotherJobId" class="select2 required">
-                                        <option value="" disabled selected hidden>-- حدد وظيفة الأم *--</option>
-                                        @foreach (var item in ViewBag.Jobs)
-                                        {
-                                            <option value="@item.Value">@item.Text</option>
-                                        }
+                                    <label>F- @Localizer["MotherJob"]</label>
+                                    <select asp-for="MotherJobId" class="select2 " asp-items="@ViewBag.FemaleJobs">
+                                        <option value="" disabled selected hidden>-- @Localizer["MotherJob"] *--</option>
                                     </select>
                                 </div>
                             </div>
@@ -256,57 +264,45 @@
                         <div class="row">
                             <div class="col-md-4">
                                 <div class="form-group select2-parent">
-                                    <select asp-for="MotherReligionId" class="select2 required">
-                                        <option value="" disabled selected hidden>-- حدد ديانة الأم *--</option>
-                                        @foreach (var item in ViewBag.Religions)
-                                        {
-                                            <option value="@item.Value">@item.Text</option>
-                                        }
+                                    <label>G- @Localizer["MotherReligion"]</label>
+                                    <select asp-for="MotherReligionId" class="select2 " asp-items="@ViewBag.FemaleReligions">
+                                        <option value="" disabled selected hidden>-- @Localizer["MotherReligion"] *--</option>
                                     </select>
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group select2-parent">
-                                    <select asp-for="MotherNationalityId" class="select2 required">
-                                        <option value="" disabled selected hidden>-- حدد جنسية الأم *--</option>
-                                        @foreach (var item in ViewBag.Nationalities)
-                                        {
-                                            <option value="@item.Value">@item.Text</option>
-                                        }
+                                    <label>H- @Localizer["MotherNationality"]</label>
+                                    <select asp-for="MotherNationalityId" class="select2 " asp-items="@ViewBag.Nationalities">
+                                        <option value="" disabled selected hidden>-- @Localizer["MotherNationality"] *--</option>
                                     </select>
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <input asp-for="MotherMobile" class="form-control " placeholder="رقم هاتف الأم" />
+                                    <label>I- @Localizer["MotherMobile"]</label>
+                                    <input asp-for="MotherMobile" class="form-control " placeholder="@Localizer["MotherMobile"]" />
                                     <span asp-validation-for="MotherMobile" class="text-danger"></span>
                                 </div>
                             </div>
                         </div>
                     </section>
                     <!-- Step 4 -->
-                    <h6>معلومات الولادة</h6>
+                    <h6>@Localizer["BirthInfo"]</h6>
                     <section>
                         <div class="row">
+                            <h3 class="mb-4">4- @Localizer["NumOfPreviousAliveChildren"]</h3>
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label style="font-size: 22px">هل هنالك صلة قرابة بين الأم والأب؟</label>
-                                    <select asp-for="Relative" class="form-control " asp-items="Html.GetEnumSelectList<CRVS.Core.Models.BirthCertificate.Relatives>()">
-                                        <option vlaue="-1" disabled selected hidden>هل هنالك صلة قرابة بين الأم والأب؟</option>
-                                    </select>
-                                    <span asp-validation-for="Relative" class="text-danger"></span>
-                                </div>
-                            </div><hr />
-                            <h3>عدد المواليد السابقة للأم عدا هذا الطفل؟</h3>
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <input asp-for="Alive" class="form-control " placeholder="الأحياء" />
+                                    <label>A- @Localizer["Alive"]</label>
+                                    <input asp-for="Alive" class="form-control " placeholder="@Localizer["Alive"]" min="0" />
                                     <span asp-validation-for="Alive" class="text-danger"></span>
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <input asp-for="BornAliveThenDied" class="form-control " placeholder="المولودين أحياء ثم توفوا" />
+                                    <label>B- @Localizer["BornAliveThenDied"]</label>
+                                    <input asp-for="BornAliveThenDied" class="form-control " placeholder="@Localizer["BornAliveThenDied"]" min="0" />
                                     <span asp-validation-for="BornAliveThenDied" class="text-danger"></span>
                                 </div>
                             </div>
@@ -314,42 +310,53 @@
                         <div class="row">
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <input asp-for="StillBirth" class="form-control " placeholder="الذين و لدوا أمواتاً" />
+                                    <label>C- @Localizer["BornDied"]</label>
+                                    <input asp-for="StillBirth" class="form-control " placeholder="@Localizer["BornDied"]" min="0" />
                                     <span asp-validation-for="StillBirth" class="text-danger"></span>
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <input asp-for="BornDisable" class="form-control " placeholder="الذين ولدوا معوقين" />
-                                    <span asp-validation-for="BornDisable" class="text-danger"></span>
+                                    <label>D- @Localizer["NoAbortionIfThere"]</label>
+                                    <input asp-for="NoAbortion" class="form-control" placeholder="@Localizer["NoAbortionIfThere"]" min="0" />
+                                    <span asp-validation-for="NoAbortion" class="text-danger"></span>
                                 </div>
                             </div>
-                            <div class="col-md-4">
+                            <div class="col-md-4" style="display: none;" id="BornDisableContainer">
                                 <div class="form-group">
-                                    <input asp-for="NoAbortion" class="form-control" placeholder="عدد الأسقاطات إن وجدت" />
-                                    <span asp-validation-for="NoAbortion" class="text-danger"></span>
+                                    <label>E- @Localizer["BornDisable"]</label>
+                                    <input asp-for="BornDisable" class="form-control " placeholder="@Localizer["BornDisable"]" min="0" />
+                                    <span asp-validation-for="BornDisable" class="text-danger"></span>
+                                    <div id="bornDisableError" class="text-danger fs-3" style="display: none;">@Localizer["BornDisableError"].</div>
                                 </div>
                             </div>
                         </div><hr />
                         <div class="row">
+                            <div class="col-md-8">
+                                <div class="form-group">
+                                    <label>5- @Localizer["IsMotherAndFatherRelated"]</label>
+                                    <select asp-for="Relative" class="form-select w-50 d-inline" asp-items="Html.GetEnumSelectList<CRVS.Core.Models.BirthCertificate.Relatives>()">
+                                        <option vlaue="-1" disabled selected hidden>@Localizer["IsMotherAndFatherRelated"]</option>
+                                    </select>
+                                    <span asp-validation-for="Relative" class="text-danger"></span>
+                                </div>
+                            </div><hr />
+                        </div>
+                        <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label>هل الولادة الحالية معوقة؟</label>
-                                    <select asp-for="IsDisabled" class="form-control " asp-items="Html.GetEnumSelectList<CRVS.Core.Models.BirthCertificate.IsDisableds>()">
-                                        <option vlaue="-1" disabled selected hidden>هل الولادة الحالية معوقة؟</option>
+                                    <label>6- @Localizer["IsDisabled"]</label>
+                                    <select asp-for="IsDisabled" class="form-select " asp-items="Html.GetEnumSelectList<CRVS.Core.Models.BirthCertificate.IsDisableds>()">
+                                        <option vlaue="-1" disabled selected hidden>@Localizer["IsDisabled"]</option>
                                     </select>
                                     <span asp-validation-for="IsDisabled" class="text-danger"></span>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group select2-parent" id="DisabledTypeIdContainer">
-                                    <label>حدد نوع الإعاقة</label>
-                                    <select asp-for="DisabledTypeId" class="select2 required">
-                                        <option value="" disabled selected hidden>-- حدد نوع الإعاقة *--</option>
-                                        @foreach (var item in ViewBag.Disabilities)
-                                        {
-                                            <option value="@item.Value">@item.Text</option>
-                                        }
+                                    <label>A- @Localizer["DisabledType"]</label>
+                                    <select asp-for="DisabledTypeId" class="select2 " asp-items="@ViewBag.Disabilities">
+                                        <option value="" disabled selected hidden>-- @Localizer["DisabledType"] *--</option>
                                     </select>
                                 </div>
                             </div>
@@ -357,13 +364,15 @@
                         <div class="row">
                             <div class="col-md-3">
                                 <div class="form-group">
-                                    <input asp-for="DurationOfPregnancy" class="form-control " placeholder="مدة الحمل بالإسبوع" />
+                                    <label>7- @Localizer["DurationOfPregnancy"]</label>
+                                    <input asp-for="DurationOfPregnancy" class="form-control " placeholder="@Localizer["DurationOfPregnancy"]" />
                                     <span asp-validation-for="DurationOfPregnancy" class="text-danger"></span>
                                 </div>
                             </div>
                             <div class="col-md-3">
                                 <div class="form-group">
-                                    <input asp-for="BabyWeight" class="form-control " placeholder="وزن الطفل /غم" />
+                                    <label>8- @Localizer["BabyWeight"]</label>
+                                    <input asp-for="BabyWeight" class="form-control " placeholder="@Localizer["BabyWeight"]" />
                                     <span asp-validation-for="BabyWeight" class="text-danger"></span>
                                 </div>
                             </div>
@@ -380,108 +389,75 @@
                                 ViewBag.IsOffice = false;
                             }
                             var isOffice = ViewBag.IsOffice;
+
+                            var birthOccurredByOptions = Html.GetEnumSelectList<CRVS.Core.Models.BirthCertificate.BirthOccurredBys>().ToList();
+                            if (!isOffice)
+                            {
+                                birthOccurredByOptions.RemoveAt(2);
+                                birthOccurredByOptions.RemoveAt(2);
+                            }
                         }
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label>مكان الولادة</label>
-                                    <input asp-for="PlaceOfBirth" class="form-control " value="@ViewBag.PlaceOfBirth" readonly placeholder="مكان الولادة" />
+                                    <label>9- @Localizer["PlaceOfBirth"]</label>
+                                    <input asp-for="PlaceOfBirth" class="form-control " value="@ViewBag.PlaceOfBirth" readonly />
                                     <span asp-validation-for="PlaceOfBirth" class="text-danger"></span>
                                 </div>
                             </div>
-                            <div class="col-md-6" id="BirthOccurredByContainer" style="display: none;">
+                            <div class="col-md-6" id="BirthOccurredByContainer">
                                 <div class="form-group">
-                                    <label>حدثت بواسطة؟</label>
-                                    <select asp-for="BirthOccurredBy" class="form-control " asp-items="Html.GetEnumSelectList<CRVS.Core.Models.BirthCertificate.BirthOccurredBys>()">
-                                        <option vlaue="-1" disabled selected hidden>--- حدثت الولادة بواسطة ---</option>
+                                    <label>A- @Localizer["BirthOccurredBy"]؟</label>
+                                    <select asp-for="BirthOccurredBy" class="form-select " asp-items="@(new SelectList(birthOccurredByOptions, "Value", "Text"))">
+                                        <option vlaue="-1" disabled selected hidden>--- @Localizer["BirthOccurredBy"] ---</option>
                                     </select>
                                     <span asp-validation-for="BirthOccurredBy" class="text-danger"></span>
                                 </div>
                             </div>
-                            <div class="col-md-6" id="additionalInputs" style="display: none">
-                                <div class="form-group">
-                                    <label>هل حدثت بالبيت؟</label>
-                                    <select asp-for="IsBirthInHome" class="form-control " readonly asp-items="Html.GetEnumSelectList<CRVS.Core.Models.BirthCertificate.IsBirthInHomes>()">
-                                        <option vlaue="-1" disabled selected hidden>--- هل حدثت الولادة بالمنزل؟ ---</option>
-                                    </select>
-                                    <span asp-validation-for="IsBirthInHome" class="text-danger"></span>
-                                </div>
-                            </div>
                         </div>
-                        <div class="row" id="additionalInputs2" style="display: none">
+                        <div class="row" id="TheKabilaLicenseInputs" style="display: none">
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label>إسم القابلة</label>
-                                    <input asp-for="KabilaName" class="form-control " placeholder="إسم القابلة" />
-                                    <span asp-validation-for="KabilaName" class="text-danger"></span>
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label>رقم الرخصة</label>
-                                    <input asp-for="LicenseNo" class="form-control " placeholder="رقم الرخصة" />
+                                    <label>B- @Localizer["LicenseNo"]</label>
+                                    <input asp-for="LicenseNo" class="form-control " placeholder="@Localizer["LicenseNo"]" />
                                     <span asp-validation-for="LicenseNo" class="text-danger"></span>
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label>تاريخ إنتهاء الرخصة</label>
+                                    <label>C- @Localizer["LicenseYear"]</label>
                                     <input asp-for="LicenseYear" class="form-control " />
                                     <span asp-validation-for="LicenseYear" class="text-danger"></span>
                                 </div>
                             </div>
                         </div>
-                        <script>
-                            $(document).ready(function () {
-                                var isOffice = @Json.Serialize(ViewBag.IsOffice);
-
-                                if (isOffice) {
-                                    $("#additionalInputs").show();
-                                    $("#additionalInputs2").show();
-                                    $("#BirthOccurredByContainer").hide();
-                                } else {
-                                    $("#BirthOccurredByContainer").show();
-                                    $("#additionalInputs").hide();
-                                    $("#additionalInputs2").hide();
-                                }
-                            });
-                        </script>
                     </section>
                     <!-- Step 5 -->
                     <h6>معلومات العائلة</h6>
                     <section>
                         <div class="row">
-                            <h3>العنوان الدائم لعائلة المولود :</h3>
+                            <h3>10- @Localizer["FamilyPermanentAddress"] :</h3>
                             <div class="col-md-4">
                                 <div class="form-group select2-parent">
-                                    <select asp-for="FamilyGovernorateId" id="FamilyGovernorateId" class="select2 required">
-                                        <option value="" disabled selected hidden>-- حدد المحافظة --</option>
-                                        @foreach (var item in ViewBag.Governorates)
-                                        {
-                                            <option value="@item.Value">@item.Text</option>
-                                        }
+                                    <label>A- @Localizer["SelectGovernorate"]</label>
+                                    <select asp-for="FamilyGovernorateId" id="FamilyGovernorateId" class="select2 " asp-items="@ViewBag.Governorates">
+                                        <option value="" disabled selected hidden>-- @Localizer["SelectGovernorate"] *--</option>
                                     </select>
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group select2-parent">
-                                    <select asp-for="FamilyDistrictId" id="FamilyDistrictId" class="select2 required">
-                                        <option value="" disabled selected hidden>-- حدد القضاء --</option>
-                                        @foreach (var item in ViewBag.Districts)
-                                        {
-                                            <option value="@item.Value">@item.Text</option>
-                                        }
+                                    <label>B- @Localizer["SelectDistrict"]</label>
+                                    <select asp-for="FamilyDistrictId" id="FamilyDistrictId" class="select2 " asp-items="@ViewBag.Districts">
+                                        <option value="" disabled selected hidden>-- @Localizer["SelectDistrict"] *--</option>
                                     </select>
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group select2-parent">
-                                    <select asp-for="FamilyNahiaId" id="FamilyNahiaId" class="select2 required">
-                                        <option value="" disabled selected hidden>-- حدد الناحية --</option>
-                                        @foreach (var item in ViewBag.Nahias)
-                                        {
-                                            <option value="@item.Value">@item.Text</option>
-                                        }
+                                    <label>C- @Localizer["SelectNahia"]</label>
+                                    <select asp-for="FamilyNahiaId" id="FamilyNahiaId" class="select2 " asp-items="@ViewBag.Nahias">
+                                        <option value="" disabled selected hidden>-- @Localizer["SelectNahia"] *--</option>
                                     </select>
                                 </div>
                             </div>
@@ -489,68 +465,84 @@
                         <div class="row">
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <input asp-for="FamilyMahala" class="form-control " placeholder="المحلة أو القرية" />
+                                    <label>D- @Localizer["MahalaOrVillage"]</label>
+                                    <input asp-for="FamilyMahala" class="form-control " placeholder="@Localizer["MahalaOrVillage"]" />
                                     <span asp-validation-for="FamilyMahala" class="text-danger"></span>
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <input asp-for="FamilyZigag" class="form-control " placeholder="الزقاق" />
+                                    <label>E- @Localizer["Zigag"]</label>
+                                    <input asp-for="FamilyZigag" class="form-control " placeholder="@Localizer["Zigag"]" />
                                     <span asp-validation-for="FamilyZigag" class="text-danger"></span>
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <input asp-for="FamilyHomeNo" class="form-control " placeholder="رقم البيت" />
+                                    <label>F- @Localizer["HomeNumber"]</label>
+                                    <input asp-for="FamilyHomeNo" class="form-control " placeholder="@Localizer["HomeNumber"]" />
                                     <span asp-validation-for="FamilyHomeNo" class="text-danger"></span>
                                 </div>
                             </div>
                         </div><hr />
                         <div class="row">
-                            <h3>23 -معلومات خاصة بمديرية الجنسية والأحوال المدنية :</h3>
+                            <h3>11- @Localizer["InfoForDirOfNationAndCivStatus"] :</h3>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <select asp-for="DocumentType" class="form-control " asp-items="Html.GetEnumSelectList<CRVS.Core.Models.BirthCertificate.DocumentTypes>()">
-                                        <option vlaue="-1" disabled selected hidden>--- Select National Id For---</option>
+                                    <label>@Localizer["DocumentType"]</label>
+                                    <select asp-for="DocumentType" class="form-select " asp-items="Html.GetEnumSelectList<CRVS.Core.Models.BirthCertificate.DocumentTypes>()">
+                                        <option vlaue="-1" disabled selected hidden>--- @Localizer["DocumentType"] *---</option>
                                     </select>
                                     <span asp-validation-for="DocumentType" class="text-danger"></span>
                                 </div>
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="col-md-6" id="firstDocumentTypeOptionSub1" style="display: none">
+                        <div class="row" id="firstDocumentTypeOptionSub2" style="display: none">
+                            <div class="col-md-6">
                                 <div class="form-group">
-                                    <input asp-for="RecordNumber" class="form-control " placeholder="رقم السجل" />
-                                    <span asp-validation-for="RecordNumber" class="text-danger"></span>
-                                </div>
-                                <div class="form-group">
-                                    <input asp-for="PageNumber" class="form-control " placeholder="رقم الصحيفة" />
-                                    <span asp-validation-for="PageNumber" class="text-danger"></span>
-                                </div>
-                            </div>
-                            <div class="col-md-6" id="firstDocumentTypeOptionSub2" style="display: none">
-                                <div class="form-group">
-                                    <input asp-for="CivilStatusDirectorate" class="form-control " placeholder="دائرة جنسية وأحوال" />
+                                    <label>A- @Localizer["CivilStatusDirectorate"]</label>
+                                    <input asp-for="CivilStatusDirectorate" class="form-control " placeholder="@Localizer["CivilStatusDirectorate"]" />
                                     <span asp-validation-for="CivilStatusDirectorate" class="text-danger"></span>
                                 </div>
+                            </div>
+                            <div class="col-md-6">
                                 <div class="form-group">
-                                    <input asp-for="GovernorateCivilStatusDirectorate" class="form-control " placeholder="محافظة" />
+                                    <label>B- @Localizer["GovernorateCivilStatusDirectorate"]</label>
+                                    <input asp-for="GovernorateCivilStatusDirectorate" class="form-control " placeholder="@Localizer["GovernorateCivilStatusDirectorate"]" />
                                     <span asp-validation-for="GovernorateCivilStatusDirectorate" class="text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row" id="firstDocumentTypeOptionSub1" style="display: none">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>C- @Localizer["RecordNumber"]</label>
+                                    <input asp-for="RecordNumber" class="form-control " placeholder="@Localizer["RecordNumber"]" />
+                                    <span asp-validation-for="RecordNumber" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>D- @Localizer["PageNumber"]</label>
+                                    <input asp-for="PageNumber" class="form-control " placeholder="@Localizer["PageNumber"]" />
+                                    <span asp-validation-for="PageNumber" class="text-danger"></span>
                                 </div>
                             </div>
                         </div>
                         <div class="row" id="secondDocumentTypeOption" style="display: none">
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <select asp-for="NationalIdFor" class="form-control " asp-items="Html.GetEnumSelectList<CRVS.Core.Models.BirthCertificate.NationalIdFors>()">
-                                        <option vlaue="-1" disabled selected hidden>--- Select National Id For---</option>
+                                    <label>C- @Localizer["NationalIdFor"]</label>
+                                    <select asp-for="NationalIdFor" class="form-select " asp-items="Html.GetEnumSelectList<CRVS.Core.Models.BirthCertificate.NationalIdFors>()">
+                                        <option vlaue="-1" disabled selected hidden>--- @Localizer["NationalIdFor"] *---</option>
                                     </select>
                                     <span asp-validation-for="NationalIdFor" class="text-danger"></span>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <input asp-for="NationalId" class="form-control " placeholder="الرقم الوطني الموحد للأم / للأب" />
+                                    <label>D- @Localizer["NationalIdForMotherOrFather"]</label>
+                                    <input asp-for="NationalId" class="form-control " placeholder="@Localizer[" NationalIdForMotherOrFather"]" />
                                     <span asp-validation-for="NationalId" class="text-danger"></span>
                                 </div>
                             </div>
@@ -558,59 +550,76 @@
                         <div class="row" id="thirdDocumentTypeOption" style="display: none">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <input asp-for="PassportNo" class="form-control " placeholder="رقم الجواز" />
+                                    <label>A- @Localizer["PassportNumber"]</label>
+                                    <input asp-for="PassportNo" class="form-control " placeholder="@Localizer["PassportNumber"]" />
                                     <span asp-validation-for="PassportNo" class="text-danger"></span>
                                 </div>
                             </div>
                         </div><hr />
                         <div class="row">
-                            <h3>24 -معلومات خاصة بالمخبر :</h3>
+                            <h3>12- @Localizer["InfoAboutInformer"] :</h3>
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <input asp-for="InformerName" class="form-control " placeholder="الإسم" />
+                                    <label>A- @Localizer["InformerName"]</label>
+                                    <input asp-for="InformerName" class="form-control " placeholder="@Localizer["InformerName"]" />
                                     <span asp-validation-for="InformerName" class="text-danger"></span>
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <input asp-for="InformerJobTitle" class="form-control " placeholder="‘العنوان" />
+                                    <label>B- @Localizer["InformerJobTitle"]</label>
+                                    <input asp-for="InformerJobTitle" class="form-control " placeholder="@Localizer["InformerJobTitle"]" />
                                     <span asp-validation-for="InformerJobTitle" class="text-danger"></span>
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <input asp-for="KinshipOfTheNewborn" class="form-control " placeholder="صلته بالوليد" />
+                                    <label>C- @Localizer["KinshipOfTheNewborn"]</label>
+                                    <input asp-for="KinshipOfTheNewborn" class="form-control " placeholder="@Localizer["KinshipOfTheNewborn"]" />
                                     <span asp-validation-for="KinshipOfTheNewborn" class="text-danger"></span>
                                 </div>
                             </div>
                         </div><hr />
                         <div class="row">
-                            <h3>25 -أشهد بأنَ هذا الطفل ولد حياً في التاريخ المبين سابقاً : </h3>
+                            <h3>13- @Localizer["CertifyThisChildBornAliveOnDateAbove"] :</h3>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <input asp-for="BirthPerformerName" class="form-control " placeholder="إسم المولَد" />
+                                    <label>A- @Localizer["BirthPerformerName"]</label>
+                                    <input asp-for="BirthPerformerName" class="form-control " placeholder="@Localizer["BirthPerformerName"]" />
                                     <span asp-validation-for="BirthPerformerName" class="text-danger"></span>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <input asp-for="BirthPerformerWorkingAddress" class="form-control " placeholder="عنوان الإشتغال" />
+                                    <label>B- @Localizer["BirthPerformerWorkingAddress"]</label>
+                                    <input asp-for="BirthPerformerWorkingAddress" class="form-control " placeholder="@Localizer["BirthPerformerWorkingAddress"]" />
                                     <span asp-validation-for="BirthPerformerWorkingAddress" class="text-danger"></span>
                                 </div>
                             </div>
                         </div><hr />
                         <div class="row">
-                            <h3>مدير المستشفى أو من ينوب عنه:</h3>
+                            <h3>14- @Localizer["HospitalManagerOrRepresentative"] :</h3>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <input asp-for="HospitalManagerName" class="form-control " placeholder="الإسم" />
+                                    <label>A- @Localizer["HospitalManagerName"]</label>
+                                    <input asp-for="HospitalManagerName" class="form-control " placeholder="@Localizer["HospitalManagerName"]" />
                                     <span asp-validation-for="HospitalManagerName" class="text-danger"></span>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <input asp-for="HospitalManagerSig" class="form-control " placeholder="توقيعه" />
+                                    <label>B- @Localizer["HospitalManagerSig"]</label>
+                                    <input asp-for="HospitalManagerSig" class="form-control " placeholder="@Localizer["HospitalManagerSig"]" />
                                     <span asp-validation-for="HospitalManagerSig" class="text-danger"></span>
+                                </div>
+                            </div>
+                        </div><hr />
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>15- @Localizer["RationCard"]</label>
+                                    <input asp-for="RationCard" class="form-control " placeholder="@Localizer["RationCard"]" />
+                                    <span asp-validation-for="RationCard" class="text-danger"></span>
                                 </div>
                             </div>
                         </div>
@@ -619,25 +628,18 @@
                     <h6>إثباتات</h6>
                     <section>
                         <div class="row">
+                            <h3 class="mb-4">16- إثباتات :</h3>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <input asp-for="RationCard" class="form-control " placeholder="RationCard" />
-                                    <span asp-validation-for="RationCard" class="text-danger"></span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label>صورة شهادة الميلاد</label>
-                                    <input asp-for="ImageBirthCertificate" class="form-control required" />
+                                    <label>A- @Localizer["ImageBirthCertificate"]</label>
+                                    <input asp-for="ImageBirthCertificate" class="form-control " />
                                     <span asp-validation-for="ImageBirthCertificate" class="text-danger"></span>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label>صورة شهادة الزواج</label>
-                                    <input asp-for="ImageMarriageCertificate" class="form-control required" />
+                                    <label>B- @Localizer["ImageMarriageCertificate"]</label>
+                                    <input asp-for="ImageMarriageCertificate" class="form-control " />
                                     <span asp-validation-for="ImageMarriageCertificate" class="text-danger"></span>
                                 </div>
                             </div>
@@ -645,15 +647,15 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label>صورة هوية الأب الأمامية</label>
-                                    <input asp-for="ImageFatherUnifiedNationalIdFront" class="form-control required" />
+                                    <label>C- @Localizer["ImageFatherUnifiedNationalIdFront"]</label>
+                                    <input asp-for="ImageFatherUnifiedNationalIdFront" class="form-control " />
                                     <span asp-validation-for="ImageFatherUnifiedNationalIdFront" class="text-danger"></span>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label>صورة هوية الأب الخلفية</label>
-                                    <input asp-for="ImageFatherUnifiedNationalIdBack" class="form-control required" />
+                                    <label>D- @Localizer["ImageFatherUnifiedNationalIdBack"]</label>
+                                    <input asp-for="ImageFatherUnifiedNationalIdBack" class="form-control " />
                                     <span asp-validation-for="ImageFatherUnifiedNationalIdBack" class="text-danger"></span>
                                 </div>
                             </div>
@@ -661,15 +663,15 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label>صورة هوية الأم الأمامية</label>
-                                    <input asp-for="ImageMotherUnifiedNationalIdFront" class="form-control required" />
+                                    <label>E- @Localizer["ImageMotherUnifiedNationalIdFront"]</label>
+                                    <input asp-for="ImageMotherUnifiedNationalIdFront" class="form-control " />
                                     <span asp-validation-for="ImageMotherUnifiedNationalIdFront" class="text-danger"></span>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label>صورة هوية الأم الخلفية</label>
-                                    <input asp-for="ImageMotherUnifiedNationalIdBack" class="form-control required" />
+                                    <label>F- @Localizer["ImageMotherUnifiedNationalIdBack"]</label>
+                                    <input asp-for="ImageMotherUnifiedNationalIdBack" class="form-control " />
                                     <span asp-validation-for="ImageMotherUnifiedNationalIdBack" class="text-danger"></span>
                                 </div>
                             </div>
@@ -677,40 +679,26 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label>صورة الإقامة الأمامية</label>
-                                    <input asp-for="ImageResidencyCardFront" class="form-control required" />
+                                    <label>G- @Localizer["ImageResidencyCardFront"]</label>
+                                    <input asp-for="ImageResidencyCardFront" class="form-control " />
                                     <span asp-validation-for="ImageResidencyCardFront" class="text-danger"></span>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label>صورة الإقامة الخلفية</label>
-                                    <input asp-for="ImageResidencyCardBack" class="form-control required" />
+                                    <label>H- @Localizer["ImageResidencyCardBack"]</label>
+                                    <input asp-for="ImageResidencyCardBack" class="form-control " />
                                     <span asp-validation-for="ImageResidencyCardBack" class="text-danger"></span>
                                 </div>
                             </div>
                         </div>
                     </section>
-<input type="submit" value="Create" class="btn btn-primary -absolute" style="bottom: -37.5px; padding: 7px 20px; border-radius: 25px; font-size: 15px; font-weight: 400; background-color: #2962ff; right: 1.5%;" />
+                    <input type="submit" value="حفظ" class="btn btn-primary position-absolute px-4 py-2 rounded-pill" style="bottom: -33%; right: 47%;" />
                 </form>
             </div>
         </div>
     </div>
 </div>
-<input type="submit" value="Create"/>
-
-<script>
-    var parentElement = document.querySelector(".action > ul");
-
-    var lastLiElement = parentElement.lastElementChild;
-
-    var aTag = lastLiElement.querySelector("a");
-    lastLiElement.removeChild(aTag);
-    var newLink = document.createElement("a");
-    newLink.href = "#";
-    newLink.textContent = "New Link";
-    lastLiElement.appendChild(newLink);
-</script>
 
 @*To Add the search bar to the Seclet Lists*@
 <script>
@@ -718,138 +706,7 @@
         $('.select2').select2();
     });
 </script>
-@* To Hide the DisabledType DropDown List except if he chose the first option from the emun above it?*@
-<script>
-    $(document).ready(function () {
-        $("#DisabledTypeIdContainer").hide();
-        $("#IsDisabled").change(function () {
-            var selectedValue = $(this).val();
-            if (selectedValue === "0") {
-                $("#DisabledTypeIdContainer").show();
-            } else {
-                $("#DisabledTypeIdContainer").hide();
-                $("#DisabledTypeId").val("");
-            }
-        });
-    });
-</script>
 
-@*Counting the age of the father and the mother*@
-<script>
-    function calculateAge(dobInputId, ageInputId) {
-        var dobInput = document.getElementById(dobInputId);
-        var dob = new Date(dobInput.value);
-        var now = new Date();
-        var age = now.getFullYear() - dob.getFullYear();
-        var monthDiff = now.getMonth() - dob.getMonth();
-
-        if (monthDiff < 0 || (monthDiff === 0 && now.getDate() < dob.getDate())) {
-            age--;
-        } else if (monthDiff >= 6) {
-            age++;
-        }
-
-        var ageInput = document.getElementById(ageInputId);
-        ageInput.value = age + " سنة";
-    }
-</script>
-@*Filtering Districts after selecting Governorate*@
-<script>
-    $(document).ready(function () {
-        $('#FamilyGovernorateId').change(function () {
-            var selectedFamilyGovernorateId = $(this).val();
-            $.ajax({
-                url: '/BirthCertificates/GetDistricts',
-                type: 'GET',
-                data: { familyGovernorateId: selectedFamilyGovernorateId },
-                dataType: 'json',
-                success: function (data) {
-                    var districtDropdown = $('#FamilyDistrictId');
-                    districtDropdown.empty();
-                    var selectOption = $('<option></option>').val('').text('-- حدد القضاء --');
-                    selectOption.prop('disabled', true);
-                    selectOption.prop('hidden', true);
-                    selectOption.prop('selected', true);
-                    districtDropdown.append(selectOption);
-                    $.each(data, function (index, item) {
-                        var option = $('<option></option>').val(item.districtId).text(item.districtName);
-                        districtDropdown.append(option);
-                    });
-                },
-                error: function (xhr, status, error) {
-                    console.log(xhr.responseText);
-                }
-            });
-        });
-    });
-</script>
-@*Filtering Nahia after selecting Districts*@
-<script>
-    $(document).ready(function () {
-        $('#FamilyDistrictId').change(function () {
-            var selectedFamilyDistrictId = $(this).val();
-            var selectedFamilyGovernorateId = $('#FamilyGovernorateId').val();
-
-            $.ajax({
-                url: '/BirthCertificates/GetNahias',
-                type: 'GET',
-                data: { familyDistrictId: selectedFamilyDistrictId, familyGovernorateId: selectedFamilyGovernorateId },
-                dataType: 'json',
-                success: function (data) {
-                    var nahiaDropdown = $('#FamilyNahiaId');
-                    nahiaDropdown.empty();
-                    var selectOption = $('<option></option>').val('').text('-- حدد الناحية --');
-                    selectOption.prop('disabled', true);
-                    selectOption.prop('hidden', true);
-                    selectOption.prop('selected', true);
-                    nahiaDropdown.append(selectOption);
-                    $.each(data, function (index, item) {
-                        var option = $('<option></option>').val(item.nahiaId).text(item.nahiaName);
-                        nahiaDropdown.append(option);
-                    });
-                },
-                error: function (xhr, status, error) {
-                    console.log(xhr.responseText);
-                }
-            });
-        });
-    });
-</script>
-@*Change the inputs based on thr choosen from Document type *@
-<script>
-    $(document).ready(function () {
-        $("#DocumentType").change(function () {
-            var selectedValue = $(this).val();
-            if (selectedValue === "0") {
-                $("#firstDocumentTypeOptionSub1").show();
-                $("#firstDocumentTypeOptionSub2").show();
-                $("#secondDocumentTypeOption").hide();
-                $("#thirdDocumentTypeOption").hide();
-                $("#NationalIdFor").val("");
-                $("#NationalId").val("");
-                $("#PassportNo").val("");
-            } else if (selectedValue === "1") {
-                $("#firstDocumentTypeOptionSub1").hide();
-                $("#firstDocumentTypeOptionSub2").show();
-                $("#secondDocumentTypeOption").show();
-                $("#thirdDocumentTypeOption").hide();
-                $("#RecordNumber").val("");
-                $("#PageNumber").val("");
-            } else {
-                $("#firstDocumentTypeOptionSub1").hide();
-                $("#firstDocumentTypeOptionSub2").hide();
-                $("#secondDocumentTypeOption").hide();
-                $("#thirdDocumentTypeOption").show();
-                $("#RecordNumber").val("");
-                $("#PageNumber").val("");
-                $("#CivilStatusDirectorate").val("");
-                $("#GovernorateCivilStatusDirectorate").val("");
-                $("#NationalIdFor").val("");
-                $("#NationalId").val("");
-            }
-        });
-    });
-</script>
 @*To Disable the Days before 40 days*@
 <script>
     var today = new Date();
@@ -860,6 +717,7 @@
     document.getElementById('DOB').setAttribute('min', minDateISO);
     document.getElementById('DOB').setAttribute('max', today.toISOString().split('T')[0]);
 </script>
+
 @*To Translate the Date to words*@
 <script>
     $(document).ready(function () {
@@ -1025,7 +883,6 @@
             var tens = ['', 'وعشرة', 'وعشرون', 'وثلاثون', 'وأربعون', 'وخمسون', 'وستون', 'وسبعون', 'وثمانون', 'وتسعون'];
             var hundreds = ['', 'ومائة', 'ومئتان', 'ثلاثمائة', 'وأربعمائة', 'وخمسمائة', 'وستمائة', 'وسبعمائة', 'وثمانمائة', 'وتسعمائة'];
             var thousands = ['', 'ألف', 'ألفان', 'ثلاثة آلاف', 'أربعة آلاف', 'خمسة آلاف', 'ستة آلاف', 'سبعة آلاف', 'ثمانية آلاف', 'تسعة آلاف'];
-
             var numberText = '';
             var numberText2 = '';
             var numberText3 = '';
@@ -1036,25 +893,243 @@
                 numberText2 = ' ' + thousands[thousand];
                 number %= 1000;
             }
-
             if (number >= 100) {
                 var hundred = Math.floor(number / 100);
                 numberText3 = ' ' + hundreds[hundred];
                 number %= 100;
             }
-
             if (number >= 10) {
                 var ten = Math.floor(number / 10);
                 numberText4 = ' ' + tens[ten];
                 number %= 10;
             }
-
             if (number > 0) {
                 numberText = numberText2 + numberText3 + ' ' + units[number] + numberText4;
             }
-
             return numberText.trim();
         }
+    });
+</script>
 
+@*Disabling the Last 10 years of the Father and Mother age*@
+<script>
+    document.getElementById('FatherDOB').setAttribute('max', new Date().getFullYear() - 10 + '-01');
+    document.getElementById('MotherDOB').setAttribute('max', new Date().getFullYear() - 10 + '-01');
+</script>
+
+@*Counting the age of the father and the mother*@
+<script>
+    function calculateAge(dobInputId, ageInputId) {
+        var dobInput = document.getElementById(dobInputId);
+        var dob = new Date(dobInput.value);
+        var now = new Date();
+        var age = now.getFullYear() - dob.getFullYear();
+        var monthDiff = now.getMonth() - dob.getMonth();
+
+        if (monthDiff < 0 || (monthDiff === 0 && now.getDate() < dob.getDate())) {
+            age--;
+        } else if (monthDiff >= 6) {
+            age++;
+        }
+
+        var ageInput = document.getElementById(ageInputId);
+        ageInput.value = age + " سنة";
+    }
+</script>
+
+@*Validation on the BornDisable Field*@
+<script>
+    $(document).ready(function () {
+        var aliveValue = "";
+        $("#Alive").change(function () {
+            aliveValue = $(this).val();
+            if (aliveValue === "0" || aliveValue === "") {
+                $("#BornDisableContainer").hide();
+            } else {
+                $("#BornDisableContainer").show();
+                $("#BornDisable").val("");
+                $("#bornDisableError").hide();
+            }
+        });
+        $("#BornDisable").change(function () {
+            var bornDisableValue = parseInt($(this).val());
+            if (bornDisableValue > parseInt(aliveValue)) {
+                $(this).val("");
+                $("#bornDisableError").show();
+                //Swal.fire({
+                //    icon: 'error',
+                //    title: 'خطأ',
+                //    text: 'what ever',
+                //    confirmButtonText: 'موافق'
+                //});
+            } else if (bornDisableValue <= parseInt(aliveValue)) {
+                $("#bornDisableError").hide();
+            }
+        });
+    });
+</script>
+
+@* To Hide the DisabledType DropDown List except if he chose the first option from the emun above it?*@
+<script>
+    $(document).ready(function () {
+        $("#DisabledTypeIdContainer").hide();
+        $("#IsDisabled").change(function () {
+            var selectedValue = $(this).val();
+            if (selectedValue === "0") {
+                $("#DisabledTypeIdContainer").show();
+            } else {
+                $("#DisabledTypeIdContainer").hide();
+                $("#DisabledTypeId").val("");
+            }
+        });
+    });
+</script>
+
+@*Controlling the The Kabila License Inputs after selecting from the BirthOccurredBy input*@
+<script>
+    $(document).ready(function () {
+        $("#BirthOccurredBy").change(function () {
+            var selectedValue = $(this).val();
+            if (selectedValue === "2") {
+                $("#TheKabilaLicenseInputs").show();
+            } else {
+                $("#TheKabilaLicenseInputs").hide();
+                $("#LicenseNo").val("");
+                $("#LicenseYear").val("");
+            }
+        });
+    });
+</script>
+
+@*Filtering Districts after selecting Governorate*@
+<script>
+    $(document).ready(function () {
+        $('#FamilyGovernorateId').change(function () {
+            var selectedFamilyGovernorateId = $(this).val();
+            $.ajax({
+                url: '/BirthCertificates/GetDistricts',
+                type: 'GET',
+                data: { familyGovernorateId: selectedFamilyGovernorateId },
+                dataType: 'json',
+                success: function (data) {
+                    var districtDropdown = $('#FamilyDistrictId');
+                    districtDropdown.empty();
+                    var selectOption = $('<option></option>').val('').text('-- حدد القضاء --');
+                    selectOption.prop('disabled', true);
+                    selectOption.prop('hidden', true);
+                    selectOption.prop('selected', true);
+                    districtDropdown.append(selectOption);
+                    $.each(data, function (index, item) {
+                        var option = $('<option></option>').val(item.districtId).text(item.districtName);
+                        districtDropdown.append(option);
+                    });
+                },
+                error: function (xhr, status, error) {
+                    console.log(xhr.responseText);
+                }
+            });
+        });
+    });
+</script>
+
+@*Filtering Nahia after selecting Districts*@
+<script>
+    $(document).ready(function () {
+        $('#FamilyDistrictId').change(function () {
+            var selectedFamilyDistrictId = $(this).val();
+            var selectedFamilyGovernorateId = $('#FamilyGovernorateId').val();
+
+            $.ajax({
+                url: '/BirthCertificates/GetNahias',
+                type: 'GET',
+                data: { familyDistrictId: selectedFamilyDistrictId, familyGovernorateId: selectedFamilyGovernorateId },
+                dataType: 'json',
+                success: function (data) {
+                    var nahiaDropdown = $('#FamilyNahiaId');
+                    nahiaDropdown.empty();
+                    var selectOption = $('<option></option>').val('').text('-- حدد الناحية --');
+                    selectOption.prop('disabled', true);
+                    selectOption.prop('hidden', true);
+                    selectOption.prop('selected', true);
+                    nahiaDropdown.append(selectOption);
+                    $.each(data, function (index, item) {
+                        var option = $('<option></option>').val(item.nahiaId).text(item.nahiaName);
+                        nahiaDropdown.append(option);
+                    });
+                },
+                error: function (xhr, status, error) {
+                    console.log(xhr.responseText);
+                }
+            });
+        });
+    });
+</script>
+
+@*Change the inputs based on thr choosen from Document type *@
+<script>
+    $(document).ready(function () {
+        $("#DocumentType").change(function () {
+            var selectedValue = $(this).val();
+            if (selectedValue === "0") {
+                $("#firstDocumentTypeOptionSub1").show();
+                $("#firstDocumentTypeOptionSub2").show();
+                $("#secondDocumentTypeOption").hide();
+                $("#thirdDocumentTypeOption").hide();
+                $("#NationalIdFor").val("");
+                $("#NationalId").val("");
+                $("#PassportNo").val("");
+            } else if (selectedValue === "1") {
+                $("#firstDocumentTypeOptionSub1").hide();
+                $("#firstDocumentTypeOptionSub2").show();
+                $("#secondDocumentTypeOption").show();
+                $("#thirdDocumentTypeOption").hide();
+                $("#RecordNumber").val("");
+                $("#PageNumber").val("");
+            } else {
+                $("#firstDocumentTypeOptionSub1").hide();
+                $("#firstDocumentTypeOptionSub2").hide();
+                $("#secondDocumentTypeOption").hide();
+                $("#thirdDocumentTypeOption").show();
+                $("#RecordNumber").val("");
+                $("#PageNumber").val("");
+                $("#CivilStatusDirectorate").val("");
+                $("#GovernorateCivilStatusDirectorate").val("");
+                $("#NationalIdFor").val("");
+                $("#NationalId").val("");
+            }
+        });
+    });
+</script>
+
+@*Adding the Create Button on the last step*@
+<script>
+    $(document).ready(function () {
+        $(".actions > ul > li:last-child > a").addClass("hide");
+
+        var newInput = $("<input>", {
+            type: "submit",
+            value: "Create",
+            class: "btn btn-primary",
+            style: "padding: 7px 20px; border-radius: 25px; font-size: 15px; font-weight: 400; background-color: #2962ff;"
+        });
+
+        $(".actions > ul > li:last-child").append(newInput);
+    });
+</script>
+
+@*Adding the Check Icon into the circle steps (UI Modifying)*@
+<script>
+    $(document).ready(function () {
+        $(".actions > ul > li > a").click(function (event) {
+            $(".steps > ul > .done > a > span").empty().append('<i class="bi bi-check-lg fs-7"></i>');
+        });
+    });
+</script>
+
+@*Translating the "Next" and "Previous" buttons to arabic*@
+<script>
+    $(document).ready(function () {
+        $(".actions > ul > li:nth-child(2) > a").text('التالي');
+        $(".actions > ul > li:nth-child(1) > a").text('السابق');
     });
 </script>

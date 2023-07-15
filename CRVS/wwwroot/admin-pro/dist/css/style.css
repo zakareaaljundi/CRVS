@@ -15013,7 +15013,7 @@ ul.list-icons li i {
   background-size: auto; }
 
 .form-select {
-  background-image: url(../../src/assets/images/custom-select.png);
+  background-image: url(/admin-pro/assets/images/custom-select.png);
   background-size: auto; }
 
 .no-wrap td,

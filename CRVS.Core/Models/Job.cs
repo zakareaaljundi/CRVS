@@ -10,5 +10,6 @@ namespace CRVS.Core.Models
     {
         public int JobId { get; set; }
         public string? JobName { get; set; }
+        public bool IsArabic { get; set; }
     }
 }

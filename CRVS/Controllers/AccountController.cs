@@ -66,12 +66,12 @@ namespace CRVS.Controllers
             ViewBag.Roles = new SelectList(_roleManager.Roles.ToList(), "Id", "Name");
             if (!isAdmin)
             {
-            ViewBag.Governorates = new SelectList(_context.Governorates.ToList(), "GovernorateId", "GovernorateName");
-            ViewBag.Dohs = new SelectList(_context.Dohs.ToList(), "DohId", "DohName");
-            ViewBag.Districts = new SelectList(_context.Districts.ToList(), "DistrictId", "DistrictName");
-            ViewBag.Nahias = new SelectList(_context.Nahias.ToList(), "NahiaId", "NahiaName");
-            ViewBag.FacilityTypes = new SelectList(_context.FacilityTypes.ToList(), "FacilityTypeId", "FacilityTypeName");
-            ViewBag.HealthInstitutions = new SelectList(_context.HealthInstitutions.ToList(), "HealthInstitutionId", "HealthInstitutionName");
+                ViewBag.Governorates = new SelectList(_context.Governorates.ToList(), "GovernorateId", "GovernorateName");
+                ViewBag.Dohs = new SelectList(_context.Dohs.ToList(), "DohId", "DohName");
+                ViewBag.Districts = new SelectList(_context.Districts.ToList(), "DistrictId", "DistrictName");
+                ViewBag.Nahias = new SelectList(_context.Nahias.ToList(), "NahiaId", "NahiaName");
+                ViewBag.FacilityTypes = new SelectList(_context.FacilityTypes.ToList(), "FacilityTypeId", "FacilityTypeName");
+                ViewBag.HealthInstitutions = new SelectList(_context.HealthInstitutions.ToList(), "HealthInstitutionId", "HealthInstitutionName");
             }
             return View();
         }

@@ -10,5 +10,6 @@ namespace CRVS.Core.Models
     {
         public int ReligionId { get; set; }
         public string? ReligionName { get; set; }
+        public bool IsArabic { get; set; }
     }
 }

@@ -10,5 +10,6 @@ namespace CRVS.Core.Models
     {
         public int GovernorateId { get; set; }
         public string? GovernorateName { get; set; }
+        public bool IsArabian { get; set; }
     }
 }

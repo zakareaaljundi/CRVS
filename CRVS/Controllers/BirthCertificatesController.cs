@@ -81,7 +81,7 @@ namespace CRVS.Controllers
             var admin = _context.Users.FirstOrDefault(e => e.UserId == CurrentUser!.Id);
             var certificates = await _certificatesRepository.GetAllAsync();
             return View(certificates);*/
-        }
+        }/*
         public async Task<IActionResult> SecondStage()
         {
             var certificates = await _certificatesRepository.GetAllAsync();
@@ -99,7 +99,7 @@ namespace CRVS.Controllers
             var certificates = await _certificatesRepository.GetAllAsync();
             var approvedCertificates = certificates.Where(x => x.FirstStage == true).Where(x => x.SecondStage == true).Where(x => x.Approval == true).Where(x => x.IsDeleted == false);
             return View(approvedCertificates);
-        }
+        }*/
         public async Task<IActionResult> UnCompleted()
         {
             var certificates = await _certificatesRepository.GetAllAsync();
@@ -112,19 +112,19 @@ namespace CRVS.Controllers
             var unCompletedCertificates = certificates.Where(x => x.IsDeleted == true);
             return View(unCompletedCertificates);
         }
-        public async Task<IActionResult> Rejected()
+        /*public async Task<IActionResult> Rejected()
         {
             var certificates = await _certificatesRepository.GetAllAsync();
             var rejectedCertificates = certificates.Where(x => x.FirstStage == false).Where(x => x.SecondStage == false).Where(x => x.Approval == false).Where(x => x.IsDeleted == false);
             return View(rejectedCertificates);
-        }
+        }*//*
         public async Task<IActionResult> ToApprovalStage(int id)
         {
             var certificate = await _certificatesRepository.GetByIdAsync(id);
             certificate.SecondStage = true;
             _certificatesRepository.Update(certificate);
             return RedirectToAction("SecondStage");
-        }
+        }*/
         public async Task<IActionResult> Approve(int id)
         {
             var certificate = await _certificatesRepository.GetByIdAsync(id);
@@ -147,7 +147,7 @@ namespace CRVS.Controllers
                 _context.SaveChanges();
             }
             return RedirectToAction("ApprovalStage");
-        }
+        }/*
         public async Task<IActionResult> SecondStageReject(int id)
         {
             var certificate = await _certificatesRepository.GetByIdAsync(id);
@@ -162,7 +162,7 @@ namespace CRVS.Controllers
             certificate.SecondStage = false;
             _certificatesRepository.Update(certificate);
             return RedirectToAction("ApprovalStage");
-        }
+        }*/
         public async Task<IActionResult> Delete(int id)
         {
             var certificate = await _certificatesRepository.GetByIdAsync(id);
@@ -213,8 +213,22 @@ namespace CRVS.Controllers
             ViewBag.FacilityType = currentUser!.FacilityType;
             ViewBag.HealthInstitution = currentUser!.HealthInstitution;
 
-            ViewBag.Jobs = new SelectList(_context.Jobs.ToList(), "JobId", "JobName");
-            ViewBag.Religions = new SelectList(_context.Religions.ToList(), "ReligionId", "ReligionName");
+            var isArabianGovernorate = _context.Governorates.FirstOrDefault(x => x.GovernorateName == currentUser.Governorate)!.IsArabian;
+            if (isArabianGovernorate)
+            {
+                ViewBag.MaleJobs = new SelectList(_context.Jobs.Where(x => x.IsArabic && x.JobId % 2 != 0).ToList(), "JobId", "JobName");
+                ViewBag.MaleReligions = new SelectList(_context.Religions.Where(x => x.IsArabic && x.ReligionId % 2 != 0).ToList(), "ReligionId", "ReligionName");
+                ViewBag.FemaleJobs = new SelectList(_context.Jobs.Where(x => x.IsArabic && x.JobId % 2 == 0).ToList(), "JobId", "JobName");
+                ViewBag.FemaleReligions = new SelectList(_context.Religions.Where(x => x.IsArabic && x.ReligionId % 2 == 0).ToList(), "ReligionId", "ReligionName");
+            }
+            else
+            {
+                ViewBag.MaleJobs = new SelectList(_context.Jobs.Where(x => x.IsArabic == false).ToList(), "JobId", "JobName");
+                ViewBag.MaleReligions = new SelectList(_context.Religions.Where(x => x.IsArabic == false).ToList(), "ReligionId", "ReligionName");
+                ViewBag.FemaleJobs = new SelectList(_context.Jobs.Where(x => x.IsArabic == false).ToList(), "JobId", "JobName");
+                ViewBag.FemaleReligions = new SelectList(_context.Religions.Where(x => x.IsArabic == false).ToList(), "ReligionId", "ReligionName");
+            }
+
             ViewBag.Nationalities = new SelectList(_context.Nationalities.ToList(), "NationalityId", "NationalityName");
             ViewBag.Disabilities = new SelectList(_context.Disabilities.ToList(), "Id", "QName");
 
@@ -245,39 +259,133 @@ namespace CRVS.Controllers
             if (ModelState.IsValid)
             {
                 var currentUser = await _userManager.GetUserAsync(User);
+
+                #region Handle-Father-Mother-info-and-Disablility
+
                 ViewBag.Jobs = new SelectList(_context.Jobs.ToList(), "JobId", "JobName");
                 ViewBag.Religions = new SelectList(_context.Religions.ToList(), "ReligionId", "ReligionName");
                 ViewBag.Nationalities = new SelectList(_context.Nationalities.ToList(), "NationalityId", "NationalityName");
                 ViewBag.Disabilities = new SelectList(_context.Disabilities.ToList(), "Id", "QName");
-                var fatherJob = _context.Jobs.FirstOrDefault(x => x.JobId == birthCertificateViewModel.FatherJobId);
-                var fatherReligion = _context.Religions.FirstOrDefault(x => x.ReligionId == birthCertificateViewModel.FatherReligionId);
-                var fatherNationality = _context.Nationalities.FirstOrDefault(x => x.NationalityId == birthCertificateViewModel.FatherNationalityId);
-                var motherJob = _context.Jobs.FirstOrDefault(x => x.JobId == birthCertificateViewModel.MotherJobId);
-                var motherReligion = _context.Religions.FirstOrDefault(x => x.ReligionId == birthCertificateViewModel.MotherReligionId);
-                var motherNationality = _context.Nationalities.FirstOrDefault(x => x.NationalityId == birthCertificateViewModel.MotherNationalityId);
                 var disableTypeName = "Not Disable";
                 if (birthCertificateViewModel.DisabledTypeId != null)
                 {
                     var DisableType = _context.Disabilities.FirstOrDefault(x => x.Id == birthCertificateViewModel.DisabledTypeId);
                     disableTypeName = DisableType!.QName;
                 }
+                var fatherJobName = "";
+                if (birthCertificateViewModel.FatherJobId != null)
+                {
+                    var fatherJob = _context.Jobs.FirstOrDefault(x => x.JobId == birthCertificateViewModel.FatherJobId);
+                    fatherJobName = fatherJob!.JobName;
+                }
+                var fatherReligionName = "";
+                if (birthCertificateViewModel.FatherReligionId != null)
+                {
+                    var fatherReligion = _context.Religions.FirstOrDefault(x => x.ReligionId == birthCertificateViewModel.FatherReligionId);
+                    fatherReligionName = fatherReligion!.ReligionName;
+                }
+                var fatherNationalityName = "";
+                if (birthCertificateViewModel.FatherNationalityId != null)
+                {
+                    var fatherNationality = _context.Nationalities.FirstOrDefault(x => x.NationalityId == birthCertificateViewModel.FatherNationalityId);
+                    fatherNationalityName = fatherNationality!.NationalityName;
+                }
+                var motherJobName = "";
+                if (birthCertificateViewModel.MotherJobId != null)
+                {
+                    var motherJob = _context.Jobs.FirstOrDefault(x => x.JobId == birthCertificateViewModel.MotherJobId);
+                    motherJobName = motherJob!.JobName;
+                }
+                var motherReligionName = "";
+                if (birthCertificateViewModel.MotherReligionId != null)
+                {
+                    var motherReligion = _context.Religions.FirstOrDefault(x => x.ReligionId == birthCertificateViewModel.MotherReligionId);
+                    motherReligionName = motherReligion!.ReligionName;
+                }
+                var motherNationalityName = "";
+                if (birthCertificateViewModel.MotherNationalityId != null)
+                {
+                    var motherNationality = _context.Nationalities.FirstOrDefault(x => x.NationalityId == birthCertificateViewModel.MotherNationalityId);
+                    motherNationalityName = motherNationality!.NationalityName;
+                }
 
                 ViewBag.Governorates = new SelectList(_context.Governorates.ToList(), "GovernorateId", "GovernorateName");
                 ViewBag.Districts = new SelectList(_context.Districts.ToList(), "DistrictId", "DistrictName");
                 ViewBag.Nahias = new SelectList(_context.Nahias.ToList(), "NahiaId", "NahiaName");
-                var governorate = _context.Governorates.FirstOrDefault(x => x.GovernorateId == birthCertificateViewModel.FamilyGovernorateId);
-                var district = _context.Districts.FirstOrDefault(x => x.DistrictId == birthCertificateViewModel.FamilyDistrictId);
-                var nahia = _context.Nahias.FirstOrDefault(x => x.NahiaId == birthCertificateViewModel.FamilyNahiaId);
 
-                /*string ImgName = FileUpload(birthCertificateViewModel);*/
-                string imgBirthCertificate = FileUpload(birthCertificateViewModel.ImageBirthCertificate!, birthCertificateViewModel.ImageBirthCertificate!.FileName);
-                string imgMarriageCertificate = FileUpload(birthCertificateViewModel.ImageMarriageCertificate!, birthCertificateViewModel.ImageMarriageCertificate!.FileName);
-                string imgFatherUnifiedNationalIdFront = FileUpload(birthCertificateViewModel.ImageFatherUnifiedNationalIdFront!, birthCertificateViewModel.ImageFatherUnifiedNationalIdFront!.FileName);
-                string imgFatherUnifiedNationalIdBack = FileUpload(birthCertificateViewModel.ImageFatherUnifiedNationalIdBack!, birthCertificateViewModel.ImageFatherUnifiedNationalIdBack!.FileName);
-                string imgMotherUnifiedNationalIdFront = FileUpload(birthCertificateViewModel.ImageMotherUnifiedNationalIdFront!, birthCertificateViewModel.ImageMotherUnifiedNationalIdFront!.FileName);
-                string imgMotherUnifiedNationalIdBack = FileUpload(birthCertificateViewModel.ImageMotherUnifiedNationalIdBack!, birthCertificateViewModel.ImageMotherUnifiedNationalIdBack!.FileName);
-                string imgResidencyCardFront = FileUpload(birthCertificateViewModel.ImageResidencyCardFront!, birthCertificateViewModel.ImageResidencyCardFront!.FileName);
-                string imgResidencyCardBack = FileUpload(birthCertificateViewModel.ImageResidencyCardBack!, birthCertificateViewModel.ImageResidencyCardBack!.FileName);
+                var governorateName = "";
+                if (birthCertificateViewModel.FamilyGovernorateId != null)
+                {
+                    var governorate = _context.Governorates.FirstOrDefault(x => x.GovernorateId == birthCertificateViewModel.FamilyGovernorateId);
+                    governorateName = governorate!.GovernorateName;
+                }
+                var districtName = "";
+                if (birthCertificateViewModel.MotherReligionId != null)
+                {
+                    var district = _context.Districts.FirstOrDefault(x => x.DistrictId == birthCertificateViewModel.FamilyDistrictId);
+                    districtName = district!.DistrictName;
+                }
+                var nahiaName = "";
+                if (birthCertificateViewModel.MotherNationalityId != null)
+                {
+                    var nahia = _context.Nahias.FirstOrDefault(x => x.NahiaId == birthCertificateViewModel.FamilyNahiaId);
+                    nahiaName = nahia!.NahiaName;
+                }
+                #endregion
+
+                #region Handle-Null-Images
+
+                string imgBirthCertificatePath = "";
+                if (birthCertificateViewModel.ImageBirthCertificate != null)
+                {
+                    string imgBirthCertificate = FileUpload(birthCertificateViewModel.ImageBirthCertificate!, birthCertificateViewModel.ImageBirthCertificate!.FileName);
+                    imgBirthCertificatePath = imgBirthCertificate;
+                }
+                string imgMarriageCertificatePath = "";
+                if (birthCertificateViewModel.ImageMarriageCertificate != null)
+                {
+                    string imgMarriageCertificate = FileUpload(birthCertificateViewModel.ImageMarriageCertificate!, birthCertificateViewModel.ImageMarriageCertificate!.FileName);
+                    imgMarriageCertificatePath = imgMarriageCertificate;
+                }
+                string imgFatherUnifiedNationalIdFrontPath = "";
+                if (birthCertificateViewModel.ImageFatherUnifiedNationalIdFront != null)
+                {
+                    string imgFatherUnifiedNationalIdFront = FileUpload(birthCertificateViewModel.ImageFatherUnifiedNationalIdFront!, birthCertificateViewModel.ImageFatherUnifiedNationalIdFront!.FileName);
+                    imgFatherUnifiedNationalIdFrontPath = imgFatherUnifiedNationalIdFront;
+                }
+                string imgFatherUnifiedNationalIdBackPath = "";
+                if (birthCertificateViewModel.ImageFatherUnifiedNationalIdBack != null)
+                {
+                    string imgFatherUnifiedNationalIdBack = FileUpload(birthCertificateViewModel.ImageFatherUnifiedNationalIdBack!, birthCertificateViewModel.ImageFatherUnifiedNationalIdBack!.FileName);
+                    imgFatherUnifiedNationalIdBackPath = imgFatherUnifiedNationalIdBack;
+                }
+                string imgMotherUnifiedNationalIdFrontPath = "";
+                if (birthCertificateViewModel.ImageMotherUnifiedNationalIdFront != null)
+                {
+                    string imgMotherUnifiedNationalIdFront = FileUpload(birthCertificateViewModel.ImageMotherUnifiedNationalIdFront!, birthCertificateViewModel.ImageMotherUnifiedNationalIdFront!.FileName);
+                    imgMotherUnifiedNationalIdFrontPath = imgMotherUnifiedNationalIdFront;
+                }
+                string imgMotherUnifiedNationalIdBackPath = "";
+                if (birthCertificateViewModel.ImageMotherUnifiedNationalIdBack != null)
+                {
+                    string imgMotherUnifiedNationalIdBack = FileUpload(birthCertificateViewModel.ImageMotherUnifiedNationalIdBack!, birthCertificateViewModel.ImageMotherUnifiedNationalIdBack!.FileName);
+                    imgMotherUnifiedNationalIdBackPath = imgMotherUnifiedNationalIdBack;
+                }
+                string imgResidencyCardFrontPath = "";
+                if (birthCertificateViewModel.ImageResidencyCardFront != null)
+                {
+                    string imgResidencyCardFront = FileUpload(birthCertificateViewModel.ImageResidencyCardFront!, birthCertificateViewModel.ImageResidencyCardFront!.FileName);
+                    imgResidencyCardFrontPath = imgResidencyCardFront;
+                }
+                string imgResidencyCardBackPath = "";
+                if (birthCertificateViewModel.ImageResidencyCardBack != null)
+                {
+                    string imgResidencyCardBack = FileUpload(birthCertificateViewModel.ImageResidencyCardBack!, birthCertificateViewModel.ImageResidencyCardBack!.FileName);
+                    imgResidencyCardBackPath = imgResidencyCardBack;
+                }
+                #endregion
+
+                #region Passing-Info-To-BirthCertificate
 
                 BirthCertificate birthCertificate = new BirthCertificate
                 {
@@ -302,18 +410,18 @@ namespace CRVS.Controllers
                     FatherLName = birthCertificateViewModel.FatherLName,
                     FatherDOB = birthCertificateViewModel.FatherDOB,
                     FatherAge = birthCertificateViewModel.FatherAge,
-                    FatherJob = fatherJob!.JobName,
-                    FatherReligion = fatherReligion!.ReligionName,
-                    FatherNationality = fatherNationality!.NationalityName,
+                    FatherJob = fatherJobName,
+                    FatherReligion = fatherReligionName,
+                    FatherNationality = fatherNationalityName,
                     FatherMobile = birthCertificateViewModel.FatherMobile,
                     MotherFName = birthCertificateViewModel.MotherFName,
                     MotherMName = birthCertificateViewModel.MotherMName,
                     MotherLName = birthCertificateViewModel.MotherLName,
                     MotherDOB = birthCertificateViewModel.MotherDOB,
                     MotherAge = birthCertificateViewModel.MotherAge,
-                    MotherJob = motherJob!.JobName,
-                    MotherReligion = motherReligion!.ReligionName,
-                    MotherNationality = motherNationality!.NationalityName,
+                    MotherJob = motherJobName,
+                    MotherReligion = motherReligionName,
+                    MotherNationality = motherNationalityName,
                     MotherMobile = birthCertificateViewModel.MotherMobile,
                     Relative = (BirthCertificate.Relatives)birthCertificateViewModel.Relative,
                     Alive = birthCertificateViewModel.Alive,
@@ -327,12 +435,11 @@ namespace CRVS.Controllers
                     BabyWeight = birthCertificateViewModel.BabyWeight,
                     PlaceOfBirth = birthCertificateViewModel.PlaceOfBirth,
                     BirthOccurredBy = (BirthCertificate.BirthOccurredBys)birthCertificateViewModel.BirthOccurredBy,
-                    KabilaName = birthCertificateViewModel.KabilaName,
                     LicenseNo = birthCertificateViewModel.LicenseNo,
                     LicenseYear = birthCertificateViewModel.LicenseYear,
-                    FamilyGovernorate = governorate!.GovernorateName,
-                    FamilyDistrict = district!.DistrictName,
-                    FamilyNahia = nahia!.NahiaName,
+                    FamilyGovernorate = governorateName,
+                    FamilyDistrict = districtName,
+                    FamilyNahia = nahiaName,
                     FamilyMahala = birthCertificateViewModel.FamilyMahala,
                     FamilyDOH = birthCertificateViewModel.FamilyDOH,
                     FamilySector = birthCertificateViewModel.FamilySector,
@@ -355,18 +462,19 @@ namespace CRVS.Controllers
                     HospitalManagerName = birthCertificateViewModel.HospitalManagerName,
                     HospitalManagerSig = birthCertificateViewModel.HospitalManagerSig,
                     RationCard = birthCertificateViewModel.RationCard,
-                    ImgBirthCertificate = imgBirthCertificate,
-                    ImgMarriageCertificate = imgMarriageCertificate,
-                    ImgFatherUnifiedNationalIdFront = imgFatherUnifiedNationalIdFront,
-                    ImgFatherUnifiedNationalIdBack = imgFatherUnifiedNationalIdBack,
-                    ImgMotherUnifiedNationalIdFront = imgMotherUnifiedNationalIdFront,
-                    ImgMotherUnifiedNationalIdBack = imgMotherUnifiedNationalIdBack,
-                    ImgResidencyCardFront = imgResidencyCardFront,
-                    ImgResidencyCardBack = imgResidencyCardBack,
-                    FirstStage = true,
+                    ImgBirthCertificate = imgBirthCertificatePath,
+                    ImgMarriageCertificate = imgMarriageCertificatePath,
+                    ImgFatherUnifiedNationalIdFront = imgFatherUnifiedNationalIdFrontPath,
+                    ImgFatherUnifiedNationalIdBack = imgFatherUnifiedNationalIdBackPath,
+                    ImgMotherUnifiedNationalIdFront = imgMotherUnifiedNationalIdFrontPath,
+                    ImgMotherUnifiedNationalIdBack = imgMotherUnifiedNationalIdBackPath,
+                    ImgResidencyCardFront = imgResidencyCardFrontPath,
+                    ImgResidencyCardBack = imgResidencyCardBackPath,
                     CreationDate = DateTime.Now,
                     Creator = currentUser!.Id,
                 };
+                #endregion
+
                 await _certificatesRepository.AddAsync(birthCertificate);
                 Notification notification = new Notification
                 {

@@ -12,8 +12,6 @@ namespace CRVS.Core.Models
     {
         public int BirthCertificateId { get; set; }
         public string? HealthId { get; set; }
-        [Required]
-        [Display(Name = "Child Name")]
         public string? ChildName { get; set; }
         public Genders Gender { get; set; }
         public enum Genders
@@ -77,17 +75,11 @@ namespace CRVS.Core.Models
         public int? DurationOfPregnancy { get; set; }
         public decimal? BabyWeight { get; set; }
         public string? PlaceOfBirth { get; set; }
-        public IsBirthInHomes IsBirthInHome { get; set; }
-        public enum IsBirthInHomes
-        {
-            نعم, لا
-        }
         public BirthOccurredBys BirthOccurredBy { get; set; }
         public enum BirthOccurredBys
         {
-            طبيب, ممرضة
+            طبيب, ممرضة, قابلة, أخرى
         }
-        public string? KabilaName { get; set; }
         public string? LicenseNo { get; set; }
         public DateTime? LicenseYear { get; set; }
         public string? FamilyGovernorate { get; set; }
@@ -131,8 +123,7 @@ namespace CRVS.Core.Models
         public string? ImgMotherUnifiedNationalIdBack { get; set; }
         public string? ImgResidencyCardFront { get; set; }
         public string? ImgResidencyCardBack { get; set; }
-        public bool FirstStage { get; set; }
-        public bool SecondStage { get; set; }
+        public bool BiostatisticsStage { get; set; }
         public bool Approval { get; set; }
         public bool IsDeleted { get; set; }
         public bool IsActive { get; set; }

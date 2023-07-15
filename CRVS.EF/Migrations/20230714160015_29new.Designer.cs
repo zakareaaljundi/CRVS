@@ -4,6 +4,7 @@ using CRVS.EF;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CRVS.EF.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230714160015_29new")]
+    partial class _29new
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -39,9 +42,6 @@ namespace CRVS.EF.Migrations
                     b.Property<decimal?>("BabyWeight")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<bool>("BiostatisticsStage")
-                        .HasColumnType("bit");
-
                     b.Property<DateTime?>("BirthHour")
                         .HasColumnType("datetime2");
 
@@ -64,6 +64,7 @@ namespace CRVS.EF.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("ChildName")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("CivilStatusDirectorate")
@@ -153,6 +154,9 @@ namespace CRVS.EF.Migrations
                     b.Property<string>("FatherReligion")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<bool>("FirstStage")
+                        .HasColumnType("bit");
+
                     b.Property<int>("Gender")
                         .HasColumnType("int");
 
@@ -207,11 +211,17 @@ namespace CRVS.EF.Migrations
                     b.Property<bool>("IsActive")
                         .HasColumnType("bit");
 
+                    b.Property<int>("IsBirthInHome")
+                        .HasColumnType("int");
+
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
                     b.Property<int>("IsDisabled")
                         .HasColumnType("int");
+
+                    b.Property<string>("KabilaName")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("KinshipOfTheNewborn")
                         .HasColumnType("nvarchar(max)");
@@ -281,6 +291,9 @@ namespace CRVS.EF.Migrations
 
                     b.Property<int>("Relative")
                         .HasColumnType("int");
+
+                    b.Property<bool>("SecondStage")
+                        .HasColumnType("bit");
 
                     b.Property<int?>("StillBirth")
                         .HasColumnType("int");
@@ -379,9 +392,6 @@ namespace CRVS.EF.Migrations
 
                     b.Property<string>("GovernorateName")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("IsArabian")
-                        .HasColumnType("bit");
 
                     b.HasKey("GovernorateId");
 

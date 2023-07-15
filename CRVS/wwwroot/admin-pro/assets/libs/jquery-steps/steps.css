@@ -4,7 +4,9 @@ Author: Themedesigner
 Email: niravjoshi87@gmail.com
 File: css
 */
-
+:root {
+    --steps-color: #3fd429;
+}
 .wizard-content .wizard>.steps>ul>li:after,
 .wizard-content .wizard>.steps>ul>li:before {
     content: '';
@@ -84,9 +86,9 @@ File: css
 }
 
 .wizard-content .wizard>.steps>ul>li.current .step {
-    border-color: #2962FF ;
+    border-color: var(--steps-color, lightblue) ;
     background-color: #fff;
-    color: #2962FF 
+    color: var(--steps-color, lightblue) 
 }
 
 .wizard-content .wizard>.steps>ul>li.disabled a,
@@ -103,8 +105,8 @@ File: css
 }
 
 .wizard-content .wizard>.steps>ul>li.done .step {
-    background-color: #2962FF ;
-    border-color: #2962FF ;
+    background-color: var(--steps-color, lightblue) ;
+    border-color: var(--steps-color, lightblue) ;
     color: #fff
 }
 
@@ -176,7 +178,7 @@ File: css
 }
 
 .wizard-content .wizard>.actions>ul>li>a {
-    background: #2962FF ;
+    background: var(--steps-color, lightblue) ;
     color: #fff;
     display: block;
     padding: 7px 12px;
@@ -230,7 +232,7 @@ File: css
     top: 45px;
     width: 50%;
     height: 3px;
-    background-color: #2962FF 
+    background-color: var(--steps-color, lightblue) 
 }
 
 .wizard-content .wizard.wizard-circle>.steps>ul>li.current:after,
@@ -253,18 +255,18 @@ File: css
     top: 39px;
     width: 50%;
     height: 2px;
-    background-color: #2962FF 
+    background-color: var(--steps-color, lightblue) 
 }
 
 .wizard-content .wizard.wizard-notification>.steps>ul>li.current .step {
-    border: 2px solid #2962FF ;
-    color: #2962FF ;
+    border: 2px solid var(--steps-color, lightblue) ;
+    color: var(--steps-color, lightblue) ;
     line-height: 36px
 }
 
 .wizard-content .wizard.wizard-notification>.steps>ul>li.current .step:after,
 .wizard-content .wizard.wizard-notification>.steps>ul>li.done .step:after {
-    border-top-color: #2962FF 
+    border-top-color: var(--steps-color, lightblue) 
 }
 
 .wizard-content .wizard.wizard-notification>.steps>ul>li.current:after,
@@ -339,7 +341,7 @@ File: css
     }
     .wizard-content .wizard>.steps>ul>li:last-child:after {
         content: '';
-        background-color: #2962FF 
+        background-color: var(--steps-color, lightblue) 
     }
     .wizard-content .wizard.vertical>.steps {
         width: 15%
@@ -351,7 +353,7 @@ File: css
         width: 100%
     }
     .wizard-content .wizard>.steps>ul>li.current:after {
-        background-color: #2962FF 
+        background-color: var(--steps-color, lightblue) 
     }
      .wizard-content .wizard.vertical>.steps>ul>li {
         display: block;
