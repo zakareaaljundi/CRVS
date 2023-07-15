@@ -1,7 +1,9 @@
 ﻿@model CRVS.Core.Models.ViewModels.BirthCertificateViewModel
+
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Edit";
 }
+
 
 <div class="row">
     <div class="col-12">
@@ -10,62 +12,10 @@
                 <h4 class="card-title mb-0 text-center">@Localizer["CreateNewBirthCertificate"]</h4>
             </div>
             <div class="card-body wizard-content">
-                <form asp-action="Create" class="login-form validation-wizard wizard-circle mt-5 pb-5" enctype="multipart/form-data" method="post" id="form">
+                <form asp-action="Create" class="login-form validation-wizard wizard-circle mt-5 pb-5" enctype="multipart/form-data" method="post">
                     <!-- Step 1 -->
                     <h6>@Localizer["NewBornInfo"]</h6>
                     <section>
-                        <div class="row">
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    <input asp-for="Governorate" class="form-control required" value="@ViewBag.Governorate" readonly />
-                                    <span asp-validation-for="Governorate" class="text-danger"></span>
-                                </div>
-                            </div>
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    <input asp-for="Doh" class="form-control required" value="@ViewBag.Doh" readonly />
-                                    <span asp-validation-for="Doh" class="text-danger"></span>
-                                </div>
-                            </div>
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    <input asp-for="District" class="form-control required" value="@ViewBag.District" readonly />
-                                    <span asp-validation-for="District" class="text-danger"></span>
-                                </div>
-                            </div>
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    <input asp-for="Nahia" class="form-control required" value="@ViewBag.Nahia" readonly />
-                                    <span asp-validation-for="Nahia" class="text-danger"></span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    <input asp-for="Village" class="form-control required" value="@ViewBag.Village" readonly />
-                                    <span asp-validation-for="Village" class="text-danger"></span>
-                                </div>
-                            </div>
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    <input asp-for="FacilityType" class="form-control required" value="@ViewBag.FacilityType" readonly />
-                                    <span asp-validation-for="FacilityType" class="text-danger"></span>
-                                </div>
-                            </div>
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    <input asp-for="HealthInstitution" class="form-control required" value="@ViewBag.HealthInstitution" readonly />
-                                    <span asp-validation-for="HealthInstitution" class="text-danger"></span>
-                                </div>
-                            </div>
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    <input asp-for="HealthId" class="form-control" value="@ViewBag.HId" readonly />
-                                    <span asp-validation-for="HealthId" class="text-danger"></span>
-                                </div>
-                            </div>
-                        </div><hr />
                         <div class="row">
                             <h3 class="mb-5">1- @Localizer["NewBornInfo"] :</h3>
                             <div class="col-md-3">
@@ -107,7 +57,7 @@
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label>ه- @Localizer["NewBornBirthHour"]</label>
-                                    <input asp-for="BirthHour" id="BirthHour" class="form-control" />
+                                    <input asp-for="BirthHour" id="BirthHour" class="form-control " />
                                     <span asp-validation-for="BirthHour" class="text-danger"></span>
                                 </div>
                             </div>

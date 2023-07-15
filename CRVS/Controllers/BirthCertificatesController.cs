@@ -67,39 +67,37 @@ namespace CRVS.Controllers
             bool IsAdmin = await _userManager.IsInRoleAsync(currentUser!, "Admin");
             if (IsAdmin)
             {
-                var admin = await _context.Users.FirstOrDefaultAsync(x => x.UserId == currentUser.Id);
+                var admin = await _context.Users.FirstOrDefaultAsync(x => x.UserId == currentUser!.Id);
                 var adminCertificates = _context.BirthCertificates.Where(x => x.HealthInstitution == admin!.HealthInstitution).ToList();
                 return View(adminCertificates);
 
             }
             else
             {
-                var user = await _context.Users.FirstOrDefaultAsync(x => x.UserId == currentUser.Id);
+                var user = await _context.Users.FirstOrDefaultAsync(x => x.UserId == currentUser!.Id);
                 var adminCertificates = _context.BirthCertificates.Where(x => x.Creator == user!.UserId).ToList();
                 return View(adminCertificates);
-            }/*
-            var admin = _context.Users.FirstOrDefault(e => e.UserId == CurrentUser!.Id);
-            var certificates = await _certificatesRepository.GetAllAsync();
-            return View(certificates);*/
-        }/*
-        public async Task<IActionResult> SecondStage()
+            }
+        }
+        public async Task<IActionResult> ToEdit()
         {
             var certificates = await _certificatesRepository.GetAllAsync();
-            var pendingCertificates = certificates.Where(x => x.FirstStage == true).Where(x => x.SecondStage == false).Where(x => x.Approval == false).Where(x => x.IsDeleted == false);
+            var pendingCertificates = certificates.Where(x => x.ToEdit == true).Where(x => x.BiostatisticsStage == false).Where(x => x.Approval == false).Where(x => x.IsDeleted == false);
             return View(pendingCertificates);
         }
-        public async Task<IActionResult> ApprovalStage()
-        {
-            var certificates = await _certificatesRepository.GetAllAsync();
-            var pendingCertificates = certificates.Where(x => x.FirstStage == true).Where(x => x.SecondStage == true).Where(x => x.Approval == false).Where(x => x.IsDeleted == false);
-            return View(pendingCertificates);
-        }
-        public async Task<IActionResult> Approved()
-        {
-            var certificates = await _certificatesRepository.GetAllAsync();
-            var approvedCertificates = certificates.Where(x => x.FirstStage == true).Where(x => x.SecondStage == true).Where(x => x.Approval == true).Where(x => x.IsDeleted == false);
-            return View(approvedCertificates);
-        }*/
+        /*
+                public async Task<IActionResult> ApprovalStage()
+                {
+                    var certificates = await _certificatesRepository.GetAllAsync();
+                    var pendingCertificates = certificates.Where(x => x.FirstStage == true).Where(x => x.SecondStage == true).Where(x => x.Approval == false).Where(x => x.IsDeleted == false);
+                    return View(pendingCertificates);
+                }
+                public async Task<IActionResult> Approved()
+                {
+                    var certificates = await _certificatesRepository.GetAllAsync();
+                    var approvedCertificates = certificates.Where(x => x.FirstStage == true).Where(x => x.SecondStage == true).Where(x => x.Approval == true).Where(x => x.IsDeleted == false);
+                    return View(approvedCertificates);
+                }*/
         public async Task<IActionResult> UnCompleted()
         {
             var certificates = await _certificatesRepository.GetAllAsync();
@@ -320,13 +318,13 @@ namespace CRVS.Controllers
                     governorateName = governorate!.GovernorateName;
                 }
                 var districtName = "";
-                if (birthCertificateViewModel.MotherReligionId != null)
+                if (birthCertificateViewModel.FamilyDistrictId != null)
                 {
                     var district = _context.Districts.FirstOrDefault(x => x.DistrictId == birthCertificateViewModel.FamilyDistrictId);
                     districtName = district!.DistrictName;
                 }
                 var nahiaName = "";
-                if (birthCertificateViewModel.MotherNationalityId != null)
+                if (birthCertificateViewModel.FamilyNahiaId != null)
                 {
                     var nahia = _context.Nahias.FirstOrDefault(x => x.NahiaId == birthCertificateViewModel.FamilyNahiaId);
                     nahiaName = nahia!.NahiaName;
@@ -470,6 +468,7 @@ namespace CRVS.Controllers
                     ImgMotherUnifiedNationalIdBack = imgMotherUnifiedNationalIdBackPath,
                     ImgResidencyCardFront = imgResidencyCardFrontPath,
                     ImgResidencyCardBack = imgResidencyCardBackPath,
+                    ToEdit = true,
                     CreationDate = DateTime.Now,
                     Creator = currentUser!.Id,
                 };
@@ -490,26 +489,7 @@ namespace CRVS.Controllers
                 return RedirectToAction("Create");
             }
             return View(birthCertificateViewModel);
-        }/*
-        public string FileUpload(BirthCertificateViewModel model)
-        {
-            string wwwPath = _webHostEnvironment.WebRootPath;
-            if (string.IsNullOrEmpty(wwwPath)) { }
-            string contentPath = _webHostEnvironment.ContentRootPath;
-            if (string.IsNullOrEmpty(contentPath)) { }
-            string p = Path.Combine(wwwPath, "Images");
-            if (!Directory.Exists(p))
-            {
-                Directory.CreateDirectory(p);
-            }
-            string fileName = Path.GetFileNameWithoutExtension(model.ImageBirthCertificate!.FileName);
-            string newImgName = model.BirthCertificateId + "_" + fileName + "_" + Guid.NewGuid().ToString() + Path.GetExtension(model.ImageBirthCertificate!.FileName);
-            using (FileStream fileStream = new FileStream(Path.Combine(p, newImgName), FileMode.Create))
-            {
-                model.ImageBirthCertificate.CopyTo(fileStream);
-            };
-            return "\\Images\\" + newImgName;
-        }*/
+        }
         public string FileUpload(IFormFile file, string desiredFileName)
         {
             string wwwPath = _webHostEnvironment.WebRootPath;
@@ -529,42 +509,106 @@ namespace CRVS.Controllers
             }
             return "\\Images\\" + newImgName;
         }
-
-    }
-    /*
-    public IActionResult Index()
-    {
-        var currentUser = await _userManager.GetUserAsync(User);
-        var currentRoles = await _userManager.GetRolesAsync(currentUser);
-        var roleId = "";
-        if (currentRoles.Count > 0)
+        [HttpGet]
+        public async Task<IActionResult> Edit(int id)
         {
-            var roleName = currentRoles[0];
-            var role = await _roleManager.FindByNameAsync(roleName);
-
-            if (role != null)
+            var birthCertificate = await _certificatesRepository.GetByIdAsync(id);
+            if (birthCertificate == null)
             {
-                roleId = role.Id;
+                return NotFound();
             }
+            #region Passing-Info-To-BirthCertificate
+            
+            BirthCertificateViewModel birthCertificateViewModel = new BirthCertificateViewModel
+            {
+                ChildName = birthCertificate.ChildName,
+                Gender = (BirthCertificateViewModel.Genders)birthCertificate.Gender,
+                BirthType = (BirthCertificateViewModel.BirthTypes)birthCertificate.BirthType,
+                NumberOfBirth = (BirthCertificateViewModel.NumberOfBirths)birthCertificate.NumberOfBirth,
+                BirthHour = birthCertificate.BirthHour,
+                DOB = birthCertificate.DOB,
+                DOBText = birthCertificate.DOBText,
+                FatherFName = birthCertificate.FatherFName,
+                FatherMName = birthCertificate.FatherMName,
+                FatherLName = birthCertificate.FatherLName,
+                FatherDOB = birthCertificate.FatherDOB,
+                FatherAge = birthCertificate.FatherAge,/*
+                FatherJobId = birthCertificate.FatherJob,
+                FatherReligion = birthCertificate.FatherReligion,
+                FatherNationality = birthCertificate.FatherNationality,*/
+                FatherMobile = birthCertificate.FatherMobile,
+                MotherFName = birthCertificate.MotherFName,
+                MotherMName = birthCertificate.MotherMName,
+                MotherLName = birthCertificate.MotherLName,
+                MotherDOB = birthCertificate.MotherDOB,
+                MotherAge = birthCertificate.MotherAge,
+                /*
+                MotherJob = birthCertificate.MotherJob,
+                MotherReligion = birthCertificate.MotherReligion,
+                MotherNationality = birthCertificate.MotherNationality,*/
+                MotherMobile = birthCertificate.MotherMobile,
+                Relative = (BirthCertificateViewModel.Relatives)birthCertificate.Relative,
+                Alive = birthCertificate.Alive,
+                BornAliveThenDied = birthCertificate.BornAliveThenDied,
+                StillBirth = birthCertificate.StillBirth,
+                BornDisable = birthCertificate.BornDisable,
+                NoAbortion = birthCertificate.NoAbortion,
+                IsDisabled = (BirthCertificateViewModel.IsDisableds)birthCertificate.IsDisabled,
+                /*DisabledType = disableTypeName,*/
+                DurationOfPregnancy = birthCertificate.DurationOfPregnancy,
+                BabyWeight = birthCertificate.BabyWeight,
+                PlaceOfBirth = birthCertificate.PlaceOfBirth,
+                BirthOccurredBy = (BirthCertificateViewModel.BirthOccurredBys)birthCertificate.BirthOccurredBy,
+                LicenseNo = birthCertificate.LicenseNo,
+                LicenseYear = birthCertificate.LicenseYear,
+                /*FamilyGovernorate = governorateName,
+                FamilyDistrict = districtName,
+                FamilyNahia = nahiaName,*/
+                FamilyMahala = birthCertificate.FamilyMahala,
+                FamilyDOH = birthCertificate.FamilyDOH,
+                FamilySector = birthCertificate.FamilySector,
+                FamilyPHC = birthCertificate.FamilyPHC,
+                FamilyZigag = birthCertificate.FamilyZigag,
+                FamilyHomeNo = birthCertificate.FamilyHomeNo,
+                DocumentType = (BirthCertificateViewModel.DocumentTypes)birthCertificate.DocumentType,
+                RecordNumber = birthCertificate.RecordNumber,
+                PageNumber = birthCertificate.PageNumber,
+                CivilStatusDirectorate = birthCertificate.CivilStatusDirectorate,
+                GovernorateCivilStatusDirectorate = birthCertificate.GovernorateCivilStatusDirectorate,
+                NationalIdFor = (BirthCertificateViewModel.NationalIdFors)birthCertificate.NationalIdFor,
+                NationalId = birthCertificate.NationalId,
+                PassportNo = birthCertificate.PassportNo,
+                InformerName = birthCertificate.InformerName,
+                InformerJobTitle = birthCertificate.InformerJobTitle,
+                KinshipOfTheNewborn = birthCertificate.KinshipOfTheNewborn,
+                BirthPerformerName = birthCertificate.BirthPerformerName,
+                BirthPerformerWorkingAddress = birthCertificate.BirthPerformerWorkingAddress,
+                HospitalManagerName = birthCertificate.HospitalManagerName,
+                HospitalManagerSig = birthCertificate.HospitalManagerSig,
+                RationCard = birthCertificate.RationCard,/*
+                ImgBirthCertificate = imgBirthCertificatePath,
+                ImgMarriageCertificate = imgMarriageCertificatePath,
+                ImgFatherUnifiedNationalIdFront = imgFatherUnifiedNationalIdFrontPath,
+                ImgFatherUnifiedNationalIdBack = imgFatherUnifiedNationalIdBackPath,
+                ImgMotherUnifiedNationalIdFront = imgMotherUnifiedNationalIdFrontPath,
+                ImgMotherUnifiedNationalIdBack = imgMotherUnifiedNationalIdBackPath,
+                ImgResidencyCardFront = imgResidencyCardFrontPath,
+                ImgResidencyCardBack = imgResidencyCardBackPath,*/
+            };
+            #endregion
+            return View(birthCertificateViewModel);
         }
 
-        var controllerName = this.ControllerContext.RouteData.Values["controller"]!.ToString();
+        [HttpPost]
+        public async Task<IActionResult> Edit(BirthCertificate birthCertificate)
+        {
+            if (ModelState.IsValid)
+            {
+                _certificatesRepository.Update(birthCertificate);
+                return RedirectToAction("Index");
+            }
 
-        var rolePermissions = await _context.RolePermissions.FirstOrDefaultAsync(p => p.RoleId! == roleId && p.TableName == controllerName);
-
-        bool canAdd = rolePermissions != null && rolePermissions.AddPermission;
-        bool canEdit = rolePermissions != null && rolePermissions.EditPermission;
-        bool canRead = rolePermissions != null && rolePermissions.ReadPermission;
-        bool canDelete = rolePermissions != null && rolePermissions.DeletePermission;
-        bool canDelete = rolePermissions != null && rolePermissions.DeletePermission;
-
-        ViewBag.CanAdd = canAdd;
-        ViewBag.CanEdit = canEdit;
-        ViewBag.CanRead = canRead;
-        ViewBag.CanDelete = canDelete;
-        ViewBag.CanDelete = canDelete;
-        return View();
+            return View(birthCertificate);
+        }
     }
-        */
-
 }

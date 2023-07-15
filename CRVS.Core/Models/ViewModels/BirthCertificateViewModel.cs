@@ -36,6 +36,7 @@ namespace CRVS.Core.Models.ViewModels
         {
             مفردة, ثنائية, ثلاثية, أكثر
         }
+        [DataType(DataType.Time)]
         public DateTime? BirthHour { get; set; }
         public DateTime? DOB { get; set; }
         public string? DOBText { get; set; }

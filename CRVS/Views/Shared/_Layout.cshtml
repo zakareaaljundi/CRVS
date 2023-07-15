@@ -275,7 +275,7 @@
                                 </ul>
                             </li>
                         }
-                        @if (User.IsInRole("Admin") || User.IsInRole("الادارة العليا"))
+                        @if (User.IsInRole("مكتب تسجيل المواليد والوفيات") || User.IsInRole("الادارة العليا"))
                         {
                             <li class="sidebar-item">
                                 <a class="sidebar-link has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false">
@@ -319,7 +319,7 @@
                             </a>
                             <ul aria-expanded="false" class="collapse  first-level">
                                 @*@if (ViewBag.canAdd)*@
-                                @if (!(User.IsInRole("Admin")) || !User.IsInRole("الادارة العليا"))
+                                @if (!(User.IsInRole("مكتب تسجيل المواليد والوفيات")) || !User.IsInRole("الادارة العليا"))
                                 {
                                     <li class="sidebar-item">
                                         <a asp-area="" asp-controller="BirthCertificates" asp-action="PreCreate" class="sidebar-link">
@@ -327,7 +327,7 @@
                                         </a>
                                     </li>
                                 }
-                                @if (User.IsInRole("Admin"))
+                                @if (User.IsInRole("مكتب تسجيل المواليد والوفيات"))
                                 {
                                     <li class="sidebar-item">
                                         <a asp-area="" asp-controller="BirthCertificates" asp-action="ApprovalStage" class="sidebar-link">
@@ -335,7 +335,7 @@
                                         </a>
                                     </li>
                                 }
-                                @if ((User.IsInRole("Admin")) || User.IsInRole("الادارة العليا"))
+                                @if ((User.IsInRole("مكتب تسجيل المواليد والوفيات")) || User.IsInRole("الادارة العليا"))
                                 {
                                     <li class="sidebar-item">
                                         <a asp-area="" asp-controller="BirthCertificates" asp-action="Approved" class="sidebar-link">
@@ -343,10 +343,10 @@
                                         </a>
                                     </li>
                                 }
-                                @if (User.IsInRole("Registrar - Biostatistics Division"))
+                                @if (User.IsInRole("شعبة الإحصاء"))
                                 {
                                     <li class="sidebar-item">
-                                        <a asp-area="" asp-controller="BirthCertificates" asp-action="SecondStage" class="sidebar-link">
+                                        <a asp-area="" asp-controller="BirthCertificates" asp-action="ToEdit" class="sidebar-link">
                                             <i class="mdi mdi-format-align-left"></i><span class="hide-menu">@Localizer["SecondStageCertificates"]</span>
                                         </a>
                                     </li>

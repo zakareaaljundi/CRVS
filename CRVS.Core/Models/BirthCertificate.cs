@@ -35,6 +35,7 @@ namespace CRVS.Core.Models
         {
             مفردة, ثنائية, ثلاثية, أكثر
         }
+        [DataType(DataType.Time)]
         public DateTime? BirthHour { get; set; }
         public DateTime? DOB { get; set; }
         public string? DOBText { get; set; }
@@ -123,6 +124,7 @@ namespace CRVS.Core.Models
         public string? ImgMotherUnifiedNationalIdBack { get; set; }
         public string? ImgResidencyCardFront { get; set; }
         public string? ImgResidencyCardBack { get; set; }
+        public bool ToEdit { get; set; }
         public bool BiostatisticsStage { get; set; }
         public bool Approval { get; set; }
         public bool IsDeleted { get; set; }
