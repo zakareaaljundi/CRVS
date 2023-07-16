@@ -17,7 +17,7 @@ namespace CRVS.Core.Models.ViewModels
         public Genders Gender { get; set; }
         public enum Genders
         {
-            ذكر, أنثى
+            ذكر, أنثى, خنثى
         }
         public string? Governorate { get; set; }
         public string? Doh { get; set; }
@@ -38,11 +38,14 @@ namespace CRVS.Core.Models.ViewModels
         }
         [DataType(DataType.Time)]
         public DateTime? BirthHour { get; set; }
+        [DataType(DataType.Date)]
         public DateTime? DOB { get; set; }
         public string? DOBText { get; set; }
         public string? FatherFName { get; set; }
         public string? FatherMName { get; set; }
         public string? FatherLName { get; set; }
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM}", ApplyFormatInEditMode = true)]
         public DateTime? FatherDOB { get; set; }
         public string? FatherAge { get; set; }
         public int? FatherJobId { get; set; }
@@ -52,6 +55,8 @@ namespace CRVS.Core.Models.ViewModels
         public string? MotherFName { get; set; }
         public string? MotherMName { get; set; }
         public string? MotherLName { get; set; }
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM}", ApplyFormatInEditMode = true)]
         public DateTime? MotherDOB { get; set; }
         public string? MotherAge { get; set; }
         public int? MotherJobId { get; set; }
@@ -99,10 +104,10 @@ namespace CRVS.Core.Models.ViewModels
         {
             هوية_أحوال, بطاقة_موحدة, جواز_سفر
         }
-        public int? RecordNumber { get; set; }
-        public int? PageNumber { get; set; }
-        public int? CivilStatusDirectorate { get; set; }
-        public int? GovernorateCivilStatusDirectorate { get; set; }
+        public string? RecordNumber { get; set; }
+        public string? PageNumber { get; set; }
+        public string? CivilStatusDirectorate { get; set; }
+        public string? GovernorateCivilStatusDirectorate { get; set; }
         public NationalIdFors NationalIdFor { get; set; }
         public enum NationalIdFors
         {
@@ -117,7 +122,7 @@ namespace CRVS.Core.Models.ViewModels
         public string? BirthPerformerWorkingAddress { get; set; }
         public string? HospitalManagerName { get; set; }
         public string? HospitalManagerSig { get; set; }
-        public int? RationCard { get; set; }
+        public string? RationCard { get; set; }
         public IFormFile? ImageBirthCertificate { get; set; }
         public IFormFile? ImageMarriageCertificate { get; set; }
         public IFormFile? ImageFatherUnifiedNationalIdFront { get; set; }
@@ -126,6 +131,7 @@ namespace CRVS.Core.Models.ViewModels
         public IFormFile? ImageMotherUnifiedNationalIdBack { get; set; }
         public IFormFile? ImageResidencyCardFront { get; set; }
         public IFormFile? ImageResidencyCardBack { get; set; }
+        public string? SaveBtn { get; set; }
         public bool ToEdit { get; set; }
         public bool BiostatisticsStage { get; set; }
         public bool Approval { get; set; }

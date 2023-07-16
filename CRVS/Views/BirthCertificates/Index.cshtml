@@ -3,43 +3,58 @@
 @{
     ViewData["Title"] = "Index";
 }
-<h1 class="text-center mt-5">Certificates List</h1>
- @if (ViewBag.canAdd)
-{
-    <a asp-action="Create" >Create</a>
-}
+<h1 class="text-center mt-5"> قائمة الشهادات</h1>
+
 @*<table class="table table-dark table-responsive-lg mb-4" id="myTable">*@
 <table class="table table-bordered table-responsive-lg mt-3">
     <thead>
         <tr>
-            <th>Child Name</th>
-            <th>Gender</th>
-            <th>Governorate</th>
-            <th>Directorate</th>
-            <th>District</th>
-            <th>Nahia</th>
-            <th>Village</th>
-            <th>Approval</th>
-            <th>Operation</th>
+            <th>الرقم الصحي</th>
+            <th>إسم الوليد</th>
+            <th>تاريخ الولادة</th>
+            <th>مكان الولادة</th>
+            <th>إسم الأب</th>
+            <th>إسم الأم</th>
+            <th>الحالة</th>
+            <th>عمليات</th>
         </tr>
     </thead>
     <tbody>
         @foreach (var certificate in Model)
         {
             <tr>
-                <td>@certificate.ChildName</td>
-                <td>@certificate.Gender</td>
-                <td>@certificate.Governorate</td>
-                <td>@certificate.Doh</td>
-                <td>@certificate.District</td>
-                <td>@certificate.Nahia</td>
-                <td>@certificate.Village</td>
-                <td>@certificate.Approval</td>
-                <td>
-                    @if (ViewBag.canDelete)
-                    {
-                        <a asp-action="Delete" asp-route-id="@certificate.BirthCertificateId">Delete</a>
+                <td>@certificate.HealthId</td>
+                <td>@certificate.ChildName @certificate.FatherFName @certificate.FatherLName</td>
+                <td>@certificate.DOB</td>
+                <td>@certificate.Governorate, @certificate.Doh, @certificate.District, @certificate.Nahia</td>
+                <td>@certificate.FatherFName</td>
+                <td>@certificate.MotherFName</td>
+                <td class="position-relative">
+                    @{
+                        var status = certificate.BiostatisticsStage ? "bg-success" : "bg-warning";
+                        var title = certificate.BiostatisticsStage ? "مكتملة" : "غير مكتملة";
+                        ViewBag.Done = certificate.BiostatisticsStage;
                     }
+                    <div class="rounded-circle @status position-absolute" style="width: 10px; height: 10px; top: 50%; transform: translate(-50%, -50%); left: 50%;" title="@title"></div>
+                </td>
+                <td class="dropdown">
+                    <a class="nav-link text-center m-0" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="bi bi-three-dots fs-4"></i>
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                        @if (!ViewBag.Done && ViewBag.canEdit)
+                        {
+                            <li><a asp-action="Edit" class="dropdown-item ps-1" asp-route-id="@certificate.BirthCertificateId"><i class="bi bi-pencil-square ms-3"></i> تعديل</a></li>
+                        }
+                        @if (ViewBag.canDelete)
+                        {
+                            <li><a asp-action="Delete" class="dropdown-item ps-1" asp-route-id="@certificate.BirthCertificateId" asp-route-returnUrl="@Context.Request.Path"><i class="bi bi-trash3 ms-3"></i> حذف</a></li>
+                        }
+                        @if (ViewBag.canRead)
+                        {
+                            <li><a asp-action="Details" class="dropdown-item ps-1" asp-route-id="@certificate.BirthCertificateId"><i class="bi bi-card-text ms-3"></i> تفاصيل</a></li>
+                        }
+                    </ul>
                 </td>
             </tr>
         }

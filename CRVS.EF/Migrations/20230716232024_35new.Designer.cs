@@ -4,6 +4,7 @@ using CRVS.EF;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CRVS.EF.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230716232024_35new")]
+    partial class _35new
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -45,7 +48,7 @@ namespace CRVS.EF.Migrations
                     b.Property<DateTime?>("BirthHour")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("BirthOccurredBy")
+                    b.Property<int?>("BirthOccurredBy")
                         .HasColumnType("int");
 
                     b.Property<string>("BirthPerformerName")
@@ -54,7 +57,7 @@ namespace CRVS.EF.Migrations
                     b.Property<string>("BirthPerformerWorkingAddress")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("BirthType")
+                    b.Property<int?>("BirthType")
                         .HasColumnType("int");
 
                     b.Property<int?>("BornAliveThenDied")
@@ -87,7 +90,7 @@ namespace CRVS.EF.Migrations
                     b.Property<string>("District")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("DocumentType")
+                    b.Property<int?>("DocumentType")
                         .HasColumnType("int");
 
                     b.Property<string>("Doh")
@@ -153,7 +156,7 @@ namespace CRVS.EF.Migrations
                     b.Property<string>("FatherReligion")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("Gender")
+                    b.Property<int?>("Gender")
                         .HasColumnType("int");
 
                     b.Property<string>("Governorate")
@@ -210,7 +213,7 @@ namespace CRVS.EF.Migrations
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
-                    b.Property<int>("IsDisabled")
+                    b.Property<int?>("IsDisabled")
                         .HasColumnType("int");
 
                     b.Property<string>("KinshipOfTheNewborn")
@@ -255,13 +258,13 @@ namespace CRVS.EF.Migrations
                     b.Property<int?>("NationalId")
                         .HasColumnType("int");
 
-                    b.Property<int>("NationalIdFor")
+                    b.Property<int?>("NationalIdFor")
                         .HasColumnType("int");
 
                     b.Property<int?>("NoAbortion")
                         .HasColumnType("int");
 
-                    b.Property<int>("NumberOfBirth")
+                    b.Property<int?>("NumberOfBirth")
                         .HasColumnType("int");
 
                     b.Property<string>("PageNumber")
@@ -279,7 +282,7 @@ namespace CRVS.EF.Migrations
                     b.Property<string>("RecordNumber")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("Relative")
+                    b.Property<int?>("Relative")
                         .HasColumnType("int");
 
                     b.Property<int?>("StillBirth")

@@ -153,9 +153,6 @@
   <data name="CivilStatusDirectorate" xml:space="preserve">
     <value>دائرة جنسية وأحوال</value>
   </data>
-  <data name="CreateNewBirthCertificate" xml:space="preserve">
-    <value>إصدار شهادة ميلاد </value>
-  </data>
   <data name="DisabledType" xml:space="preserve">
     <value>نوع الإعاقة</value>
   </data>
@@ -266,6 +263,9 @@
   </data>
   <data name="MahalaOrVillage" xml:space="preserve">
     <value>المحلة أو القرية</value>
+  </data>
+  <data name="ModifyNewBirthCertificate" xml:space="preserve">
+    <value>تعديل شهادة ميلاد </value>
   </data>
   <data name="MotherAge" xml:space="preserve">
     <value>عمر الأم (تلقائي)</value>

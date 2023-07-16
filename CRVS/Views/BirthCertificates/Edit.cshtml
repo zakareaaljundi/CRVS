@@ -9,10 +9,11 @@
     <div class="col-12">
         <div class="card">
             <div class="border-bottom title-part-padding">
-                <h4 class="card-title mb-0 text-center">@Localizer["CreateNewBirthCertificate"]</h4>
+                <h4 class="card-title mb-0 text-center">@Localizer["ModifyNewBirthCertificate"]</h4>
             </div>
             <div class="card-body wizard-content">
                 <form asp-action="Edit" class="login-form validation-wizard wizard-circle mt-5 pb-5" enctype="multipart/form-data" method="post">
+                    <div asp-validation-summary="All" class="text-danger"></div>
                     <!-- Step 1 -->
                     <h6>@Localizer["NewBornInfo"]</h6>
                     <section>
@@ -22,7 +23,7 @@
                             <div class="col-md-3">
                                 <div class="form-group">
                                     <label>أ- @Localizer["NewBornName"]</label>
-                                    <input asp-for="ChildName" class="form-control " placeholder="@Localizer["NewBornName"]" />
+                                    <input asp-for="ChildName" class="form-control required" placeholder="@Localizer["NewBornName"]" />
                                     <span asp-validation-for="ChildName" class="text-danger"></span>
                                 </div>
                             </div>
@@ -86,7 +87,7 @@
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label>أ- @Localizer["FatherFName"]</label>
-                                    <input asp-for="FatherFName" class="form-control " placeholder="@Localizer["FatherFName"]" />
+                                    <input asp-for="FatherFName" class="form-control required" placeholder="@Localizer["FatherFName"]" />
                                     <span asp-validation-for="FatherFName" class="text-danger"></span>
                                 </div>
                             </div>
@@ -125,10 +126,7 @@
                                     <label>و- @Localizer["FatherJob"]</label>
                                     <select asp-for="FatherJobId" class="select2 " asp-items="ViewBag.MaleJobs">
                                         <option value="" disabled selected hidden>-- @Localizer["FatherJob"] *--</option>
-                                        @if(ViewBag.FatherJob != null)
-                                        {
-                                            <option hidden selected>@ViewBag.FatherJob</option>
-                                        }
+
                                     </select>
                                 </div>
                             </div>
@@ -145,7 +143,7 @@
                             <div class="col-md-4">
                                 <div class="form-group select2-parent">
                                     <label>ح- @Localizer["FatherNationality"]</label>
-                                    <select asp-for="FatherNationalityId" class="select2 " asp-items="@ViewBag.Nationalities">
+                                    <select asp-for="FatherNationalityId" class="select2 " asp-items="@ViewBag.FatherNationalities">
                                         <option value="" disabled selected hidden>-- @Localizer["FatherNationality"] *--</option>
                                     </select>
                                 </div>
@@ -159,12 +157,6 @@
                             </div>
                         </div>
                     </section>
-                    <script>
-                        $(document).ready(function () {
-                            $(".select2-container .select2-dropdown .select2-results ul li:first-child").addClass("hide");
-                        });
-                        //$(".select2-results > .select2-results__option > li:first-child").attr("hidden", true);
-                    </script>
                     <!-- Step 3 -->
                     <h6>@Localizer["MotherInfo"]</h6>
                     <section>
@@ -210,7 +202,7 @@
                             <div class="col-md-4">
                                 <div class="form-group select2-parent">
                                     <label>و- @Localizer["MotherJob"]</label>
-                                    <select asp-for="MotherJobId" class="select2 " asp-items="@ViewBag.FemaleJobs">
+                                    <select asp-for="MotherJobId" class="select2 required" asp-items="@ViewBag.FemaleJobs">
                                         <option value="" disabled selected hidden>-- @Localizer["MotherJob"] *--</option>
                                     </select>
                                 </div>
@@ -228,7 +220,7 @@
                             <div class="col-md-4">
                                 <div class="form-group select2-parent">
                                     <label>ح- @Localizer["MotherNationality"]</label>
-                                    <select asp-for="MotherNationalityId" class="select2 " asp-items="@ViewBag.Nationalities">
+                                    <select asp-for="MotherNationalityId" class="select2 " asp-items="@ViewBag.MotherNationalities">
                                         <option value="" disabled selected hidden>-- @Localizer["MotherNationality"] *--</option>
                                     </select>
                                 </div>
@@ -320,7 +312,7 @@
                             <div class="col-md-3">
                                 <div class="form-group">
                                     <label>7- @Localizer["DurationOfPregnancy"]</label>
-                                    <input asp-for="DurationOfPregnancy" class="form-control " placeholder="@Localizer["DurationOfPregnancy"]" />
+                                    <input asp-for="DurationOfPregnancy" class="form-control required" placeholder="@Localizer["DurationOfPregnancy"]" />
                                     <span asp-validation-for="DurationOfPregnancy" class="text-danger"></span>
                                 </div>
                             </div>
@@ -333,14 +325,12 @@
                             </div>
                         </div><hr />
                         @{
-                            if (ViewBag.FacilityType == "مكتب تسجيل الولادات والوفيات")
+                            if (ViewBag.PlaceOfBirth == "مكتب")
                             {
-                                ViewBag.PlaceOfBirth = "مكتب";
                                 ViewBag.IsOffice = true;
                             }
                             else
                             {
-                                ViewBag.PlaceOfBirth = "مستشفى أو مركز";
                                 ViewBag.IsOffice = false;
                             }
                             var isOffice = ViewBag.IsOffice;
@@ -428,7 +418,7 @@
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label>ه- @Localizer["Zigag"]</label>
-                                    <input asp-for="FamilyZigag" class="form-control " placeholder="@Localizer["Zigag"]" />
+                                    <input asp-for="FamilyZigag" class="form-control required" placeholder="@Localizer["Zigag"]" />
                                     <span asp-validation-for="FamilyZigag" class="text-danger"></span>
                                 </div>
                             </div>
@@ -587,8 +577,9 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>أ- @Localizer["ImageBirthCertificate"]</label>
-                                    <input asp-for="ImageBirthCertificate" class="form-control " />
+                                    <input asp-for="ImageBirthCertificate" class="form-control required" />
                                     <span asp-validation-for="ImageBirthCertificate" class="text-danger"></span>
+                                    <img src="@Url.Content(ViewBag.imgBirthCertificate)" style="width: 3rem;" />
                                 </div>
                             </div>
                             <div class="col-md-6">
@@ -596,6 +587,7 @@
                                     <label>ب- @Localizer["ImageMarriageCertificate"]</label>
                                     <input asp-for="ImageMarriageCertificate" class="form-control " />
                                     <span asp-validation-for="ImageMarriageCertificate" class="text-danger"></span>
+                                    <img src="@Url.Content(ViewBag.imgMarriageCertificate)" style="width: 3rem;" />
                                 </div>
                             </div>
                         </div>
@@ -605,6 +597,7 @@
                                     <label>ج- @Localizer["ImageFatherUnifiedNationalIdFront"]</label>
                                     <input asp-for="ImageFatherUnifiedNationalIdFront" class="form-control " />
                                     <span asp-validation-for="ImageFatherUnifiedNationalIdFront" class="text-danger"></span>
+                                    <img src="@Url.Content(ViewBag.imgFatherUnifiedNationalIdFront)" style="width: 3rem;" />
                                 </div>
                             </div>
                             <div class="col-md-6">
@@ -612,6 +605,7 @@
                                     <label>د- @Localizer["ImageFatherUnifiedNationalIdBack"]</label>
                                     <input asp-for="ImageFatherUnifiedNationalIdBack" class="form-control " />
                                     <span asp-validation-for="ImageFatherUnifiedNationalIdBack" class="text-danger"></span>
+                                    <img src="@Url.Content(ViewBag.imgFatherUnifiedNationalIdBack)" style="width: 3rem;" />
                                 </div>
                             </div>
                         </div>
@@ -621,6 +615,7 @@
                                     <label>ه- @Localizer["ImageMotherUnifiedNationalIdFront"]</label>
                                     <input asp-for="ImageMotherUnifiedNationalIdFront" class="form-control " />
                                     <span asp-validation-for="ImageMotherUnifiedNationalIdFront" class="text-danger"></span>
+                                    <img src="@Url.Content(ViewBag.imgMotherUnifiedNationalIdFront)" style="width: 3rem;" />
                                 </div>
                             </div>
                             <div class="col-md-6">
@@ -628,6 +623,7 @@
                                     <label>و- @Localizer["ImageMotherUnifiedNationalIdBack"]</label>
                                     <input asp-for="ImageMotherUnifiedNationalIdBack" class="form-control " />
                                     <span asp-validation-for="ImageMotherUnifiedNationalIdBack" class="text-danger"></span>
+                                    <img src="@Url.Content(ViewBag.imgMotherUnifiedNationalIdBack)" style="width: 3rem;" />
                                 </div>
                             </div>
                         </div>
@@ -637,6 +633,7 @@
                                     <label>ز- @Localizer["ImageResidencyCardFront"]</label>
                                     <input asp-for="ImageResidencyCardFront" class="form-control " />
                                     <span asp-validation-for="ImageResidencyCardFront" class="text-danger"></span>
+                                    <img src="@Url.Content(ViewBag.imgResidencyCardFront)" style="width: 3rem;" />
                                 </div>
                             </div>
                             <div class="col-md-6">
@@ -644,11 +641,13 @@
                                     <label>ح- @Localizer["ImageResidencyCardBack"]</label>
                                     <input asp-for="ImageResidencyCardBack" class="form-control " />
                                     <span asp-validation-for="ImageResidencyCardBack" class="text-danger"></span>
+                                    <img src="@Url.Content(ViewBag.imgResidencyCardBack)" style="width: 3rem;" />
                                 </div>
                             </div>
                         </div>
                     </section>
-                    <input type="submit" value="حفظ" class="btn btn-primary position-absolute px-4 py-2 rounded-pill" style="bottom: -100px; right: 47%;" />
+                    <input type="hidden" asp-for="SaveBtn" id="SaveBtn" value="SaveAndSend" />
+                    <input type="submit" value="حفظ" name="Save" onclick="setSaveBtnValue('Save'); removeRequiredClass();" class="btn btn-primary position-absolute px-4 py-2 rounded-pill" style="bottom: -100px; right: 47%;" />
                 </form>
             </div>
         </div>
@@ -921,10 +920,16 @@
                 $("#bornDisableError").hide();
             }
         });
+        var aliveOldValue = $("#Alive").val();
+        var bornDisableOldValue = $("#BornDisable").val();
+        if (aliveOldValue != null && aliveOldValue > 0) {
+            $("#BornDisableContainer").show();
+            $("#BornDisable").val(bornDisableOldValue);
+        }
     });
 </script>
 
-@* To Hide the DisabledType DropDown List except if he chose the first option from the emun above it?*@
+@* To Hide the DisabledType DropDown List except if he chose the first option from the emun above it*@
 <script>
     $(document).ready(function () {
         $("#DisabledTypeIdContainer").hide();
@@ -937,6 +942,12 @@
                 $("#DisabledTypeId").val("");
             }
         });
+        var isDisableOldValue = $("#IsDisabled").val();
+        var disabledTypeIdOldValue = $("#DisabledTypeId").val();
+        if (isDisableOldValue === "0") {
+            $("#DisabledTypeIdContainer").show();
+            $("#DisabledTypeId").val(disabledTypeIdOldValue);
+        }
     });
 </script>
 
@@ -953,6 +964,14 @@
                 $("#LicenseYear").val("");
             }
         });
+        var birthOccurredByOldValue = $("#BirthOccurredBy").val();
+        var licenseNoOldValue = $("#LicenseNo").val();
+        var licenseYearOldValue = $("#LicenseYear").val();
+        if (birthOccurredByOldValue === "2") {
+            $("#TheKabilaLicenseInputs").show();
+            $("#LicenseNo").val(licenseNoOldValue);
+            $("#LicenseYear").val(licenseYearOldValue);
+        }
     });
 </script>
 
@@ -1053,6 +1072,34 @@
                 $("#NationalId").val("");
             }
         });
+        var documentTypeOldValue = $("#DocumentType").val();
+        var nationalIdForOldValue = $("#NationalIdFor").val();
+        var nationalIdOldValue = $("#NationalId").val();
+        var passportNoOldValue = $("#PassportNo").val();
+        var recordNumberOldValue = $("#RecordNumber").val();
+        var pageNumberOldValue = $("#PageNumber").val();
+        var civilStatusDirectorateOldValue = $("#CivilStatusDirectorate").val();
+        var governorateCivilStatusDirectorateOldValue = $("#GovernorateCivilStatusDirectorate").val();
+        if (documentTypeOldValue === "0") {
+            $("#firstDocumentTypeOptionSub1").show();
+            $("#firstDocumentTypeOptionSub2").show();
+            $("#NationalIdFor").val(nationalIdForOldValue);
+            $("#NationalId").val(nationalIdOldValue);
+            $("#PassportNo").val(passportNoOldValue);
+        } else if (selectedValue === "1") {
+            $("#firstDocumentTypeOptionSub2").show();
+            $("#secondDocumentTypeOption").show();
+            $("#RecordNumber").val(recordNumberOldValue);
+            $("#PageNumber").val(pageNumberOldValue);
+        } else {
+            $("#thirdDocumentTypeOption").show();
+            $("#RecordNumber").val(recordNumberOldValue);
+            $("#PageNumber").val(pageNumberOldValue);
+            $("#NationalIdFor").val(nationalIdForOldValue);
+            $("#NationalId").val(nationalIdOldValue);
+            $("#CivilStatusDirectorate").val(civilStatusDirectorateOldValue);
+            $("#GovernorateCivilStatusDirectorate").val(governorateCivilStatusDirectorateOldValue);
+        }
     });
 </script>
 
@@ -1063,7 +1110,7 @@
 
         var newInput = $("<input>", {
             type: "submit",
-            value: "Create",
+            value: "حفظ وإرسال",
             class: "btn btn-primary",
             style: "padding: 7px 20px; border-radius: 25px; font-size: 15px; font-weight: 400; background-color: #2962ff;"
         });
@@ -1087,4 +1134,18 @@
         $(".actions > ul > li:nth-child(2) > a").text('التالي');
         $(".actions > ul > li:nth-child(1) > a").text('السابق');
     });
+</script>
+
+@*Adding Save as a value to the Save Button*@
+<script>
+    function setSaveBtnValue(btnValue) {
+        document.getElementById("SaveBtn").value = btnValue;
+    }
+</script>
+
+@*Remove all the Reqiured Inputs to save the work *@
+<script>
+    function removeRequiredClass() {
+        $('.required').removeClass('required');
+    }
 </script>

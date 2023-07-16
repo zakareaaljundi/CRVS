@@ -1,0 +1,353 @@
+﻿@model CRVS.Core.Models.BirthCertificate
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1 class="text-center">تفاصيل شهادة @Model.ChildName</h1>
+<div class="container bg-white mt-5 px-3 py-4 rounded middle-line position-relative">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="row">
+                <div class="col-md-6">
+                    إسم الطفل
+                </div>
+                <div class="col-md-6">
+                    @Html.DisplayFor(x => x.ChildName)
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="row">
+                <div class="col-md-6">
+                    الرقم الصحي
+                </div>
+                <div class="col-md-6">
+                    @Html.DisplayFor(x => x.HealthId)
+                </div>
+            </div>
+        </div>
+    </div>
+    <hr />
+    <div class="row">
+        <div class="col-md-6">
+            <div class="row">
+                <div class="col-md-6">
+                    جهة الولادة
+                </div>
+                <div class="col-md-6">
+                    @Html.DisplayFor(x => x.FacilityType)
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="row">
+                <div class="col-md-6">
+                    المؤسسة الصحية
+                </div>
+                <div class="col-md-6">
+                    @Html.DisplayFor(x => x.HealthInstitution)
+                </div>
+            </div>
+        </div>
+    </div>
+    <hr />
+    <div class="row">
+        <div class="col-md-6">
+            <div class="row">
+                <div class="col-md-6">
+                    نوع الولادة
+                </div>
+                <div class="col-md-6">
+                    @Html.DisplayFor(x => x.BirthType)
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="row">
+                <div class="col-md-6">
+                    عدد المواليد
+                </div>
+                <div class="col-md-6">
+                    @Html.DisplayFor(x => x.NumberOfBirth)
+                </div>
+            </div>
+        </div>
+    </div>
+    <hr />
+    <div class="row">
+        <div class="col-md-6">
+            <div class="row">
+                <div class="col-md-6">
+                    تاريخ الولادة
+                </div>
+                <div class="col-md-6">
+                    @Html.DisplayFor(x => x.DOB)
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="row">
+                <div class="col-md-6">
+                    وقت الولادة
+                </div>
+                <div class="col-md-6">
+                    @Html.DisplayFor(x => x.BirthHour)
+                </div>
+            </div>
+        </div>
+    </div>
+    <hr />
+    <div class="row">
+        <div class="col-md-6">
+            <div class="row">
+                <div class="col-md-6">
+                    اسم الأب
+                </div>
+                <div class="col-md-6">
+                    @Html.DisplayFor(x => x.FatherFName) @Html.DisplayFor(x => x.FatherMName) @Html.DisplayFor(x => x.FatherLName)
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="row">
+                <div class="col-md-6">
+                    تاريخ ميلاد الأب
+                </div>
+                <div class="col-md-6">
+                    @Html.DisplayFor(x => x.FatherDOB)
+                </div>
+            </div>
+        </div>
+    </div>
+    <hr />
+    <div class="row">
+        <div class="col-md-6">
+            <div class="row">
+                <div class="col-md-6">
+                    اسم الأم
+                </div>
+                <div class="col-md-6">
+                    @Html.DisplayFor(x => x.MotherFName) @Html.DisplayFor(x => x.MotherMName) @Html.DisplayFor(x => x.MotherLName)
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="row">
+                <div class="col-md-6">
+                    تاريخ ميلاد الأم
+                </div>
+                <div class="col-md-6">
+                    @Html.DisplayFor(x => x.MotherDOB)
+                </div>
+            </div>
+        </div>
+    </div>
+    <hr />
+    <div class="row">
+        <div class="col-md-6">
+            <div class="row">
+                <div class="col-md-6">
+                    العمر
+                </div>
+                <div class="col-md-6">
+                    @Html.DisplayFor(x => x.FatherAge)
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="row">
+                <div class="col-md-6">
+                    الوزن عند الولادة
+                </div>
+                <div class="col-md-6">
+                    @Html.DisplayFor(x => x.BabyWeight)
+                </div>
+            </div>
+        </div>
+    </div>
+    <hr />
+    <div class="row">
+        <div class="col-md-6">
+            <div class="row">
+                <div class="col-md-6">
+                    عدد الإخوة الأحياء
+                </div>
+                <div class="col-md-6">
+                    @Html.DisplayFor(x => x.Alive)
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="row">
+                <div class="col-md-6">
+                    عدد المواليد الذين توفوا
+                </div>
+                <div class="col-md-6">
+                    @Html.DisplayFor(x => x.BornAliveThenDied)
+                </div>
+            </div>
+        </div>
+    </div>
+    <hr />
+    <div class="row">
+        <div class="col-md-6">
+            <div class="row">
+                <div class="col-md-6">
+                    عدد الأجنة النيِّــضة
+                </div>
+                <div class="col-md-6">
+                    @Html.DisplayFor(x => x.StillBirth)
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="row">
+                <div class="col-md-6">
+                    عدد المواليد ذوي الإعاقة
+                </div>
+                <div class="col-md-6">
+                    @Html.DisplayFor(x => x.BornDisable)
+                </div>
+            </div>
+        </div>
+    </div>
+    <hr />
+    <div class="row">
+        <div class="col-md-6">
+            <div class="row">
+                <div class="col-md-6">
+                    عدم الإجهاض
+                </div>
+                <div class="col-md-6">
+                    @Html.DisplayFor(x => x.NoAbortion)
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="row">
+                <div class="col-md-6">
+                    الإعاقة
+                </div>
+                <div class="col-md-6">
+                    @Html.DisplayFor(x => x.IsDisabled)
+                </div>
+            </div>
+        </div>
+    </div>
+    <hr />
+    <div class="row">
+        <div class="col-md-6">
+            <div class="row">
+                <div class="col-md-6">
+                    نوع الإعاقة
+                </div>
+                <div class="col-md-6">
+                    @Html.DisplayFor(x => x.DisabledType)
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="row">
+                <div class="col-md-6">
+                    مدة الحمل (بالأسابيع)
+                </div>
+                <div class="col-md-6">
+                    @Html.DisplayFor(x => x.DurationOfPregnancy)
+                </div>
+            </div>
+        </div>
+    </div>
+    <hr />
+    <div class="row">
+        <div class="col-md-6">
+            <div class="row">
+                <div class="col-md-6">
+                    طريقة ولادة الطفل
+                </div>
+                <div class="col-md-6">
+                    @Html.DisplayFor(x => x.BirthOccurredBy)
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="row">
+                <div class="col-md-6">
+                    رقم الرخصة
+                </div>
+                <div class="col-md-6">
+                    @Html.DisplayFor(x => x.LicenseNo)
+                </div>
+            </div>
+        </div>
+    </div>
+    <hr />
+    <div class="row">
+        <div class="col-md-6">
+            <div class="row">
+                <div class="col-md-6">
+                    سنة الرخصة
+                </div>
+                <div class="col-md-6">
+                    @Html.DisplayFor(x => x.LicenseYear)
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="row">
+                <div class="col-md-6">
+                    جهة الأسرة
+                </div>
+                <div class="col-md-6">
+                    @Html.DisplayFor(x => x.FamilyGovernorate)
+                </div>
+            </div>
+        </div>
+    </div>
+    <hr />
+    <div class="row">
+        <div class="col-md-6">
+            <div class="row">
+                <div class="col-md-6">
+                    منطقة الأسرة
+                </div>
+                <div class="col-md-6">
+                    @Html.DisplayFor(x => x.FamilyDistrict)
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="row">
+                <div class="col-md-6">
+                    ناحية الأسرة
+                </div>
+                <div class="col-md-6">
+                    @Html.DisplayFor(x => x.FamilyNahia)
+                </div>
+            </div>
+        </div>
+    </div>
+    <hr />
+    <div class="row">
+        <div class="col-md-6">
+            <div class="row">
+                <div class="col-md-6">
+                    محلة الأسرة
+                </div>
+                <div class="col-md-6">
+                    @Html.DisplayFor(x => x.FamilyMahala)
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="row">
+                <div class="col-md-6">
+                    دائرة الأسرة
+                </div>
+                <div class="col-md-6">
+                    @Html.DisplayFor(x => x.FamilyDOH)
+                </div>
+            </div>
+        </div>
+    </div>
+    <hr />
+</div>

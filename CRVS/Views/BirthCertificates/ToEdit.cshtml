@@ -9,13 +9,12 @@
 <table class="table table-bordered table-responsive-lg mt-3">
     <thead>
         <tr>
-            <th>Child Name</th>
-            <th>Gender</th>
-            <th>Governorate</th>
-            <th>Directorate</th>
-            <th>District</th>
-            <th>Nahia</th>
-            <th>Village</th>
+            <th>الرقم الصحي</th>
+            <th>إسم الوليد</th>
+            <th>تاريخ الولادة</th>
+            <th>مكان الولادة</th>
+            <th>إسم الأب</th>
+            <th>إسم الأم</th>
             <th>الحالة</th>
             <th>عمليات</th>
         </tr>
@@ -24,13 +23,12 @@
         @foreach (var certificate in Model)
         {
             <tr>
-                <td>@certificate.ChildName</td>
-                <td>@certificate.Gender</td>
-                <td>@certificate.Governorate</td>
-                <td>@certificate.Doh</td>
-                <td>@certificate.District</td>
-                <td>@certificate.Nahia</td>
-                <td>@certificate.Village</td>
+                <td>@certificate.HealthId</td>
+                <td>@certificate.ChildName @certificate.FatherFName @certificate.FatherLName</td>
+                <td>@certificate.DOB</td>
+                <td>@certificate.Governorate, @certificate.Doh, @certificate.District, @certificate.Nahia</td>
+                <td>@certificate.FatherFName</td>
+                <td>@certificate.MotherFName</td>
                 <td class="position-relative">
                     @{
                         var status = certificate.BiostatisticsStage ? "bg-success" : "bg-warning";
@@ -43,14 +41,24 @@
                         <i class="bi bi-three-dots fs-4"></i>
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                        <li><a asp-action="Edit" class="dropdown-item ps-1" asp-route-id="@certificate.BirthCertificateId"><i class="bi bi-pencil-square ms-3"></i> تعديل</a></li>
-                        <li><a asp-action="Delete" class="dropdown-item ps-1" asp-route-id="@certificate.BirthCertificateId"><i class="bi bi-trash3 ms-3"></i> حذف</a></li>
+                        @if (ViewBag.canEdit)
+                        {
+                            <li><a asp-action="Edit" class="dropdown-item ps-1" asp-route-id="@certificate.BirthCertificateId"><i class="bi bi-pencil-square ms-3"></i> تعديل</a></li>
+                        }
+                        @if (ViewBag.canDelete)
+                        {
+                            <li><a asp-action="Delete" class="dropdown-item ps-1" asp-route-id="@certificate.BirthCertificateId" asp-route-returnUrl="@Context.Request.Path"><i class="bi bi-trash3 ms-3"></i> حذف</a></li>
+                        }
+                        @if (ViewBag.canRead)
+                        {
+                            <li><a asp-action="Details" class="dropdown-item ps-1" asp-route-id="@certificate.BirthCertificateId"><i class="bi bi-card-text ms-3"></i> تفاصيل</a></li>
+                        }
                     </ul>
                 </td>
             </tr>
         }
     </tbody>
 </table>
-    @*    <li><a asp-action="Print" class="dropdown-item ps-1" asp-route-id="@item.BirthCertificateId"><i class="bi bi-printer ms-3"></i> Print</a></li>
+@*    <li><a asp-action="Print" class="dropdown-item ps-1" asp-route-id="@item.BirthCertificateId"><i class="bi bi-printer ms-3"></i> Print</a></li>
         <li><a asp-action="Details" class="dropdown-item ps-1" asp-route-id="@item.BirthCertificateId"><i class="bi bi-info-circle ms-3"></i> Details</a></li>
     *@

@@ -11,31 +11,32 @@
             </div>
             <div class="card-body wizard-content">
                 <form asp-action="Create" class="login-form validation-wizard wizard-circle mt-5 pb-5" enctype="multipart/form-data" method="post" id="form">
+                    <div asp-validation-summary="All" class="text-danger"></div>
                     <!-- Step 1 -->
                     <h6>@Localizer["NewBornInfo"]</h6>
                     <section>
                         <div class="row">
                             <div class="col-md-3">
                                 <div class="form-group">
-                                    <input asp-for="Governorate" class="form-control required" value="@ViewBag.Governorate" readonly />
+                                    <input asp-for="Governorate" class="form-control required" value="@ViewBag.Governorate" readonly type="hidden"/>
                                     <span asp-validation-for="Governorate" class="text-danger"></span>
                                 </div>
                             </div>
                             <div class="col-md-3">
                                 <div class="form-group">
-                                    <input asp-for="Doh" class="form-control required" value="@ViewBag.Doh" readonly />
+                                    <input asp-for="Doh" class="form-control required" value="@ViewBag.Doh" readonly type="hidden"/>
                                     <span asp-validation-for="Doh" class="text-danger"></span>
                                 </div>
                             </div>
                             <div class="col-md-3">
                                 <div class="form-group">
-                                    <input asp-for="District" class="form-control required" value="@ViewBag.District" readonly />
+                                    <input asp-for="District" class="form-control required" value="@ViewBag.District" readonly type="hidden"/>
                                     <span asp-validation-for="District" class="text-danger"></span>
                                 </div>
                             </div>
                             <div class="col-md-3">
                                 <div class="form-group">
-                                    <input asp-for="Nahia" class="form-control required" value="@ViewBag.Nahia" readonly />
+                                    <input asp-for="Nahia" class="form-control required" value="@ViewBag.Nahia" readonly type="hidden"/>
                                     <span asp-validation-for="Nahia" class="text-danger"></span>
                                 </div>
                             </div>
@@ -43,35 +44,35 @@
                         <div class="row">
                             <div class="col-md-3">
                                 <div class="form-group">
-                                    <input asp-for="Village" class="form-control required" value="@ViewBag.Village" readonly />
+                                    <input asp-for="Village" class="form-control required" value="@ViewBag.Village" readonly type="hidden"/>
                                     <span asp-validation-for="Village" class="text-danger"></span>
                                 </div>
                             </div>
                             <div class="col-md-3">
                                 <div class="form-group">
-                                    <input asp-for="FacilityType" class="form-control required" value="@ViewBag.FacilityType" readonly />
+                                    <input asp-for="FacilityType" class="form-control required" value="@ViewBag.FacilityType" readonly type="hidden" />
                                     <span asp-validation-for="FacilityType" class="text-danger"></span>
                                 </div>
                             </div>
                             <div class="col-md-3">
                                 <div class="form-group">
-                                    <input asp-for="HealthInstitution" class="form-control required" value="@ViewBag.HealthInstitution" readonly />
+                                    <input asp-for="HealthInstitution" class="form-control required" value="@ViewBag.HealthInstitution" readonly type="hidden"/>
                                     <span asp-validation-for="HealthInstitution" class="text-danger"></span>
                                 </div>
                             </div>
                             <div class="col-md-3">
                                 <div class="form-group">
-                                    <input asp-for="HealthId" class="form-control" value="@ViewBag.HId" readonly />
+                                    <input asp-for="HealthId" class="form-control" value="@ViewBag.HId" readonly type="hidden" />
                                     <span asp-validation-for="HealthId" class="text-danger"></span>
                                 </div>
                             </div>
-                        </div><hr />
+                        </div>
                         <div class="row">
                             <h3 class="mb-5">1- @Localizer["NewBornInfo"] :</h3>
                             <div class="col-md-3">
                                 <div class="form-group">
                                     <label>أ- @Localizer["NewBornName"]</label>
-                                    <input asp-for="ChildName" class="form-control " placeholder="@Localizer["NewBornName"]" />
+                                    <input asp-for="ChildName" class="form-control required" placeholder="@Localizer["NewBornName"]" />
                                     <span asp-validation-for="ChildName" class="text-danger"></span>
                                 </div>
                             </div>
@@ -172,7 +173,7 @@
                             <div class="col-md-4">
                                 <div class="form-group select2-parent">
                                     <label>و- @Localizer["FatherJob"]</label>
-                                    <select asp-for="FatherJobId" class="select2 " asp-items="@ViewBag.MaleJobs">
+                                    <select asp-for="FatherJobId" class="select2 required" asp-items="@ViewBag.MaleJobs">
                                         <option value="" disabled selected hidden>-- @Localizer["FatherJob"] *--</option>
                                     </select>
                                 </div>
@@ -255,7 +256,7 @@
                             <div class="col-md-4">
                                 <div class="form-group select2-parent">
                                     <label>و- @Localizer["MotherJob"]</label>
-                                    <select asp-for="MotherJobId" class="select2 " asp-items="@ViewBag.FemaleJobs">
+                                    <select asp-for="MotherJobId" class="select2 required" asp-items="@ViewBag.FemaleJobs">
                                         <option value="" disabled selected hidden>-- @Localizer["MotherJob"] *--</option>
                                     </select>
                                 </div>
@@ -295,7 +296,7 @@
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label>أ- @Localizer["Alive"]</label>
-                                    <input asp-for="Alive" class="form-control " placeholder="@Localizer["Alive"]" min="0" />
+                                    <input asp-for="Alive" class="form-control required" placeholder="@Localizer["Alive"]" min="0" />
                                     <span asp-validation-for="Alive" class="text-danger"></span>
                                 </div>
                             </div>
@@ -618,7 +619,7 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>15- @Localizer["RationCard"]</label>
-                                    <input asp-for="RationCard" class="form-control " placeholder="@Localizer["RationCard"]" />
+                                    <input asp-for="RationCard" class="form-control required" placeholder="@Localizer["RationCard"]" />
                                     <span asp-validation-for="RationCard" class="text-danger"></span>
                                 </div>
                             </div>
@@ -632,7 +633,7 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>أ- @Localizer["ImageBirthCertificate"]</label>
-                                    <input asp-for="ImageBirthCertificate" class="form-control " />
+                                    <input asp-for="ImageBirthCertificate" class="form-control required" />
                                     <span asp-validation-for="ImageBirthCertificate" class="text-danger"></span>
                                 </div>
                             </div>
@@ -693,7 +694,8 @@
                             </div>
                         </div>
                     </section>
-                    <input type="submit" value="حفظ" class="btn btn-primary position-absolute px-4 py-2 rounded-pill" style="bottom: -33%; right: 47%;" />
+                    <input type="hidden" asp-for="SaveBtn" id="SaveBtn" value="SaveAndSend" />
+                    <input type="submit" value="حفظ" name="Save" onclick="setSaveBtnValue('Save'); removeRequiredClass();" class="btn btn-primary position-absolute px-4 py-2 rounded-pill" style="bottom: -100px; right: 47%;" />
                 </form>
             </div>
         </div>
@@ -1108,7 +1110,7 @@
 
         var newInput = $("<input>", {
             type: "submit",
-            value: "Create",
+            value: "حفظ وإرسال",
             class: "btn btn-primary",
             style: "padding: 7px 20px; border-radius: 25px; font-size: 15px; font-weight: 400; background-color: #2962ff;"
         });
@@ -1132,4 +1134,18 @@
         $(".actions > ul > li:nth-child(2) > a").text('التالي');
         $(".actions > ul > li:nth-child(1) > a").text('السابق');
     });
+</script>
+
+@*Adding Save as a value to the Save Button*@
+<script>
+    function setSaveBtnValue(btnValue) {
+        document.getElementById("SaveBtn").value = btnValue;
+    }
+</script>
+           
+@*Remove all the Reqiured Inputs to save the work *@
+<script>
+    function removeRequiredClass() {
+        $('.required').removeClass('required');
+    }
 </script>
