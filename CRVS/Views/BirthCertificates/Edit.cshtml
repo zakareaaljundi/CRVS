@@ -12,10 +12,11 @@
                 <h4 class="card-title mb-0 text-center">@Localizer["CreateNewBirthCertificate"]</h4>
             </div>
             <div class="card-body wizard-content">
-                <form asp-action="Create" class="login-form validation-wizard wizard-circle mt-5 pb-5" enctype="multipart/form-data" method="post">
+                <form asp-action="Edit" class="login-form validation-wizard wizard-circle mt-5 pb-5" enctype="multipart/form-data" method="post">
                     <!-- Step 1 -->
                     <h6>@Localizer["NewBornInfo"]</h6>
                     <section>
+                        <input asp-for="BirthCertificateId" type="hidden" />
                         <div class="row">
                             <h3 class="mb-5">1- @Localizer["NewBornInfo"] :</h3>
                             <div class="col-md-3">
@@ -122,8 +123,12 @@
                             <div class="col-md-4">
                                 <div class="form-group select2-parent">
                                     <label>و- @Localizer["FatherJob"]</label>
-                                    <select asp-for="FatherJobId" class="select2 " asp-items="@ViewBag.MaleJobs">
+                                    <select asp-for="FatherJobId" class="select2 " asp-items="ViewBag.MaleJobs">
                                         <option value="" disabled selected hidden>-- @Localizer["FatherJob"] *--</option>
+                                        @if(ViewBag.FatherJob != null)
+                                        {
+                                            <option hidden selected>@ViewBag.FatherJob</option>
+                                        }
                                     </select>
                                 </div>
                             </div>
@@ -643,7 +648,7 @@
                             </div>
                         </div>
                     </section>
-                    <input type="submit" value="حفظ" class="btn btn-primary position-absolute px-4 py-2 rounded-pill" style="bottom: -33%; right: 47%;" />
+                    <input type="submit" value="حفظ" class="btn btn-primary position-absolute px-4 py-2 rounded-pill" style="bottom: -100px; right: 47%;" />
                 </form>
             </div>
         </div>

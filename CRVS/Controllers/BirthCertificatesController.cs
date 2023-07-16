@@ -82,7 +82,7 @@ namespace CRVS.Controllers
         public async Task<IActionResult> ToEdit()
         {
             var certificates = await _certificatesRepository.GetAllAsync();
-            var pendingCertificates = certificates.Where(x => x.ToEdit == true).Where(x => x.BiostatisticsStage == false).Where(x => x.Approval == false).Where(x => x.IsDeleted == false);
+            var pendingCertificates = certificates.OrderByDescending(x=>x.CreationDate).Where(x => x.ToEdit == true).Where(x => x.BiostatisticsStage == false).Where(x => x.Approval == false).Where(x => x.IsDeleted == false);
             return View(pendingCertificates);
         }
         /*
@@ -517,12 +517,50 @@ namespace CRVS.Controllers
             {
                 return NotFound();
             }
+            var userId = _userManager.GetUserName(HttpContext.User);
+            var currentUser = await _context.Users.FirstOrDefaultAsync(x => x.Email == userId);
+
+            var isArabianGovernorate = _context.Governorates.FirstOrDefault(x => x.GovernorateName == currentUser!.Governorate)!.IsArabian;
+            if (isArabianGovernorate)
+            {
+                
+                    ViewBag.FatherJob = birthCertificate.FatherJob;
+                
+                ViewBag.MaleJobs = new SelectList(_context.Jobs.Where(x => x.IsArabic && x.JobId % 2 != 0).ToList(), "JobId", "JobName");
+                ViewBag.MaleReligions = new SelectList(_context.Religions.Where(x => x.IsArabic && x.ReligionId % 2 != 0).ToList(), "ReligionId", "ReligionName");
+                ViewBag.FemaleJobs = new SelectList(_context.Jobs.Where(x => x.IsArabic && x.JobId % 2 == 0).ToList(), "JobId", "JobName");
+                ViewBag.FemaleReligions = new SelectList(_context.Religions.Where(x => x.IsArabic && x.ReligionId % 2 == 0).ToList(), "ReligionId", "ReligionName");
+            }
+            else
+            {
+                ViewBag.MaleJobs = new SelectList(_context.Jobs.Where(x => x.IsArabic == false).ToList(), "JobId", "JobName");
+                ViewBag.MaleReligions = new SelectList(_context.Religions.Where(x => x.IsArabic == false).ToList(), "ReligionId", "ReligionName");
+                ViewBag.FemaleJobs = new SelectList(_context.Jobs.Where(x => x.IsArabic == false).ToList(), "JobId", "JobName");
+                ViewBag.FemaleReligions = new SelectList(_context.Religions.Where(x => x.IsArabic == false).ToList(), "ReligionId", "ReligionName");
+            }
+
+            ViewBag.Nationalities = new SelectList(_context.Nationalities.ToList(), "NationalityId", "NationalityName");
+            ViewBag.Disabilities = new SelectList(_context.Disabilities.ToList(), "Id", "QName");
+
+            ViewBag.Governorates = new SelectList(_context.Governorates.ToList(), "GovernorateId", "GovernorateName");
+            ViewBag.Districts = new SelectList(_context.Districts.ToList(), "DistrictId", "DistrictName");
+            ViewBag.Nahias = new SelectList(_context.Nahias.ToList(), "NahiaId", "NahiaName");
+
             #region Passing-Info-To-BirthCertificate
-            
+
             BirthCertificateViewModel birthCertificateViewModel = new BirthCertificateViewModel
             {
+                BirthCertificateId = birthCertificate.BirthCertificateId,
                 ChildName = birthCertificate.ChildName,
+                HealthId = birthCertificate.HealthId,
                 Gender = (BirthCertificateViewModel.Genders)birthCertificate.Gender,
+                /*Governorate = birthCertificate.Governorate,
+                Doh = birthCertificate.Doh,
+                District = birthCertificate.District,
+                Nahia = birthCertificate.Nahia,
+                Village = birthCertificate.Village,
+                FacilityType = birthCertificate.FacilityType,
+                HealthInstitution = birthCertificate.HealthInstitution,*/
                 BirthType = (BirthCertificateViewModel.BirthTypes)birthCertificate.BirthType,
                 NumberOfBirth = (BirthCertificateViewModel.NumberOfBirths)birthCertificate.NumberOfBirth,
                 BirthHour = birthCertificate.BirthHour,
@@ -600,15 +638,103 @@ namespace CRVS.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Edit(BirthCertificate birthCertificate)
+        public async Task<IActionResult> Edit(BirthCertificateViewModel birthCertificateViewModel)
         {
             if (ModelState.IsValid)
             {
+                #region Passing-Info-To-BirthCertificate
+
+                BirthCertificate birthCertificate = new BirthCertificate
+                {
+                    BirthCertificateId = birthCertificateViewModel.BirthCertificateId,
+                    ChildName = birthCertificateViewModel.ChildName,
+                    HealthId = birthCertificateViewModel.HealthId,
+                    Gender = (BirthCertificate.Genders)birthCertificateViewModel.Gender,
+                    /*Governorate = birthCertificateViewModel.Governorate,
+                    Doh = birthCertificateViewModel.Doh,
+                    District = birthCertificateViewModel.District,
+                    Nahia = birthCertificateViewModel.Nahia,
+                    Village = birthCertificateViewModel.Village,
+                    FacilityType = birthCertificateViewModel.FacilityType,
+                    HealthInstitution = birthCertificateViewModel.HealthInstitution,*/
+                    BirthType = (BirthCertificate.BirthTypes)birthCertificateViewModel.BirthType,
+                    NumberOfBirth = (BirthCertificate.NumberOfBirths)birthCertificateViewModel.NumberOfBirth,
+                    BirthHour = birthCertificateViewModel.BirthHour,
+                    DOB = birthCertificateViewModel.DOB,
+                    DOBText = birthCertificateViewModel.DOBText,
+                    FatherFName = birthCertificateViewModel.FatherFName,
+                    FatherMName = birthCertificateViewModel.FatherMName,
+                    FatherLName = birthCertificateViewModel.FatherLName,
+                    FatherDOB = birthCertificateViewModel.FatherDOB,
+                    FatherAge = birthCertificateViewModel.FatherAge,
+                    /*FatherJob = fatherJobName,
+                    FatherReligion = fatherReligionName,
+                    FatherNationality = fatherNationalityName,*/
+                    FatherMobile = birthCertificateViewModel.FatherMobile,
+                    MotherFName = birthCertificateViewModel.MotherFName,
+                    MotherMName = birthCertificateViewModel.MotherMName,
+                    MotherLName = birthCertificateViewModel.MotherLName,
+                    MotherDOB = birthCertificateViewModel.MotherDOB,
+                    MotherAge = birthCertificateViewModel.MotherAge,
+                    /*MotherJob = motherJobName,
+                    MotherReligion = motherReligionName,
+                    MotherNationality = motherNationalityName,*/
+                    MotherMobile = birthCertificateViewModel.MotherMobile,
+                    Relative = (BirthCertificate.Relatives)birthCertificateViewModel.Relative,
+                    Alive = birthCertificateViewModel.Alive,
+                    BornAliveThenDied = birthCertificateViewModel.BornAliveThenDied,
+                    StillBirth = birthCertificateViewModel.StillBirth,
+                    BornDisable = birthCertificateViewModel.BornDisable,
+                    NoAbortion = birthCertificateViewModel.NoAbortion,
+                    IsDisabled = (BirthCertificate.IsDisableds)birthCertificateViewModel.IsDisabled,
+                    /*DisabledType = disableTypeName,*/
+                    DurationOfPregnancy = birthCertificateViewModel.DurationOfPregnancy,
+                    BabyWeight = birthCertificateViewModel.BabyWeight,
+                    PlaceOfBirth = birthCertificateViewModel.PlaceOfBirth,
+                    BirthOccurredBy = (BirthCertificate.BirthOccurredBys)birthCertificateViewModel.BirthOccurredBy,
+                    LicenseNo = birthCertificateViewModel.LicenseNo,
+                    LicenseYear = birthCertificateViewModel.LicenseYear,
+                    /*FamilyGovernorate = governorateName,
+                    FamilyDistrict = districtName,
+                    FamilyNahia = nahiaName,*/
+                    FamilyMahala = birthCertificateViewModel.FamilyMahala,
+                    FamilyDOH = birthCertificateViewModel.FamilyDOH,
+                    FamilySector = birthCertificateViewModel.FamilySector,
+                    FamilyPHC = birthCertificateViewModel.FamilyPHC,
+                    FamilyZigag = birthCertificateViewModel.FamilyZigag,
+                    FamilyHomeNo = birthCertificateViewModel.FamilyHomeNo,
+                    DocumentType = (BirthCertificate.DocumentTypes)birthCertificateViewModel.DocumentType,
+                    RecordNumber = birthCertificateViewModel.RecordNumber,
+                    PageNumber = birthCertificateViewModel.PageNumber,
+                    CivilStatusDirectorate = birthCertificateViewModel.CivilStatusDirectorate,
+                    GovernorateCivilStatusDirectorate = birthCertificateViewModel.GovernorateCivilStatusDirectorate,
+                    NationalIdFor = (BirthCertificate.NationalIdFors)birthCertificateViewModel.NationalIdFor,
+                    NationalId = birthCertificateViewModel.NationalId,
+                    PassportNo = birthCertificateViewModel.PassportNo,
+                    InformerName = birthCertificateViewModel.InformerName,
+                    InformerJobTitle = birthCertificateViewModel.InformerJobTitle,
+                    KinshipOfTheNewborn = birthCertificateViewModel.KinshipOfTheNewborn,
+                    BirthPerformerName = birthCertificateViewModel.BirthPerformerName,
+                    BirthPerformerWorkingAddress = birthCertificateViewModel.BirthPerformerWorkingAddress,
+                    HospitalManagerName = birthCertificateViewModel.HospitalManagerName,
+                    HospitalManagerSig = birthCertificateViewModel.HospitalManagerSig,
+                    RationCard = birthCertificateViewModel.RationCard,
+                    /*ImgBirthCertificate = imgBirthCertificatePath,
+                    ImgMarriageCertificate = imgMarriageCertificatePath,
+                    ImgFatherUnifiedNationalIdFront = imgFatherUnifiedNationalIdFrontPath,
+                    ImgFatherUnifiedNationalIdBack = imgFatherUnifiedNationalIdBackPath,
+                    ImgMotherUnifiedNationalIdFront = imgMotherUnifiedNationalIdFrontPath,
+                    ImgMotherUnifiedNationalIdBack = imgMotherUnifiedNationalIdBackPath,
+                    ImgResidencyCardFront = imgResidencyCardFrontPath,
+                    ImgResidencyCardBack = imgResidencyCardBackPath,*/
+                    ToEdit = true,
+                };
+                #endregion
                 _certificatesRepository.Update(birthCertificate);
-                return RedirectToAction("Index");
+                return RedirectToAction("ToEdit");
             }
 
-            return View(birthCertificate);
+            return View(birthCertificateViewModel);
         }
     }
 }
