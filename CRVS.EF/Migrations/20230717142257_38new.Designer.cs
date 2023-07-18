@@ -4,6 +4,7 @@ using CRVS.EF;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CRVS.EF.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230717142257_38new")]
+    partial class _38new
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -151,9 +154,6 @@ namespace CRVS.EF.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("FatherReligion")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Feedback")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("Gender")
@@ -502,17 +502,11 @@ namespace CRVS.EF.Migrations
                     b.Property<bool>("IsGoodFeedBack")
                         .HasColumnType("bit");
 
-                    b.Property<bool>("IsOpen")
-                        .HasColumnType("bit");
-
                     b.Property<bool>("IsRead")
                         .HasColumnType("bit");
 
                     b.Property<bool>("IsSettingMessage")
                         .HasColumnType("bit");
-
-                    b.Property<string>("NewUserId")
-                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("NotificationId");
 

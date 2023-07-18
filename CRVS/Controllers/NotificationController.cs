@@ -24,9 +24,11 @@ namespace CRVS.Controllers
             _context = context;
             _roleManager = roleManager;
         }
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View();
+            var currentUser = await _userManager.GetUserAsync(HttpContext.User);
+            var notifications = _context.Notifications.OrderByDescending(x=>x.DAT).Where(x=>x.CurrentUser == currentUser!.Id).ToList();
+            return View(notifications);
         }
 
         [HttpPost]

@@ -7,186 +7,140 @@
     <div class="col-12">
         <div class="card">
             <div class="border-bottom title-part-padding">
-                <h4 class="card-title mb-0 text-center">Add User</h4>
+                <h4 class="card-title mb-0 text-center">إضافة موظف جديد</h4>
             </div>
             <div class="card-body wizard-content">
                 <form asp-action="Register" class="login-form @*validation-wizard wizard-circle*@ mt-5" enctype="multipart/form-data" method="post">
-                    <!-- Step 1 -->
-                    @*<h6>Step 1</h6>
-                    <section>*@
                     <div class="row">
-                        <div class="col-md-6">
+                        <div class="col-md-8">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <input asp-for="FName" class="form-control required" placeholder="الإسم الأول*" />
+                                        <span asp-validation-for="FName" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <input asp-for="LName" class="form-control required" placeholder="الإسم الثاني *" />
+                                        <span asp-validation-for="LName" class="text-danger"></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col">
+                                    <div class="form-group">
+                                        <input asp-for="Email" class="form-control required" placeholder="البريد الإلكتروني *" />
+                                        <span asp-validation-for="Email" class="text-danger"></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+
+                                    <div class="form-group">
+                                        <input asp-for="Password" class="form-control required" placeholder="كلمة المرور *" />
+                                        <span asp-validation-for="Password" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <input asp-for="ConfirmPassword" class="form-control required" placeholder="تأكيد كلمة المرور *" />
+                                        <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <input asp-for="Phone" class="form-control required" placeholder="رقم الهاتف *" />
+                                        <span asp-validation-for="Phone" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <select id="Roles" name="Roles" asp-for="Roles" class="form-control required" asp-items="ViewBag.Roles">
+                                            <option value="" disabled selected hidden>-- حدد الوظيفة *--</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div><hr />
+                            @if (ViewBag.IsAdmin)
+                            {
+                                <div class="row mt-4">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <select id="GovernorateId" asp-for="GovernorateId" name="GovernorateId" class="form-control select2" asp-items="ViewBag.Governorates">
+                                                <option value="" disabled selected hidden>-- @Localizer["SelectGovernorate"]* --</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <select id="DohId" asp-for="DohId" name="DohId" class="form-control select2" asp-items="ViewBag.Dohs">
+                                                <option value="" disabled selected hidden>-- حدد الدائرة*--</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row mt-3">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <select id="DistrictId" asp-for="DistrictId" name="DistrictId" class="form-control select2" asp-items="ViewBag.Districts">
+                                                <option value="" disabled selected hidden>-- حدد القضاء*--</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <select id="NahiaId" name="NahiaId" asp-for="NahiaId" class="form-control select2" asp-items="ViewBag.Nahias">
+                                                <option value="" disabled selected hidden>-- حدد الناحية*--</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                        <div class="border col-md-4 mb-2 rounded-3">
                             <div class="form-group d-flex flex-column align-items-center">
                                 <div class="position-relative w-75 mb-md-2">
                                     <img id="default" src="~/Images/GoldenBidPerson1_TestPicture.png" class="rounded-circle w-100" />
                                     <img id="preview" src="#" alt="Preview" class="top-0 w-100 rounded-circle left-0" style="display: none;" />
                                 </div>
-                                <label class="p-0 bg-transparent">Profile Picture (Optional)</label>
+                                <label class="p-0 bg-transparent">صورة شخصية (إختياري)</label>
                                 <input asp-for="Img" class="form-control" onchange="previewImage(event)" />
                                 <span asp-validation-for="Img" class="text-danger"></span>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                @*<input type="hidden" name="isAdmin" value="@ViewBag.IsAdmin" />*@
-                                @*<input type="hidden" name="userId" value="@ViewBag.userId" />*@
-                                <input asp-for="FName" class="form-control required" placeholder="First Name *" />
-                                <span asp-validation-for="FName" class="text-danger"></span>
-                            </div>
-                            <div class="form-group">
-                                <input asp-for="LName" class="form-control required" placeholder="Last Name *" />
-                                <span asp-validation-for="LName" class="text-danger"></span>
-                            </div>
-                            <div class="form-group">
-                                <input asp-for="Email" class="form-control required" placeholder="Email *" />
-                                <span asp-validation-for="Email" class="text-danger"></span>
-                            </div>
-                            <div class="form-group">
-                                <input asp-for="Password" class="form-control required" placeholder="Password *" />
-                                <span asp-validation-for="Password" class="text-danger"></span>
-                            </div>
-                            <div class="form-group">
-                                <input asp-for="ConfirmPassword" class="form-control required" placeholder="Confirm Password *" />
-                                <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
-                            </div>
-                            <div class="form-group">
-                                <input asp-for="Phone" class="form-control required" placeholder="Phone *" value="+962" />
-                                <span asp-validation-for="Phone" class="text-danger"></span>
-                            </div>
-                            <div class="form-group">
-                                <label for="Roles">Roles</label>
-                                    <select id="Roles" name="Roles" asp-for="Roles" class="form-control required">
-                                <option value="" disabled selected hidden>-- Select Roles *--</option>
-                                @foreach (var item in ViewBag.Roles)
-                                {
-                                    <option value="@item.Value">@item.Text</option>
-                                }
-                                </select>
                             </div>
                         </div>
                     </div>
                     @if (ViewBag.IsAdmin)
                     {
-                        <div class="row mt-4">
-                            <div class="col">
+                        <div class="row">
+                            <div class="col-md-4">
                                 <div class="form-group">
-                                    <label for="GovernorateId">Governorate*</label>
-                                    <select id="GovernorateId" asp-for="GovernorateId" name="GovernorateId" class="form-control">
-                                        <option value="" disabled selected hidden>-- @Localizer["SelectGovernorate"] --</option>
-                                        @foreach (var item in ViewBag.Governorates)
-                                        {
-                                            <option value="@item.Value">@item.Text</option>
-                                        }
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row" id="row2">
-                            <div class="col">
-                                <div class="form-group">
-                                    <label for="DohId">Directorate</label>
-                                    <select id="DohId" asp-for="DohId" name="DohId" class="form-control ">
-                                        <option value="" disabled selected hidden>-- Select Doh*--</option>
-                                        @foreach (var item in ViewBag.Dohs)
-                                        {
-                                            <option value="@item.Value">@item.Text</option>
-                                        }
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row" id="row2">
-                            <div class="col">
-                                <div class="form-group">
-                                    <label for="DistrictId">District</label>
-                                    <select id="DistrictId" asp-for="DistrictId" name="DistrictId" class="form-control ">
-                                        <option value="" disabled selected hidden>-- Select District*--</option>
-                                        @foreach (var item in ViewBag.Districts)
-                                        {
-                                            <option value="@item.Value">@item.Text</option>
-                                        }
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row" id="row2">
-                            <div class="col">
-                                <div class="form-group">
-                                    <label for="NahiaId">Nahia</label>
-                                    <select id="NahiaId" name="NahiaId" asp-for="NahiaId" class="form-control ">
-                                        <option value="" disabled selected hidden>-- Select Nahia*--</option>
-                                        @foreach (var item in ViewBag.Nahias)
-                                        {
-                                            <option value="@item.Value">@item.Text</option>
-                                        }
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row" id="row2">
-                            <div class="col">
-                                <div class="form-group">
-                                    <input asp-for="Village" class="form-control required" placeholder="Village*" />
+                                    <input asp-for="Village" class="form-control required" placeholder="إسم القرية*" />
                                     <span asp-validation-for="Village" class="text-danger"></span>
                                 </div>
                             </div>
-                        </div>
-                        <div class="row">
-                            <div class="col">
+                            <div class="col-md-4">
                                 <div class="form-group">
-                                    <label for="FacilityTypeId">Facility Type</label>
-                                    <select id="FacilityTypeId" name="FacilityTypeId" asp-for="FacilityTypeId" class="form-control ">
-                                        <option value="" disabled selected hidden>-- Select Facility Type*--</option>
-                                        @foreach (var item in ViewBag.FacilityTypes)
-                                        {
-                                            <option value="@item.Value">@item.Text</option>
-                                        }
+                                    <select id="FacilityTypeId" name="FacilityTypeId" asp-for="FacilityTypeId" class="form-control select2" asp-items="ViewBag.FacilityTypes">
+                                        <option value="" disabled selected hidden>-- حدد نوع المؤسسة*--</option>
                                     </select>
                                 </div>
                             </div>
-                        </div>
-                        <div class="row" id="row2">
-                            <div class="col">
+                            <div class="col-md-4">
                                 <div class="form-group">
-                                    <label for="HealthInstitutionId">Health Institution</label>
-                                    <select id="HealthInstitutionId" name="HealthInstitutionId" asp-for="HealthInstitutionId" class="form-control ">
-                                        <option value="" disabled selected hidden>-- Select Health Institution*--</option>
-                                        @foreach (var item in ViewBag.HealthInstitutions)
-                                        {
-                                            <option value="@item.Value">@item.Text</option>
-                                        }
+                                    <select id="HealthInstitutionId" name="HealthInstitutionId" asp-for="HealthInstitutionId" class="form-control select2" asp-items="ViewBag.HealthInstitutions">
+                                        <option value="" disabled selected hidden>-- حدد المؤسسة*--</option>
                                     </select>
                                 </div>
                             </div>
                         </div>
                     }
-                    @*
-                    </section>
-                    <!-- Step 2 -->
-                    <h6>Step 2</h6>
-                    <section>
-                    <div class="row">
-                    </div>
-                    </section>
-                    <!-- Step 3 -->
-                    <h6>Step 3</h6>
-                    <section>
-                    <div class="row">
-                    </div>
-                    </section>
-                    <!-- Step 4 -->
-                    <h6>Step 4</h6>
-                    <section>
-                    <div class="row">
-                    </div>
-                    </section>
-                    <!-- Step 5 -->
-                    <h6>Step 5</h6>
-                    <section>
-                    <div class="row">
-                    </div>
-                    </section>*@
-                    <input type="submit" value="Create" class="btn btn-primary" @*bottom-0 position-absolute start-0" *@ />
+                    <div class="d-flex form-group justify-content-center mt-4">
+                    <input type="submit" value="إنشاء" class="btn btn-primary px-5" @*bottom-0 position-absolute start-0" *@ />
+                        </div>
                 </form>
             </div>
         </div>
@@ -194,6 +148,7 @@
 </div>
 
 @section Scripts {
+    @*For Uploading the Image*@
     <script>
         function previewImage(event) {
             var input = event.target;
@@ -208,6 +163,7 @@
             reader.readAsDataURL(input.files[0]);
         }
     </script>
+
     @*Filtering Doh after selecting Governorate*@
     <script>
         $(document).ready(function () {
@@ -221,7 +177,7 @@
                     success: function (data) {
                         var directorateDropdown = $('#DohId');
                         directorateDropdown.empty();
-                        var selectOption = $('<option></option>').val('').text('-- Select Doh* --');
+                        var selectOption = $('<option></option>').val('').text('-- حدد الدائرة*--');
                         selectOption.prop('disabled', true);
                         selectOption.prop('hidden', true);
                         selectOption.prop('selected', true);
@@ -238,6 +194,7 @@
             });
         });
     </script>
+
     @*Filtering Districts after selecting Doh*@
     <script>
         $(document).ready(function () {
@@ -251,7 +208,7 @@
                     success: function (data) {
                         var districtDropdown = $('#DistrictId');
                         districtDropdown.empty();
-                        var selectOption = $('<option></option>').val('').text('-- Select Districts* --');
+                        var selectOption = $('<option></option>').val('').text('-- حدد القضاء*--');
                         selectOption.prop('disabled', true);
                         selectOption.prop('hidden', true);
                         selectOption.prop('selected', true);
@@ -268,36 +225,8 @@
             });
         });
     </script>
+
     @*Filtering Nahia after selecting Districts*@
-    @*<script>
-        $(document).ready(function () {
-            $('#DistrictId').change(function () {
-                var selectedDistrictId = $(this).val();
-                $.ajax({
-                    url: '/Account/GetNahias',
-                    type: 'GET',
-                    data: { districtId: selectedDistrictId },
-                    dataType: 'json',
-                    success: function (data) {
-                        var nahiaDropdown = $('#NahiaId');
-                        nahiaDropdown.empty();
-                        var selectOption = $('<option></option>').val('').text('-- Select Nahia --');
-                        selectOption.prop('disabled', true);
-                        selectOption.prop('hidden', true);
-                        selectOption.prop('selected', true);
-                        nahiaDropdown.append(selectOption);
-                        $.each(data, function (index, item) {
-                            var option = $('<option></option>').val(item.nahiaId).text(item.nahiaName);
-                            nahiaDropdown.append(option);
-                        });
-                    },
-                    error: function (xhr, status, error) {
-                        console.log(xhr.responseText);
-                    }
-                });
-            });
-        });
-    </script>*@
     <script>
         $(document).ready(function () {
             $('#DistrictId').change(function () {
@@ -313,7 +242,7 @@
                     success: function (data) {
                         var nahiaDropdown = $('#NahiaId');
                         nahiaDropdown.empty();
-                        var selectOption = $('<option></option>').val('').text('-- Select Nahia* --');
+                        var selectOption = $('<option></option>').val('').text('-- حدد الناحية*--');
                         selectOption.prop('disabled', true);
                         selectOption.prop('hidden', true);
                         selectOption.prop('selected', true);
@@ -346,7 +275,7 @@
                     success: function (data) {
                         var healthInstitutionDropdown = $('#HealthInstitutionId');
                         healthInstitutionDropdown.empty();
-                        var selectOption = $('<option></option>').val('').text('-- Select Health Institutions* --');
+                        var selectOption = $('<option></option>').val('').text('-- حدد المؤسسة*--');
                         selectOption.prop('disabled', true);
                         selectOption.prop('hidden', true);
                         selectOption.prop('selected', true);
@@ -362,46 +291,6 @@
                 });
             });
         });
-    </script>@*
-    <script>
-        function showNextDropdown(selectElement, nextRow) {
-            var selectedValue = selectElement.value;
-            $('#row' + nextRow + ', #row' + (nextRow + 1) + ', #row' + (nextRow + 2) + ', #row' + (nextRow + 3)).hide();
-            if (selectedValue !== '') {
-                $('#row' + nextRow).show();
-                for (var i = nextRow + 1; i <= 5; i++) {
-                    $('#row' + i).hide();
-                    $('select[name="' + $('#row' + i + ' select').attr('name') + '"]').val('');
-                }
-            }
-        }
-    </script>*@
-    @*
-    <script>
-        function showNextDropdown(selectElement, nextRowClass) {
-            var selectedValue = selectElement.value;
-            var currentRow = selectElement.parentNode.parentNode;
-            var nextRowElement = currentRow.nextElementSibling;
-
-            while (nextRowElement) {
-                nextRowElement.style.display = 'none';
-
-                var nextDropdown = nextRowElement.querySelector('select');
-                nextDropdown.value = '';
-
-                nextRowElement = nextRowElement.nextElementSibling;
-
-                if (nextRowElement && nextRowElement.classList.contains(nextRowClass)) {
-                    break;
-                }
-            }
-
-            if (selectedValue !== '') {
-                if (nextRowElement) {
-                    nextRowElement.style.display = 'block';
-                }
-            }
-        }
-    </script>*@
+    </script>
 
 }

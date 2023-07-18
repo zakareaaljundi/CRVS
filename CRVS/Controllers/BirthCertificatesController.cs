@@ -49,15 +49,12 @@ namespace CRVS.Controllers
                 }
             }
             var controllerName = this.ControllerContext.RouteData.Values["controller"]!.ToString();
-
             var rolePermissions = await _context.RolePermissions.FirstOrDefaultAsync(p => p.RoleId! == roleId && p.TableName == controllerName);
-
             bool canAdd = rolePermissions != null && rolePermissions.AddPermission;
             bool canEdit = rolePermissions != null && rolePermissions.EditPermission;
             bool canRead = rolePermissions != null && rolePermissions.ReadPermission;
             bool canDelete = rolePermissions != null && rolePermissions.DeletePermission;
             bool canApprove = rolePermissions != null && rolePermissions.ApprovalPermission;
-
             ViewBag.CanAdd = canAdd;
             ViewBag.CanEdit = canEdit;
             ViewBag.CanRead = canRead;
@@ -68,8 +65,8 @@ namespace CRVS.Controllers
             if (IsOfficeUser)
             {
                 var officeUser = await _context.Users.FirstOrDefaultAsync(x => x.UserId == currentUser!.Id);
-                var officeUserCertificates = _context.BirthCertificates.Where(x => x.HealthInstitution == officeUser!.HealthInstitution && x.IsDeleted == false).ToList();
-                return View(officeUser);
+                var officeUserCertificates = _context.BirthCertificates.Where(x => x.HealthInstitution == officeUser!.HealthInstitution && x.IsDeleted == false && x.IsRejected == false).ToList();
+                return View(officeUserCertificates);
 
             }
             else
@@ -79,7 +76,7 @@ namespace CRVS.Controllers
                 return View(userCertificates);
             }
         }
-        public async Task<IActionResult> ToEdit()
+        public async Task<IActionResult> BiostatisticsStage()
         {
             var currentUser = await _userManager.GetUserAsync(User);
             var currentRoles = await _userManager.GetRolesAsync(currentUser!);
@@ -110,41 +107,181 @@ namespace CRVS.Controllers
             ViewBag.canApprove = canApprove;
 
             var certificates = await _certificatesRepository.GetAllAsync();
-            var pendingCertificates = certificates.OrderByDescending(x => x.CreationDate).Where(x => x.ToEdit == true).Where(x => x.BiostatisticsStage == false).Where(x => x.Approval == false).Where(x => x.IsDeleted == false);
+            var pendingCertificates = certificates.OrderByDescending(x => x.CreationDate).Where(x => x.BiostatisticsStage == false).Where(x => x.IsRejected == false).Where(x => x.Approval == false).Where(x => x.IsDeleted == false);
             return View(pendingCertificates);
         }
 
-        /*
-                public async Task<IActionResult> ApprovalStage()
+        public async Task<IActionResult> ApprovalStage()
+        {
+            var currentUser = await _userManager.GetUserAsync(User);
+            var currentRoles = await _userManager.GetRolesAsync(currentUser!);
+            var roleId = "";
+            if (currentRoles.Count > 0)
+            {
+                var roleName = currentRoles[0];
+                var role = await _roleManager.FindByNameAsync(roleName);
+
+                if (role != null)
                 {
-                    var certificates = await _certificatesRepository.GetAllAsync();
-                    var pendingCertificates = certificates.Where(x => x.FirstStage == true).Where(x => x.SecondStage == true).Where(x => x.Approval == false).Where(x => x.IsDeleted == false);
-                    return View(pendingCertificates);
+                    roleId = role.Id;
                 }
-                public async Task<IActionResult> Approved()
+            }
+            var controllerName = this.ControllerContext.RouteData.Values["controller"]!.ToString();
+            var rolePermissions = await _context.RolePermissions.FirstOrDefaultAsync(p => p.RoleId! == roleId && p.TableName == controllerName);
+            bool canAdd = rolePermissions != null && rolePermissions.AddPermission;
+            bool canEdit = rolePermissions != null && rolePermissions.EditPermission;
+            bool canRead = rolePermissions != null && rolePermissions.ReadPermission;
+            bool canDelete = rolePermissions != null && rolePermissions.DeletePermission;
+            bool canApprove = rolePermissions != null && rolePermissions.ApprovalPermission;
+            ViewBag.CanAdd = canAdd;
+            ViewBag.CanEdit = canEdit;
+            ViewBag.CanRead = canRead;
+            ViewBag.CanDelete = canDelete;
+            ViewBag.canApprove = canApprove;
+
+            var officeUser = await _context.Users.FirstOrDefaultAsync(x => x.UserId == currentUser!.Id);
+            var officeUserCertificates = _context.BirthCertificates.Where(x => x.HealthInstitution == officeUser!.HealthInstitution && x.BiostatisticsStage == true && x.Approval == false && x.IsDeleted == false && x.IsRejected == false).ToList();
+            return View(officeUserCertificates);
+        }
+        public async Task<IActionResult> Approved()
+        {
+            var currentUser = await _userManager.GetUserAsync(User);
+            var currentRoles = await _userManager.GetRolesAsync(currentUser!);
+            var roleId = "";
+            if (currentRoles.Count > 0)
+            {
+                var roleName = currentRoles[0];
+                var role = await _roleManager.FindByNameAsync(roleName);
+
+                if (role != null)
                 {
-                    var certificates = await _certificatesRepository.GetAllAsync();
-                    var approvedCertificates = certificates.Where(x => x.FirstStage == true).Where(x => x.SecondStage == true).Where(x => x.Approval == true).Where(x => x.IsDeleted == false);
-                    return View(approvedCertificates);
-                }*/
-        public async Task<IActionResult> UnCompleted()
+                    roleId = role.Id;
+                }
+            }
+            var controllerName = this.ControllerContext.RouteData.Values["controller"]!.ToString();
+            var rolePermissions = await _context.RolePermissions.FirstOrDefaultAsync(p => p.RoleId! == roleId && p.TableName == controllerName);
+            bool canAdd = rolePermissions != null && rolePermissions.AddPermission;
+            bool canEdit = rolePermissions != null && rolePermissions.EditPermission;
+            bool canRead = rolePermissions != null && rolePermissions.ReadPermission;
+            bool canDelete = rolePermissions != null && rolePermissions.DeletePermission;
+            bool canApprove = rolePermissions != null && rolePermissions.ApprovalPermission;
+            ViewBag.CanAdd = canAdd;
+            ViewBag.CanEdit = canEdit;
+            ViewBag.CanRead = canRead;
+            ViewBag.CanDelete = canDelete;
+            ViewBag.canApprove = canApprove;
+
+            bool IsOfficeUser = await _userManager.IsInRoleAsync(currentUser!, "مكتب تسجيل المواليد والوفيات");
+            if (IsOfficeUser)
+            {
+                var officeUser = await _context.Users.FirstOrDefaultAsync(x => x.UserId == currentUser!.Id);
+                var officeUserCertificates = _context.BirthCertificates.Where(x => x.HealthInstitution == officeUser!.HealthInstitution && x.BiostatisticsStage == true && x.Approval == true && x.IsDeleted == false && x.IsRejected == false).ToList();
+                return View(officeUserCertificates);
+            }
+            else
+            {
+                var certificates = await _certificatesRepository.GetAllAsync();
+                var approvedCertificates = certificates.Where(x => x.BiostatisticsStage == true).Where(x => x.IsRejected == false).Where(x => x.Approval == true).Where(x => x.IsDeleted == false);
+                return View(approvedCertificates);
+            }
+        }
+        /*public async Task<IActionResult> UnCompleted()
         {
             var certificates = await _certificatesRepository.GetAllAsync();
             var unCompletedCertificates = certificates.Where(x => x.Approval == false).Where(x => x.IsDeleted == false);
             return View(unCompletedCertificates);
-        }
+        }*/
         public async Task<IActionResult> Deleted()
         {
-            var certificates = await _certificatesRepository.GetAllAsync();
-            var unCompletedCertificates = certificates.Where(x => x.IsDeleted == true);
-            return View(unCompletedCertificates);
+            var currentUser = await _userManager.GetUserAsync(User);
+            var currentRoles = await _userManager.GetRolesAsync(currentUser!);
+            var roleId = "";
+            if (currentRoles.Count > 0)
+            {
+                var roleName = currentRoles[0];
+                var role = await _roleManager.FindByNameAsync(roleName);
+
+                if (role != null)
+                {
+                    roleId = role.Id;
+                }
+            }
+            var controllerName = this.ControllerContext.RouteData.Values["controller"]!.ToString();
+            var rolePermissions = await _context.RolePermissions.FirstOrDefaultAsync(p => p.RoleId! == roleId && p.TableName == controllerName);
+            bool canAdd = rolePermissions != null && rolePermissions.AddPermission;
+            bool canEdit = rolePermissions != null && rolePermissions.EditPermission;
+            bool canRead = rolePermissions != null && rolePermissions.ReadPermission;
+            bool canDelete = rolePermissions != null && rolePermissions.DeletePermission;
+            bool canApprove = rolePermissions != null && rolePermissions.ApprovalPermission;
+            ViewBag.CanAdd = canAdd;
+            ViewBag.CanEdit = canEdit;
+            ViewBag.CanRead = canRead;
+            ViewBag.CanDelete = canDelete;
+            ViewBag.canApprove = canApprove;
+
+            bool IsOfficeUser = await _userManager.IsInRoleAsync(currentUser!, "مكتب تسجيل المواليد والوفيات");
+            if (IsOfficeUser)
+            {
+                var officeUser = await _context.Users.FirstOrDefaultAsync(x => x.UserId == currentUser!.Id);
+                var officeUserCertificates = _context.BirthCertificates.Where(x => x.HealthInstitution == officeUser!.HealthInstitution && x.IsDeleted == true).ToList();
+                return View(officeUserCertificates);
+            }
+            else
+            {
+                var certificates = await _certificatesRepository.GetAllAsync();
+                var deletedCertificates = certificates.Where(x => x.IsDeleted == true);
+                return View(deletedCertificates);
+            }
         }
-        /*public async Task<IActionResult> Rejected()
+        public async Task<IActionResult> Rejected()
         {
-            var certificates = await _certificatesRepository.GetAllAsync();
-            var rejectedCertificates = certificates.Where(x => x.FirstStage == false).Where(x => x.SecondStage == false).Where(x => x.Approval == false).Where(x => x.IsDeleted == false);
-            return View(rejectedCertificates);
-        }*//*
+            var currentUser = await _userManager.GetUserAsync(User);
+            var currentRoles = await _userManager.GetRolesAsync(currentUser!);
+            var roleId = "";
+            if (currentRoles.Count > 0)
+            {
+                var roleName = currentRoles[0];
+                var role = await _roleManager.FindByNameAsync(roleName);
+
+                if (role != null)
+                {
+                    roleId = role.Id;
+                }
+            }
+            var controllerName = this.ControllerContext.RouteData.Values["controller"]!.ToString();
+            var rolePermissions = await _context.RolePermissions.FirstOrDefaultAsync(p => p.RoleId! == roleId && p.TableName == controllerName);
+            bool canAdd = rolePermissions != null && rolePermissions.AddPermission;
+            bool canEdit = rolePermissions != null && rolePermissions.EditPermission;
+            bool canRead = rolePermissions != null && rolePermissions.ReadPermission;
+            bool canDelete = rolePermissions != null && rolePermissions.DeletePermission;
+            bool canApprove = rolePermissions != null && rolePermissions.ApprovalPermission;
+            ViewBag.CanAdd = canAdd;
+            ViewBag.CanEdit = canEdit;
+            ViewBag.CanRead = canRead;
+            ViewBag.CanDelete = canDelete;
+            ViewBag.canApprove = canApprove;
+
+            bool IsBioUser = await _userManager.IsInRoleAsync(currentUser!, "شعبة الإحصاء");
+            bool IsOfficeUser = await _userManager.IsInRoleAsync(currentUser!, "مكتب تسجيل المواليد والوفيات");
+            if (IsOfficeUser)
+            {
+                var officeUser = await _context.Users.FirstOrDefaultAsync(x => x.UserId == currentUser!.Id);
+                var officeUserCertificates = _context.BirthCertificates.Where(x => x.HealthInstitution == officeUser!.HealthInstitution && x.IsRejected == true && x.Approval == false && x.BiostatisticsStage == false && x.IsDeleted == false).ToList();
+                return View(officeUserCertificates);
+            }
+            else if (IsBioUser)
+            {
+                var bioUser = await _context.Users.FirstOrDefaultAsync(x => x.UserId == currentUser!.Id);
+                var bioUserCertificates = _context.BirthCertificates.Where(x => x.Creator == bioUser!.UserId && x.IsRejected == true && x.Approval == false && x.BiostatisticsStage == false && x.IsDeleted == true).ToList();
+                return View(bioUserCertificates);
+            }
+            else
+            {
+                var certificates = await _certificatesRepository.GetAllAsync();
+                var rejectedCertificates = certificates.Where(x => x.IsRejected == true).Where(x => x.Approval == false).Where(x => x.BiostatisticsStage == false).Where(x => x.IsDeleted == false);
+                return View(rejectedCertificates);
+            }
+        }/*
         public async Task<IActionResult> ToApprovalStage(int id)
         {
             var certificate = await _certificatesRepository.GetByIdAsync(id);
@@ -161,10 +298,11 @@ namespace CRVS.Controllers
             if (forNotification != null)
             {
                 var userForNotification = _context.Users.FirstOrDefault(x => x.UserId == certificate.Creator);
+            string description = $"لقد تم قبول شهادة ميلاد {certificate.ChildName}, من قِبل مكتب التسجيل.";
                 Notification notification = new Notification
                 {
                     HeadLine = "تم قبول الشهادة",
-                    Description = "لقد تم قبول شهادة الميلاد, من قِبل مكتب التسجيل.",
+                    Description = description,
                     CurrentUser = userForNotification!.UserId,
                     CertificateId = certificate.BirthCertificateId,
                     DAT = DateTime.Now,
@@ -174,37 +312,40 @@ namespace CRVS.Controllers
                 _context.SaveChanges();
             }
             return RedirectToAction("ApprovalStage");
-        }/*
-        public async Task<IActionResult> SecondStageReject(int id)
-        {
-            var certificate = await _certificatesRepository.GetByIdAsync(id);
-            certificate.FirstStage = false;
-            _certificatesRepository.Update(certificate);
-            return RedirectToAction("SecondStage");
         }
-        public async Task<IActionResult> Reject(int id)
+        public async Task<IActionResult> Reject(int id, string feedback)
         {
             var certificate = await _certificatesRepository.GetByIdAsync(id);
-            certificate.FirstStage = false;
-            certificate.SecondStage = false;
+            certificate.IsRejected = true;
+            certificate.BiostatisticsStage = false;
+            certificate.Feedback = feedback;
+            var userForNotification = _context.Users.FirstOrDefault(x => x.UserId == certificate.Creator);
+            string description = $"لقد تم رفض شهادة ميلاد {certificate.ChildName}, من قِبل مكتب التسجيل.";
+            Notification notification = new Notification
+            {
+                HeadLine = "تم رفض الشهادة",
+                Description = description,
+                CurrentUser = userForNotification!.UserId,
+                CertificateId = certificate.BirthCertificateId,
+                DAT = DateTime.Now,
+                IsGoodFeedBack = false,
+            };
+            _context.Notifications.Add(notification);
             _certificatesRepository.Update(certificate);
             return RedirectToAction("ApprovalStage");
-        }*/
+        }
         public async Task<IActionResult> Delete(int id, string returnUrl)
         {
             var certificate = await _certificatesRepository.GetByIdAsync(id);
             certificate.IsDeleted = true;
             await _certificatesRepository.UpdateAsync(certificate);
 
-            // Check if the returnUrl is provided and it is a local URL (to prevent open redirects)
             if (!string.IsNullOrEmpty(returnUrl) && Url.IsLocalUrl(returnUrl))
             {
-                // Redirect back to the returnUrl (which will be the "Index" view with the same page URL)
                 return Redirect(returnUrl);
             }
             else
             {
-                // If the returnUrl is not provided or not a local URL, redirect to the default "Index" action
                 return RedirectToAction("Index");
             }
         }
@@ -222,23 +363,66 @@ namespace CRVS.Controllers
         }
         public async Task<IActionResult> PreCreate()
         {
-            ViewBag.Phones = new SelectList(_context.BirthCertificates.ToList(), "BirthCertificateId", "FatherMobile");
-            return View();
-        }
-        [HttpPost]
-        public async Task<IActionResult> PreCreate(FindFamilyViewModel model)
-        {
-            if (ModelState.IsValid)
+            var currentUser = await _userManager.GetUserAsync(User);
+            var currentRoles = await _userManager.GetRolesAsync(currentUser!);
+            var roleId = "";
+            if (currentRoles.Count > 0)
             {
-                ViewBag.Phones = new SelectList(_context.BirthCertificates.ToList(), "BirthCertificateId", "FatherMobile");
-                var BC = _context.BirthCertificates.FirstOrDefault(x => x.BirthCertificateId == model.FatherPhoneId);
-                return RedirectToAction("Create");
-            }
-            return View(model);
-        }
+                var roleName = currentRoles[0];
+                var role = await _roleManager.FindByNameAsync(roleName);
 
+                if (role != null)
+                {
+                    roleId = role.Id;
+                }
+            }
+            var controllerName = this.ControllerContext.RouteData.Values["controller"]!.ToString();
+            var rolePermissions = await _context.RolePermissions.FirstOrDefaultAsync(p => p.RoleId! == roleId && p.TableName == controllerName);
+            bool canAdd = rolePermissions != null && rolePermissions.AddPermission;
+            bool canEdit = rolePermissions != null && rolePermissions.EditPermission;
+            bool canRead = rolePermissions != null && rolePermissions.ReadPermission;
+            bool canDelete = rolePermissions != null && rolePermissions.DeletePermission;
+            bool canApprove = rolePermissions != null && rolePermissions.ApprovalPermission;
+            ViewBag.CanAdd = canAdd;
+            ViewBag.CanEdit = canEdit;
+            ViewBag.CanRead = canRead;
+            ViewBag.CanDelete = canDelete;
+            ViewBag.canApprove = canApprove;
+
+            ViewBag.FatherPhones = new SelectList(_context.BirthCertificates.ToList(), "BirthCertificateId", "FatherMobile");
+            ViewBag.MotherPhones = new SelectList(_context.BirthCertificates.ToList(), "BirthCertificateId", "MotherMobile");
+            var certificates = _certificatesRepository.GetAll();
+            return View(certificates);
+        }
+        public IActionResult SecondCreate(int id)
+        {
+            var certificate = _certificatesRepository.GetById(id);
+            return RedirectToAction("Create", new
+            {
+                oldInformations = true,
+                oldFatherFName = certificate.FatherFName,
+                oldFatherMName = certificate.FatherMName,
+                oldFatherLName = certificate.FatherLName,
+                oldFatherAge = certificate.FatherAge,
+                oldFatherDOB = certificate.FatherDOB,
+                oldFatherJob = certificate.FatherJob,
+                oldFatherMobile = certificate.FatherMobile,
+                oldFatherReligion = certificate.FatherReligion,
+                oldFatherNationality = certificate.FatherNationality,
+                oldMotherFName = certificate.MotherFName,
+                oldMotherMName = certificate.MotherMName,
+                oldMotherLName = certificate.MotherLName,
+                oldMotherAge = certificate.MotherAge,
+                oldMotherDOB = certificate.MotherDOB,
+                oldMotherJob = certificate.MotherJob,
+                oldMotherMobile = certificate.MotherMobile,
+                oldMotherReligion = certificate.MotherReligion,
+                oldMotherNationality = certificate.MotherNationality,
+            });
+        }
         [HttpGet]
-        public async Task<IActionResult> Create()
+        public async Task<IActionResult> Create(bool? oldInformations, string? oldFatherFName, string? oldFatherMName, string? oldFatherLName, string? oldFatherAge, DateTime? oldFatherDOB, string? oldFatherMobile, string? oldFatherJob, string? oldFatherReligion, string? oldFatherNationality
+                                                                , string? oldMotherFName, string? oldMotherMName, string? oldMotherLName, string? oldMotherAge, DateTime? oldMotherDOB, string? oldMotherMobile, string? oldMotherJob, string? oldMotherReligion, string? oldMotherNationality)
         {
             ViewBag.HId = Guid.NewGuid();
             var userId = _userManager.GetUserName(HttpContext.User);
@@ -251,13 +435,61 @@ namespace CRVS.Controllers
             ViewBag.FacilityType = currentUser!.FacilityType;
             ViewBag.HealthInstitution = currentUser!.HealthInstitution;
 
+            BirthCertificateViewModel birthCertificateViewModel = new BirthCertificateViewModel
+            {
+                FatherFName = oldFatherFName,
+                FatherMName = oldFatherMName,
+                FatherLName = oldFatherLName,
+                FatherAge = oldFatherAge,
+                FatherDOB = oldFatherDOB,
+                FatherMobile = oldFatherMobile,
+                MotherFName = oldMotherFName,
+                MotherMName = oldMotherMName,
+                MotherLName = oldMotherLName,
+                MotherAge = oldMotherAge,
+                MotherDOB = oldMotherDOB,
+                MotherMobile = oldMotherMobile,
+            };
+
             var isArabianGovernorate = _context.Governorates.FirstOrDefault(x => x.GovernorateName == currentUser.Governorate)!.IsArabian;
             if (isArabianGovernorate)
             {
-                ViewBag.MaleJobs = new SelectList(_context.Jobs.Where(x => x.IsArabic && x.JobId % 2 != 0).ToList(), "JobId", "JobName");
-                ViewBag.MaleReligions = new SelectList(_context.Religions.Where(x => x.IsArabic && x.ReligionId % 2 != 0).ToList(), "ReligionId", "ReligionName");
-                ViewBag.FemaleJobs = new SelectList(_context.Jobs.Where(x => x.IsArabic && x.JobId % 2 == 0).ToList(), "JobId", "JobName");
-                ViewBag.FemaleReligions = new SelectList(_context.Religions.Where(x => x.IsArabic && x.ReligionId % 2 == 0).ToList(), "ReligionId", "ReligionName");
+                if (oldFatherJob != "" && oldInformations == true)
+                {
+                    var fatherJobId = _context.Jobs.FirstOrDefault(x => x.JobName == oldFatherJob)!.JobId;
+                    ViewBag.MaleJobs = new SelectList(_context.Jobs.Where(x => x.IsArabic && x.JobId % 2 != 0).ToList(), "JobId", "JobName", fatherJobId);
+                }
+                else
+                {
+                    ViewBag.MaleJobs = new SelectList(_context.Jobs.Where(x => x.IsArabic && x.JobId % 2 != 0).ToList(), "JobId", "JobName");
+                }
+                if (oldFatherReligion != "" && oldInformations == true)
+                {
+                    var fatherReligionId = _context.Religions.FirstOrDefault(x => x.ReligionName == oldFatherReligion)!.ReligionId;
+                    ViewBag.MaleReligions = new SelectList(_context.Religions.Where(x => x.IsArabic && x.ReligionId % 2 != 0).ToList(), "ReligionId", "ReligionName", fatherReligionId);
+                }
+                else
+                {
+                    ViewBag.MaleReligions = new SelectList(_context.Religions.Where(x => x.IsArabic && x.ReligionId % 2 != 0).ToList(), "ReligionId", "ReligionName");
+                }
+                if (oldMotherJob != "" && oldInformations == true)
+                {
+                    var motherJobId = _context.Jobs.FirstOrDefault(x => x.JobName == oldMotherJob)!.JobId;
+                    ViewBag.FemaleJobs = new SelectList(_context.Jobs.Where(x => x.IsArabic && x.JobId % 2 == 0).ToList(), "JobId", "JobName", motherJobId);
+                }
+                else
+                {
+                    ViewBag.FemaleJobs = new SelectList(_context.Jobs.Where(x => x.IsArabic && x.JobId % 2 == 0).ToList(), "JobId", "JobName");
+                }
+                if (oldMotherReligion != "" && oldInformations == true)
+                {
+                    var motherReligionId = _context.Religions.FirstOrDefault(x => x.ReligionName == oldMotherReligion)!.ReligionId;
+                    ViewBag.FemaleReligions = new SelectList(_context.Religions.Where(x => x.IsArabic && x.ReligionId % 2 == 0).ToList(), "ReligionId", "ReligionName", motherReligionId);
+                }
+                else
+                {
+                    ViewBag.FemaleReligions = new SelectList(_context.Religions.Where(x => x.IsArabic && x.ReligionId % 2 == 0).ToList(), "ReligionId", "ReligionName");
+                }
             }
             else
             {
@@ -267,14 +499,32 @@ namespace CRVS.Controllers
                 ViewBag.FemaleReligions = new SelectList(_context.Religions.Where(x => x.IsArabic == false).ToList(), "ReligionId", "ReligionName");
             }
 
-            ViewBag.Nationalities = new SelectList(_context.Nationalities.ToList(), "NationalityId", "NationalityName");
+            if (oldFatherNationality != "" && oldInformations == true)
+            {
+                var fatherNationalityId = _context.Nationalities.FirstOrDefault(x => x.NationalityName == oldFatherNationality)!.NationalityId;
+                ViewBag.FatherNationalities = new SelectList(_context.Nationalities.ToList(), "NationalityId", "NationalityName", fatherNationalityId);
+            }
+            else
+            {
+                ViewBag.FatherNationalities = new SelectList(_context.Nationalities.ToList(), "NationalityId", "NationalityName");
+            }
+            if (oldMotherNationality != "" && oldInformations == true)
+            {
+                var motherNationalityId = _context.Nationalities.FirstOrDefault(x => x.NationalityName == oldMotherNationality)!.NationalityId;
+                ViewBag.MotherNationalities = new SelectList(_context.Nationalities.ToList(), "NationalityId", "NationalityName", motherNationalityId);
+            }
+            else
+            {
+                ViewBag.MotherNationalities = new SelectList(_context.Nationalities.ToList(), "NationalityId", "NationalityName");
+            }
+
             ViewBag.Disabilities = new SelectList(_context.Disabilities.ToList(), "Id", "QName");
 
             ViewBag.Governorates = new SelectList(_context.Governorates.ToList(), "GovernorateId", "GovernorateName");
             ViewBag.Districts = new SelectList(_context.Districts.ToList(), "DistrictId", "DistrictName");
             ViewBag.Nahias = new SelectList(_context.Nahias.ToList(), "NahiaId", "NahiaName");
 
-            return View();
+            return View(birthCertificateViewModel);
         }
         public ActionResult GetDistricts(int familyGovernorateId)
         {
@@ -514,7 +764,6 @@ namespace CRVS.Controllers
                 };
                 if (SaveBtn == "Save")
                 {
-                    birthCertificate.ToEdit = true;
                     birthCertificate.BiostatisticsStage = false;
                 }
                 #endregion
@@ -571,10 +820,10 @@ namespace CRVS.Controllers
                     var motherJobId = _context.Jobs.FirstOrDefault(x => x.JobName == birthCertificate.MotherJob)!.JobId;
                     ViewBag.FemaleJobs = new SelectList(_context.Jobs.Where(x => x.IsArabic && x.JobId % 2 == 0).ToList(), "JobId", "JobName", motherJobId);
                 }
-                if (birthCertificate.FatherReligion != "")
+                if (birthCertificate.MotherReligion != "")
                 {
-                    var motherReligionId = _context.Religions.FirstOrDefault(x => x.ReligionName == birthCertificate.FatherReligion)!.ReligionId;
-                    ViewBag.FemaleReligions = new SelectList(_context.Religions.Where(x => x.IsArabic && x.ReligionId % 2 != 0).ToList(), "ReligionId", "ReligionName", motherReligionId);
+                    var motherReligionId = _context.Religions.FirstOrDefault(x => x.ReligionName == birthCertificate.MotherReligion)!.ReligionId;
+                    ViewBag.FemaleReligions = new SelectList(_context.Religions.Where(x => x.IsArabic && x.ReligionId % 2 == 0).ToList(), "ReligionId", "ReligionName", motherReligionId);
                 }
             }
             else
@@ -825,12 +1074,12 @@ namespace CRVS.Controllers
                 string imgBirthCertificatePath = null;
                 if (birthCertificateViewModel.ImageBirthCertificate != null)
                 {
-                        string imgBirthCertificate = FileUpload(birthCertificateViewModel.ImageBirthCertificate!, birthCertificateViewModel.ImageBirthCertificate!.FileName);
-                        imgBirthCertificatePath = imgBirthCertificate;
+                    string imgBirthCertificate = FileUpload(birthCertificateViewModel.ImageBirthCertificate!, birthCertificateViewModel.ImageBirthCertificate!.FileName);
+                    imgBirthCertificatePath = imgBirthCertificate;
                 }
                 else
                 {
-                        imgBirthCertificatePath = birthCertificateOld.ImgBirthCertificate!;
+                    imgBirthCertificatePath = birthCertificateOld.ImgBirthCertificate!;
 
                 }
                 string imgMarriageCertificatePath = null;
@@ -990,17 +1239,14 @@ namespace CRVS.Controllers
                 birthCertificateOld.ImgResidencyCardFront = imgResidencyCardFrontPath;
                 birthCertificateOld.ImgResidencyCardBack = imgResidencyCardBackPath;
                 birthCertificateOld.BiostatisticsStage = true;
-                birthCertificateOld.ToEdit = false;
-                /*};*/
                 if (SaveBtn == "Save")
                 {
-                    birthCertificateOld.ToEdit = true;
                     birthCertificateOld.BiostatisticsStage = false;
                 }
                 #endregion
 
                 _certificatesRepository.Update(birthCertificateOld);
-                return RedirectToAction("ToEdit");
+                return RedirectToAction("BiostatisticsStage");
             }
             return View(birthCertificateViewModel);
         }

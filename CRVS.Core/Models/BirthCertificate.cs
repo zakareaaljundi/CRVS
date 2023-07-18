@@ -129,11 +129,11 @@ namespace CRVS.Core.Models
         public string? ImgMotherUnifiedNationalIdBack { get; set; }
         public string? ImgResidencyCardFront { get; set; }
         public string? ImgResidencyCardBack { get; set; }
-        public bool ToEdit { get; set; }
+        public string? Feedback { get; set; }
         public bool BiostatisticsStage { get; set; }
         public bool Approval { get; set; }
         public bool IsDeleted { get; set; }
-        public bool IsActive { get; set; }
+        public bool IsRejected { get; set; }
         public DateTime? CreationDate { get; set; }
         public string? Creator { get; set; }
     }

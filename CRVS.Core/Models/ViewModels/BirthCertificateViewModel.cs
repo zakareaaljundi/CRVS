@@ -132,11 +132,10 @@ namespace CRVS.Core.Models.ViewModels
         public IFormFile? ImageResidencyCardFront { get; set; }
         public IFormFile? ImageResidencyCardBack { get; set; }
         public string? SaveBtn { get; set; }
-        public bool ToEdit { get; set; }
         public bool BiostatisticsStage { get; set; }
         public bool Approval { get; set; }
         public bool IsDeleted { get; set; }
-        public bool IsActive { get; set; }
+        public bool IsRejected { get; set; }
         public DateTime? CreationDate { get; set; }
         public string? Creator { get; set; }
     }

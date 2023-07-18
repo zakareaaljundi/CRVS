@@ -15,55 +15,96 @@
         <ul class="list-style-none">
             <li>
                 <div class="border-bottom rounded-top py-3 px-4">
-                    <div class="mb-0 font-weight-medium fs-4">Notifications</div>
+                    <div class="mb-0 font-weight-medium fs-4">الإشعارات</div>
                 </div>
             </li>
             <li>
                 <div class="message-center notifications position-relative" style="height:230px;">
                     @foreach (var notification in Model)
                     {
-                        <a href="javascript:void(0)" class="message-item d-flex align-items-center border-bottom px-2 py-2">
-                            <div style="width: 3rem">
-                                @{
-                                    if (notification.IsGoodFeedBack)
-                                    {
-                                        <img class="w-100" src="~/Images/good-feedback.jpg">
-                                    }
-                                    else
-                                    {
-                                        <img class="w-100" src="~/Images/bad-feedback.jpg">
-                                    }
-                                }
-                            </div>
-                            <div class="w-75 d-inline-block v-middle ps-2">
-                                <h5 class="message-title mb-0 mt-1 fs-3 fw-bold">@notification.HeadLine</h5>
-                                <span class="fs-2 text-nowrap d-block time text-truncate fw-normal text-muted mt-1">
-                                    @notification.Description
-                                </span>
-                                <span class="fs-2 text-nowrap d-block subtext text-muted">
+                        @if (notification.CertificateId != 0)
+                        {
+                            <a asp-action="Details" asp-controller="BirthCertificates" asp-route-id="@notification.CertificateId" class="message-item d-flex align-items-center border-bottom px-2 py-2">
+                                <div style="width: 3rem">
                                     @{
-                                        DateTime currentDate = DateTime.Today;
-                                        DateTime notificationDate = notification.DAT;
-                                        if (notificationDate.Date == currentDate)
+                                        if (notification.IsGoodFeedBack)
                                         {
-                                            @notificationDate.ToString("HH:mm tt")
+                                            <img class="w-100" src="~/Images/GoodFeedback.png">
                                         }
                                         else
                                         {
-                                            @notificationDate.ToString("yyyy-MM-dd HH:mm tt")
+                                            <img class="w-100" src="~/Images/BadFeedback.png">
                                         }
                                     }
-                                </span>
+                                </div>
+                                <div class="w-75 d-inline-block v-middle ps-2">
+                                    <h5 class="message-title mb-0 mt-1 fs-3 fw-bold">@notification.HeadLine</h5>
+                                    <span class="fs-2 text-nowrap d-block time text-truncate fw-normal text-muted mt-1">
+                                        @notification.Description
+                                    </span>
+                                    <span class="fs-2 text-nowrap d-block subtext text-muted">
+                                        @{
+                                            DateTime currentDate = DateTime.Today;
+                                            DateTime notificationDate = notification.DAT;
+                                            if (notificationDate.Date == currentDate)
+                                            {
+                                                @notificationDate.ToString("HH:mm tt")
+                                            }
+                                            else
+                                            {
+                                                @notificationDate.ToString("yyyy-MM-dd HH:mm tt")
+                                            }
+                                        }
+                                    </span>
 
-                            </div>
-                        </a>
+                                </div>
+                            </a>
+                        }
+                        else if (notification.NewUserId != null)
+                        {
+                            <a asp-action="Profile" asp-controller="Users" asp-route-id="@notification.NewUserId" class="message-item d-flex align-items-center border-bottom px-2 py-2">
+                                <div style="width: 3rem">
+                                    @{
+                                        if (notification.IsGoodFeedBack)
+                                        {
+                                            <img class="w-100" src="~/Images/GoodFeedback.png">
+                                        }
+                                        else
+                                        {
+                                            <img class="w-100" src="~/Images/BadFeedback.png">
+                                        }
+                                    }
+                                </div>
+                                <div class="w-75 d-inline-block v-middle ps-2">
+                                    <h5 class="message-title mb-0 mt-1 fs-3 fw-bold">@notification.HeadLine</h5>
+                                    <span class="fs-2 text-nowrap d-block time text-truncate fw-normal text-muted mt-1">
+                                        @notification.Description
+                                    </span>
+                                    <span class="fs-2 text-nowrap d-block subtext text-muted">
+                                        @{
+                                            DateTime currentDate = DateTime.Today;
+                                            DateTime notificationDate = notification.DAT;
+                                            if (notificationDate.Date == currentDate)
+                                            {
+                                                @notificationDate.ToString("HH:mm tt")
+                                            }
+                                            else
+                                            {
+                                                @notificationDate.ToString("yyyy-MM-dd HH:mm tt")
+                                            }
+                                        }
+                                    </span>
+
+                                </div>
+                            </a>
+                        }
+
                     }
                 </div>
             </li>
             <li>
-                <a class="nav-link border-top text-center text-dark pt-3"
-                   href="javascript:void(0);">
-                    <strong>Check all notifications</strong> <i data-feather="chevron-right" class="feather-sm"></i>
+                <a class="nav-link border-top text-center text-dark pt-3" asp-action="Index" asp-controller="Notification">
+                    <i data-feather="chevron-right" class="feather-sm"></i><strong>جميع الإشعارات</strong>
                 </a>
             </li>
         </ul>

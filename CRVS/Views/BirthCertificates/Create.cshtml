@@ -143,14 +143,14 @@
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label>ب- @Localizer["FatherMName"]</label>
-                                    <input asp-for="FatherMName" class="form-control " placeholder="@Localizer["FatherMName"]" />
+                                    <input asp-for="FatherMName" class="form-control " placeholder="@Localizer["FatherMName"]"/>
                                     <span asp-validation-for="FatherMName" class="text-danger"></span>
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label>ج- @Localizer["FatherLName"]</label>
-                                    <input asp-for="FatherLName" class="form-control " placeholder="@Localizer["FatherLName"]" />
+                                    <input asp-for="FatherLName" class="form-control " placeholder="@Localizer["FatherLName"]"/>
                                     <span asp-validation-for="FatherLName" class="text-danger"></span>
                                 </div>
                             </div>
@@ -191,7 +191,7 @@
                             <div class="col-md-4">
                                 <div class="form-group select2-parent">
                                     <label>ح- @Localizer["FatherNationality"]</label>
-                                    <select asp-for="FatherNationalityId" class="select2 " asp-items="@ViewBag.Nationalities">
+                                    <select asp-for="FatherNationalityId" class="select2 " asp-items="@ViewBag.FatherNationalities">
                                         <option value="" disabled selected hidden>-- @Localizer["FatherNationality"] *--</option>
                                     </select>
                                 </div>
@@ -274,7 +274,7 @@
                             <div class="col-md-4">
                                 <div class="form-group select2-parent">
                                     <label>ح- @Localizer["MotherNationality"]</label>
-                                    <select asp-for="MotherNationalityId" class="select2 " asp-items="@ViewBag.Nationalities">
+                                    <select asp-for="MotherNationalityId" class="select2 " asp-items="@ViewBag.MotherNationalities">
                                         <option value="" disabled selected hidden>-- @Localizer["MotherNationality"] *--</option>
                                     </select>
                                 </div>

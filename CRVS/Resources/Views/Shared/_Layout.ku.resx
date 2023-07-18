@@ -123,6 +123,9 @@
   <data name="AllCertificates" xml:space="preserve">
     <value />
   </data>
+  <data name="AllRightsReservedbyCRVS" xml:space="preserve">
+    <value />
+  </data>
   <data name="ApprovedCertificates" xml:space="preserve">
     <value />
   </data>

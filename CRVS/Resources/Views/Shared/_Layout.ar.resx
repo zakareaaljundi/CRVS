@@ -123,6 +123,9 @@
   <data name="AllCertificates" xml:space="preserve">
     <value>جميع الشهادات</value>
   </data>
+  <data name="AllRightsReservedbyCRVS" xml:space="preserve">
+    <value>جميع الحقوق محفوظة لوزارة الصحة العراقية</value>
+  </data>
   <data name="ApprovedCertificates" xml:space="preserve">
     <value>موافق عليهم</value>
   </data>

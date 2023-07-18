@@ -1,10 +1,9 @@
 ﻿@model IEnumerable<CRVS.Core.Models.BirthCertificate>
-
 @{
-    ViewData["Title"] = "Rejected";
+    ViewData["Title"] = "To Edit Stage";
 }
 
-<h1 class="bg-white py-4 rounded-3 text-center">قائمة الشهادات المرفوضة  </h1>
+<h1 class="bg-white py-4 rounded-3 text-center">قائمة الشهادات الغير مكتملة للمراجعة</h1>
 
 <div class="box-2 table-responsive bg-white mt-4 px-2 py-4 rounded-3">
     <div class="row mb-3">
@@ -106,7 +105,6 @@
                         @{
                             var status = certificate.BiostatisticsStage ? "bg-success" : "bg-warning";
                             var title = certificate.BiostatisticsStage ? "مكتملة" : "غير مكتملة";
-                            ViewBag.BioStage = certificate.BiostatisticsStage;
                         }
                         <div class="rounded-circle @status position-absolute" style="width: 10px; height: 10px; top: 50%; transform: translate(-50%, -50%); left: 50%;" title="@title"></div>
                     </td>
@@ -115,7 +113,7 @@
                             <i class="bi bi-three-dots fs-4"></i>
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                            @if (ViewBag.canEdit && !ViewBag.BioStage)
+                            @if (ViewBag.canEdit)
                             {
                                 <li><a asp-action="Edit" class="dropdown-item ps-1" asp-route-id="@certificate.BirthCertificateId"><i class="bi bi-pencil-square ms-3"></i> تعديل</a></li>
                             }
@@ -126,44 +124,11 @@
                             @if (ViewBag.canRead)
                             {
                                 <li><a asp-action="Details" class="dropdown-item ps-1" asp-route-id="@certificate.BirthCertificateId"><i class="bi bi-card-text ms-3"></i> تفاصيل</a></li>
-                                <li>
-                                    <a  href="#" class="dropdown-item ps-1" data-bs-toggle="modal" data-bs-target="#feedbackModal_@certificate.BirthCertificateId">
-                                        <i class="bi bi-info-circle ms-3"></i> سبب الرفض
-                                    </a>
-                                </li>
                             }
-
-                            </ul>
-                        </td>
-                    </tr>
-                }
+                        </ul>
+                    </td>
+                </tr>
+            }
         </tbody>
     </table>
 </div>
-
-
-@foreach (var certificate in Model)
-{
-    <div class="modal fade" id="feedbackModal_@certificate.BirthCertificateId" tabindex="-1" role="dialog" aria-labelledby="feedbackModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header d-flex justify-content-center position-relative">
-                    <button type="button" class="close position-absolute" data-bs-dismiss="modal" aria-label="Close" style="right: 4%;">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                    <h5 class="modal-title" id="feedbackModalLabel">سبب رفض شهادة @certificate.ChildName</h5>
-                </div>
-                <div class="modal-body">
-                    <p>- @certificate.Feedback</p>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">إغلاق</button>
-                    @if (ViewBag.canEdit && !ViewBag.BioStage)
-                    {
-                        <a asp-action="Edit" class="btn btn-primary" asp-route-id="@certificate.BirthCertificateId"> تعديل</a>
-                    }
-                </div>
-            </div>
-        </div>
-    </div>
-}

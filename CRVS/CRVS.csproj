@@ -29,4 +29,11 @@
     <Folder Include="wwwroot\admin-pro\assets\libs\select2\dist\css\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Content Update="wwwroot\admin-pro\table-datatable-advanced.html">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+  </ItemGroup>
+
 </Project>

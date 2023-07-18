@@ -1,0 +1,52 @@
+﻿@model IEnumerable<CRVS.Core.Models.Notification>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1 class="bg-white py-4 rounded-3 text-center">قائمة الإشعارات</h1>
+
+<div class="bg-white container-fluid py-3">
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th></th>
+                <th>العنوان</th>
+                <th>الوصف</th>
+                <th>الوقت</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var notification in Model)
+            {
+                <tr>
+                    @if (notification.IsGoodFeedBack)
+                    {
+                        <td>
+                            <img style="width: 5rem" src="~/Images/GoodFeedback.png">
+                        </td>
+                    }
+                    else
+                    {
+                        <td>
+                            <img style="width: 5rem" src="~/Images/BadFeedback.png">
+                        </td>
+                    }
+                    <td>@notification.HeadLine</td>
+                    <td>@notification.Description</td>
+                    <td>@notification.DAT</td>
+                    <td>
+                        @if (notification.CertificateId != 0)
+                        {
+                        <a asp-action="Details" asp-controller="BirthCertificates" asp-route-id="@notification.CertificateId" class="btn btn-primary">تفاصيل</a>
+                        }
+                        else if (notification.NewUserId != null)
+                        {
+                        <a asp-action="Profile" asp-controller="Users" asp-route-id="@notification.NewUserId" class="btn btn-primary">تفاصيل</a>
+                        }
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

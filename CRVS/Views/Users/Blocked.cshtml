@@ -1,7 +1,220 @@
-﻿
+﻿@model IEnumerable<CRVS.Core.Models.User>
+
 @{
     ViewData["Title"] = "Blocked";
 }
 
-<h1>Blocked</h1>
-
+<div class="widget-content searchable-container list">
+    <div class="card card-body">
+        <div class="row">
+            <div class="col-md-4 col-xl-2 mt-2">
+                <form>
+                    <input type="text" class="form-control product-search" id="input-search" placeholder="@Localizer["Search"]...">
+                </form>
+            </div>
+            <div class="col-md-4 col-xl-2">
+                <h1 class="text-center">المحظورين</h1>
+            </div>
+        </div>
+    </div>
+    <div class="card card-body">
+        <div class="table-responsive">
+            <table class="table search-table v-middle">
+                <thead>
+                    <tr class="header-item">
+                    <tr>
+                        <th>
+                            <div class="n-chk align-self-center text-center">
+                                <div class="form-check">
+                                    <input type="checkbox" class="form-check-input secondary" id="contact-check-all">
+                                    <label class="form-check-label" for="contact-check-all"></label>
+                                    <span class="new-control-indicator"></span>
+                                </div>
+                            </div>
+                        </th>
+                        <th>@Localizer["Name"]</th>
+                        <th>@Localizer["Email"]</th>
+                        <th>@Localizer["Phone"]</th>
+                        <th>@Localizer["Action"]</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var user in Model)
+                    {
+                        <tr class="search-items">
+                            <td>
+                                <div class="n-chk align-self-center text-center">
+                                    <div class="form-check">
+                                        <input type="checkbox" class="form-check-input contact-chkbox primary" id="checkbox2">
+                                        <label class="form-check-label" for="checkbox2"></label>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="d-flex align-items-center">
+                                    <img src="@Url.Content(user.Img)" class="rounded-circle" alt="user" width="50">
+                                    <div class="ms-3">
+                                        <div class="user-meta-info">
+                                            <h6 class="user-name mb-0 font-weight-medium" data-name="Olivia Allen">@user.FName</h6>
+                                            <small class="user-work text-muted" data-occupation="Web Designer">@user.RoleName</small>
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <span class="usr-email-addr" data-email="allen@mail.com">@user.Email</span>
+                            </td>
+                            <td>
+                                <span class="usr-ph-no" data-phone="+91 (125) 450-1500">@user.Phone</span>
+                            </td>
+                            <td class="dropdown">
+                                <a class="nav-link text-center m-0" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i class="bi bi-three-dots fs-4"></i>
+                                </a>
+                                <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                    <li><a asp-action="UnBlock" class="dropdown-item ps-1" asp-route-id="@user.UserId"><i class="bi bi-check-lg ms-3"></i> إزالة الحظر</a></li>
+                                    <li>
+                                        <a href="#" class="dropdown-item ps-1" data-bs-toggle="modal" data-bs-target="#feedbackModal_@user.UserId">
+                                            <i class="bi bi-info-circle ms-3"></i> تفاصيل
+                                        </a>
+                                    </li>
+                                </ul>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+@foreach (var user in Model)
+{
+    <div class="modal fade" id="feedbackModal_@user.UserId" tabindex="-1" role="dialog" aria-labelledby="feedbackModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header d-flex justify-content-center position-relative">
+                    <button type="button" class="close position-absolute" data-bs-dismiss="modal" aria-label="Close" style="right: 4%;">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h5 class="modal-title fs-6" id="feedbackModalLabel">تفاصيل المستخدم @user.FName @user.LName</h5>
+                </div>
+                <div class="modal-body">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col d-flex justify-content-center">
+                                <img src="@Url.Content("user.Img")" style="width: 8rem;" />
+                            </div>
+                        </div><hr />
+                        <div class="row">
+                            <div class="col-6">
+                                الإسم الأول:
+                            </div>
+                            <div class="col-6">
+                                @user.FName
+                            </div>
+                        </div><hr />
+                        <div class="row">
+                            <div class="col-6">
+                                إسم العائلة:
+                            </div>
+                            <div class="col-6">
+                                @user.LName
+                            </div>
+                        </div><hr />
+                        <div class="row">
+                            <div class="col-6">
+                                البريد الإلكتروني:
+                            </div>
+                            <div class="col-6">
+                                @user.Email
+                            </div>
+                        </div><hr />
+                        <div class="row">
+                            <div class="col-6">
+                                الوظيفة:
+                            </div>
+                            <div class="col-6">
+                                @user.RoleName
+                            </div>
+                        </div><hr />
+                        <div class="row">
+                            <div class="col-6">
+                                رقم الهاتف:
+                            </div>
+                            <div class="col-6">
+                                @user.Phone
+                            </div>
+                        </div><hr />
+                        <div class="row">
+                            <div class="col-6">
+                                المحافظة:
+                            </div>
+                            <div class="col-6">
+                                @user.Governorate
+                            </div>
+                        </div><hr />
+                        <div class="row">
+                            <div class="col-6">
+                                الدائرة:
+                            </div>
+                            <div class="col-6">
+                                @user.Doh
+                            </div>
+                        </div><hr />
+                        <div class="row">
+                            <div class="col-6">
+                                القضاء:
+                            </div>
+                            <div class="col-6">
+                                @user.District
+                            </div>
+                        </div><hr />
+                        <div class="row">
+                            <div class="col-6">
+                                الناحية:
+                            </div>
+                            <div class="col-6">
+                                @user.Nahia
+                            </div>
+                        </div><hr />
+                        <div class="row">
+                            <div class="col-6">
+                                القرية:
+                            </div>
+                            <div class="col-6">
+                                @user.Village
+                            </div>
+                        </div><hr />
+                        <div class="row">
+                            <div class="col-6">
+                                نوع المؤسسة:
+                            </div>
+                            <div class="col-6">
+                                @user.FacilityType
+                            </div>
+                        </div><hr />
+                        <div class="row">
+                            <div class="col-6">
+                                إسم المؤسسة:
+                            </div>
+                            <div class="col-6">
+                                @user.HealthInstitution
+                            </div>
+                        </div><hr />
+                        <div class="row">
+                            <div class="col-6">
+                                تاريخ الإنضمام:
+                            </div>
+                            <div class="col-6">
+                                @user.RegisterDate
+                            </div>
+                        </div><hr />
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">إغلاق</button>
+                </div>
+            </div>
+        </div>
+    </div>
+}

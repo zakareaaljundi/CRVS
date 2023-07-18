@@ -40,6 +40,11 @@
 
     @*Bootstrap Icons*@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+
+    @*Datatables Style*@
+    <link href="~/admin-pro/assets/extra-libs/datatables.net-bs4/css/dataTables.bootstrap4.css" rel="stylesheet">
+    @*<link href="https://cdn.datatables.net/1.11.5/css/dataTables.bootstrap4.min.css" rel="stylesheet">
+    <link href="https://cdn.datatables.net/buttons/2.0.1/css/buttons.bootstrap4.min.css" rel="stylesheet">*@
     <style>
         * {
             font-family: system-ui;
@@ -75,9 +80,9 @@
             transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
         }
 
-        .select2-container .select2-selection--single .select2-selection__rendered {
-            margin-top: -3px;
-        }
+            .select2-container .select2-selection--single .select2-selection__rendered {
+                margin-top: -3px;
+            }
 
         .select2 {
             width: 100% !important;
@@ -111,7 +116,8 @@
             background-image: url(/admin-pro/assets/images/custom-select.png);
             background-size: auto;
         }
-        .middle-line:before{
+
+        .middle-line:before {
             content: "";
             height: 98%;
             width: 1px;
@@ -119,6 +125,9 @@
             top: 1%;
             right: 50%;
             background-color: #d9dcde;
+        }
+        #maxDate, #minDate {
+            border: 1px solid #e9ecef;
         }
     </style>
 </head>
@@ -217,7 +226,7 @@
                                 <a class="dropdown-item" asp-action="Profile" asp-controller="Users" asp-area="">
                                     <i data-feather="user" class="feather-sm text-info me-1 ms-1"></i>
                                     @Localizer["Profile"]
-                                </a>
+                                </a>@*
                                 <a class="dropdown-item" href="#">
                                     <i data-feather="credit-card" class="feather-sm text-primary me-1 ms-1"></i>
                                     @Localizer["MyBalance"]
@@ -225,7 +234,7 @@
                                 <a class="dropdown-item" href="#">
                                     <i data-feather="mail" class="feather-sm text-success me-1 ms-1"></i>
                                     @Localizer["Inbox"]
-                                </a>
+                                </a>*@
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item" asp-action="ChangePassword" asp-controller="Account" asp-area="">
                                     <i data-feather="settings" class="feather-sm text-warning me-1 ms-1"></i>
@@ -284,7 +293,7 @@
                                 </ul>
                             </li>
                         }
-                        @if (User.IsInRole("مكتب تسجيل المواليد والوفيات") || User.IsInRole("الادارة العليا"))
+                        @if (User.IsInRole("") || User.IsInRole("الادارة العليا"))
                         {
                             <li class="sidebar-item">
                                 <a class="sidebar-link has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false">
@@ -302,12 +311,12 @@
                                         </a>
                                     </li>
                                     <li class="sidebar-item">
-                                        <a href="page-layout-fixed-header.html" class="sidebar-link">
+                                        <a asp-area="" asp-controller="Users" asp-action="Blocked" class="sidebar-link">
                                             <i class="mdi mdi-view-quilt"></i><span class="hide-menu">
                                                 @Localizer["BlockedUsers"]
                                             </span>
                                         </a>
-                                    </li>
+                                    </li>@*
                                     <li class="sidebar-item">
                                         <a href="page-layout-fixed-sidebar.html"
                                            class="sidebar-link">
@@ -316,7 +325,7 @@
                                                 <span class="side-badge badge bg-info" style="margin-top: -4px;">4</span>
                                             </span>
                                         </a>
-                                    </li>
+                                    </li>*@
                                 </ul>
                             </li>
                         }
@@ -328,7 +337,7 @@
                             </a>
                             <ul aria-expanded="false" class="collapse  first-level">
                                 @*@if (ViewBag.canAdd)*@
-                                @if (!(User.IsInRole("مكتب تسجيل المواليد والوفيات")) || !User.IsInRole("الادارة العليا"))
+                                @if (User.IsInRole("شعبة الإحصاء"))
                                 {
                                     <li class="sidebar-item">
                                         <a asp-area="" asp-controller="BirthCertificates" asp-action="PreCreate" class="sidebar-link">
@@ -355,21 +364,8 @@
                                 @if (User.IsInRole("شعبة الإحصاء"))
                                 {
                                     <li class="sidebar-item">
-                                        <a asp-area="" asp-controller="BirthCertificates" asp-action="ToEdit" class="sidebar-link">
+                                        <a asp-area="" asp-controller="BirthCertificates" asp-action="BiostatisticsStage" class="sidebar-link">
                                             <i class="mdi mdi-format-align-left"></i><span class="hide-menu">@Localizer["SecondStageCertificates"]</span>
-                                        </a>
-                                    </li>
-                                }
-                                @if ((User.IsInRole("Admin")) || User.IsInRole("الادارة العليا"))
-                                {
-                                    <li class="sidebar-item">
-                                        <a asp-area="" asp-controller="BirthCertificates" asp-action="UnCompleted" class="sidebar-link">
-                                            <i class="mdi mdi-format-align-left"></i><span class="hide-menu">@Localizer["UnCompletedCertificates"]</span>
-                                        </a>
-                                    </li>
-                                    <li class="sidebar-item">
-                                        <a asp-area="" asp-controller="BirthCertificates" asp-action="Deleted" class="sidebar-link">
-                                            <i class="mdi mdi-format-align-left"></i><span class="hide-menu">@Localizer["DeletedCertificates"]</span>
                                         </a>
                                     </li>
                                 }
@@ -383,6 +379,19 @@
                                         <i class="mdi mdi-format-align-left"></i><span class="hide-menu">@Localizer["RejectedCertificates"]</span>
                                     </a>
                                 </li>
+                                @if ((User.IsInRole("مكتب تسجيل المواليد والوفيات")) || User.IsInRole("الادارة العليا"))
+                                {
+                                   @* <li class="sidebar-item">
+                                        <a asp-area="" asp-controller="BirthCertificates" asp-action="UnCompleted" class="sidebar-link">
+                                            <i class="mdi mdi-format-align-left"></i><span class="hide-menu">@Localizer["UnCompletedCertificates"]</span>
+                                        </a>
+                                    </li>*@
+                                    <li class="sidebar-item">
+                                        <a asp-area="" asp-controller="BirthCertificates" asp-action="Deleted" class="sidebar-link">
+                                            <i class="mdi mdi-format-align-left"></i><span class="hide-menu">@Localizer["DeletedCertificates"]</span>
+                                        </a>
+                                    </li>
+                                }
                             </ul>
                         </li>
                     </ul>
@@ -394,7 +403,7 @@
                 @RenderBody()
             </div>
             <footer class="footer text-center position-relative">
-                All Rights Reserved by Adminpro admin.
+                @Localizer["AllRightsReservedbyCRVS"].
             </footer>
         </div>
     </div>
@@ -831,14 +840,25 @@
     <script src="~/admin-pro/assets/libs/select2/dist/js/select2.full.min.js"></script>
     <script src="~/admin-pro/assets/libs/select2/dist/js/select2.min.js"></script>
     <script src="~/admin-pro/dist/js/pages/forms/select2/select2.init.js"></script>
-    
+
     @*alert script*@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.18/dist/sweetalert2.all.min.js"></script>
-    
-    @*Upload image style*@
+
+    @*Upload image script*@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/js/dropify.min.js"></script>
 
+    @*datatables script*@
+    <script src="~/admin-pro/assets/extra-libs/datatables.net/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.5.1/js/dataTables.buttons.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.5.1/js/buttons.flash.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.32/pdfmake.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.32/vfs_fonts.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.5.1/js/buttons.html5.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.5.1/js/buttons.print.min.js"></script>
+    <script src="~/admin-pro/dist/js/pages/datatable/datatable-advanced.init.js"></script>
 
+    @*For the Validaition Form in the Createing Birth Certificate*@
     <script>
         //Basic Example
         $("#example-basic").steps({
@@ -998,10 +1018,192 @@
                 }
             }
         })
-    </script>@*
-    <script src="~/admin-pro//dist/js/pages/forms/select2/select2.init.js"></script>
-    <script src="~/admin-pro/assets/libs/select2/dist/js/select2.full.min.js"></script>
-    <script src="~/admin-pro/assets/libs/select2/dist/js/select2.min.js"></script>*@
+    </script>
+
+    @*To Translate the Buttons*@
+    <script>
+        $(document).ready(function () {
+            //$('#file_export_filter').addClass("text-center");
+    //        $('#file_export_filter label input').addClass('w-100 h-100 fs-5');
+            $('#file_export_filter label').contents().first().remove();
+            $('#file_export_filter label input').attr("placeholder", "إبحث..");
+            $('.dt-buttons :first-child').hide();
+            $('.dt-buttons :nth-child(2)').hide();
+            $('.dt-buttons :nth-child(4)').hide();
+            //$('.dt-buttons :first-child').text('');
+            //$('.dt-buttons :nth-child(4) span').text('ملف');
+            $('.dt-buttons :nth-child(3) ').text('إكسل');
+            //$('.dt-buttons :nth-child(2) ').text('ملف');
+            $('.dt-buttons :nth-child(5) ').text('طباعة');
+            $('#file_export_filter').css({ 'margin-top': '-89px' });
+            $('#file_export_filter label').css({ 'margin-top': '46px' });
+            $('.dt-buttons').css({ 'margin-top': '-48px' });
+            $('#file_export thead tr th').addClass("fs-4");
+            $('#file_export tbody tr td').addClass("fs-4");
+
+            $('.pagination :first-child a').text('السابقة');
+            $('.pagination :last-child a').text('التالية');
+            $('.dataTables_empty').text('لا توجد نتائج');
+
+        });
+    </script>
+
+    @*To filter the table based on the Date of Birth *@
+    <script>
+        $(document).ready(function () {
+            $("#minDate, #maxDate").on("change", function () {
+                filterTable();
+            });
+
+            function filterTable() {
+                var minDate = new Date(document.getElementById("minDate").value);
+                var maxDate = new Date(document.getElementById("maxDate").value);
+
+                var table = $("#file_export");
+                var rows = table.find("tbody tr");
+
+                rows.each(function () {
+                    var row = $(this);
+                    var dateOfBirth = new Date(row.find("td:eq(2)").text());
+
+                    if ((minDate && dateOfBirth < minDate) || (maxDate && dateOfBirth > maxDate)) {
+                        row.hide();
+                    } else {
+                        row.show();
+                    }
+                });
+            }
+        });
+    </script>
+
+    @*To Handle the father search bar*@
+    <script>
+        $('.father-search').on('input', function () {
+            var searchQuery = $(this).val().toLowerCase();
+            $('.father-filter-item').hide();
+            if (searchQuery.trim() === '') {
+                return;
+            }
+            $('.father-filter-item').each(function () {
+                var father = $(this).find('label').text().toLowerCase();
+                if (father.indexOf(searchQuery) !== -1) {
+                    $(this).show();
+                }
+            });
+        });
+    </script>
+
+    @*To Handle the mother search bar*@
+    <script>
+        $('.mother-search').on('input', function () {
+            var searchQuery = $(this).val().toLowerCase();
+            $('.mother-filter-item').hide();
+            if (searchQuery.trim() === '') {
+                return;
+            }
+            $('.mother-filter-item').each(function () {
+                var mother = $(this).find('label').text().toLowerCase();
+                if (mother.indexOf(searchQuery) !== -1) {
+                    $(this).show();
+                }
+            });
+        });
+    </script>
+
+    @*To Handle the Place of birth search bar*@
+    <script>
+        $('.place-of-birth-search').on('input', function () {
+            var searchQuery = $(this).val().toLowerCase();
+            $('.place-of-birth-filter-item').hide();
+            if (searchQuery.trim() === '') {
+                return;
+            }
+            $('.place-of-birth-filter-item').each(function () {
+                var placeOfBirth = $(this).find('label').text().toLowerCase();
+                if (placeOfBirth.indexOf(searchQuery) !== -1) {
+                    $(this).show();
+                }
+            });
+        });
+    </script>
+
+    @*To uncheck the choosen items*@
+    <script>
+        $('.uncheck-filter-btn').click(function () {
+            var filterType = $(this).data('filter');
+            var filterSelector = '.' + filterType + '-filter';
+
+            $(filterSelector).prop('checked', false);
+            $(filterSelector + '-item').hide();
+        });
+    </script>
+
+    @*The Logic to search in the table*@
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            function clearFilters() {
+                var fatherSearchInput = document.querySelector('.father-search');
+                fatherSearchInput.value = '';
+
+                var motherSearchInput = document.querySelector('.mother-search');
+                motherSearchInput.value = '';
+
+                var placeOfBirthSearchInput = document.querySelector('.place-of-birth-search');
+                placeOfBirthSearchInput.value = '';
+            }
+
+            function updateTable() {
+                var fatherCheckboxes = document.querySelectorAll('.father-filter:checked');
+                var fatherValues = Array.from(fatherCheckboxes).map(function (checkbox) {
+                    return checkbox.value;
+                });
+
+                var motherCheckboxes = document.querySelectorAll('.mother-filter:checked');
+                var motherValues = Array.from(motherCheckboxes).map(function (checkbox) {
+                    return checkbox.value;
+                });
+
+                var placeOfBirthCheckboxes = document.querySelectorAll('.place-of-birth-filter:checked');
+                var placeOfBirthValues = Array.from(placeOfBirthCheckboxes).map(function (checkbox) {
+                    return checkbox.value;
+                });
+
+                var table = $('#file_export');
+
+                table.search('').columns().search('').draw();
+
+                table.column(3).search(fatherValues.join('|'), true, false);
+                table.column(4).search(motherValues.join('|'), true, false);
+                table.column(3).search(placeOfBirthValues.join('|'), true, false);
+
+                table.draw();
+                updateCheckedCount('father');
+                updateCheckedCount('mother');
+                updateCheckedCount('place-of-birth');
+            }
+
+            function updateCheckedCount(filterType) {
+                var checkboxes = document.querySelectorAll('.' + filterType + '-filter:checked');
+                var counterElement = document.querySelector('[data-counter="' + filterType + '-counter"]');
+                counterElement.textContent = checkboxes.length;
+            }
+
+            var clearAllButtons = document.querySelectorAll('.uncheck-filter-btn');
+            clearAllButtons.forEach(function (button) {
+                button.addEventListener('click', function () {
+                    clearFilters();
+                    updateTable();
+                });
+            });
+
+            var checkboxes = document.querySelectorAll('.form-check-input');
+            checkboxes.forEach(function (checkbox) {
+                checkbox.addEventListener('change', function () {
+                    updateTable();
+                });
+            });
+        });
+    </script>
 
     @await RenderSectionAsync("Scripts", required: false)
 </body>

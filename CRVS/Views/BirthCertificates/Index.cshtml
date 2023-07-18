@@ -3,60 +3,133 @@
 @{
     ViewData["Title"] = "Index";
 }
-<h1 class="text-center mt-5"> قائمة الشهادات</h1>
+<h1 class="bg-white py-4 rounded-3 text-center">قائمة جميع الشهادات</h1>
 
-@*<table class="table table-dark table-responsive-lg mb-4" id="myTable">*@
-<table class="table table-bordered table-responsive-lg mt-3">
-    <thead>
-        <tr>
-            <th>الرقم الصحي</th>
-            <th>إسم الوليد</th>
-            <th>تاريخ الولادة</th>
-            <th>مكان الولادة</th>
-            <th>إسم الأب</th>
-            <th>إسم الأم</th>
-            <th>الحالة</th>
-            <th>عمليات</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var certificate in Model)
-        {
-            <tr>
-                <td>@certificate.HealthId</td>
-                <td>@certificate.ChildName @certificate.FatherFName @certificate.FatherLName</td>
-                <td>@certificate.DOB</td>
-                <td>@certificate.Governorate, @certificate.Doh, @certificate.District, @certificate.Nahia</td>
-                <td>@certificate.FatherFName</td>
-                <td>@certificate.MotherFName</td>
-                <td class="position-relative">
-                    @{
-                        var status = certificate.BiostatisticsStage ? "bg-success" : "bg-warning";
-                        var title = certificate.BiostatisticsStage ? "مكتملة" : "غير مكتملة";
-                        ViewBag.Done = certificate.BiostatisticsStage;
+<div class="box-2 table-responsive bg-white mt-4 px-2 py-4 rounded-3">
+    <div class="row mb-3">
+        <div class="col-md-2"></div>
+        <div class="col-md-2">
+            <div class="dropdown">
+                <a class="nav-link text-center form-select m-0 text-dark" href="#" role="button" id="fatherDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                    إختر المحافظة
+                </a>
+                <ul class="dropdown-menu w-100" aria-labelledby="fatherDropdown">
+                    <li class="d-flex justify-content-center">
+                        <button class="btn btn-outline-warning w-75 mb-2 uncheck-filter-btn position-relative" data-filter="father">
+                            مسح الكل
+                            <div class="chekecd-counter bg-info position-absolute px-2 rounded-circle" style="top: 15%; right: 10%;" data-counter="father-counter"></div>
+                        </button>
+
+                    </li>
+                    <li>
+                        <div class="input-group px-2">
+                            <input type="text" class="form-control father-search" placeholder="إبحث..">
+                        </div>
+                    </li>
+                    <li>
+                        <hr class="my-2">
+                    </li>
+                    @foreach (var father in Model.Select(item => item.Governorate).Distinct())
+                    {
+                        <li class="father-filter-item" style="display:none;">
+                            <div class="form-check form-check-inline ms-2">
+                                <input class="form-check-input father-filter" type="checkbox" value="@father" id="@("father_" + father)">
+                                <label class="form-check-label" for="@("father_" + father)">@father</label>
+                            </div>
+                        </li>
                     }
-                    <div class="rounded-circle @status position-absolute" style="width: 10px; height: 10px; top: 50%; transform: translate(-50%, -50%); left: 50%;" title="@title"></div>
-                </td>
-                <td class="dropdown">
-                    <a class="nav-link text-center m-0" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
-                        <i class="bi bi-three-dots fs-4"></i>
-                    </a>
-                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                        @if (!ViewBag.Done && ViewBag.canEdit)
-                        {
-                            <li><a asp-action="Edit" class="dropdown-item ps-1" asp-route-id="@certificate.BirthCertificateId"><i class="bi bi-pencil-square ms-3"></i> تعديل</a></li>
-                        }
-                        @if (ViewBag.canDelete)
-                        {
-                            <li><a asp-action="Delete" class="dropdown-item ps-1" asp-route-id="@certificate.BirthCertificateId" asp-route-returnUrl="@Context.Request.Path"><i class="bi bi-trash3 ms-3"></i> حذف</a></li>
-                        }
-                        @if (ViewBag.canRead)
-                        {
-                            <li><a asp-action="Details" class="dropdown-item ps-1" asp-route-id="@certificate.BirthCertificateId"><i class="bi bi-card-text ms-3"></i> تفاصيل</a></li>
-                        }
-                    </ul>
-                </td>
+                </ul>
+            </div>
+        </div>
+        <div class="col-md-2">
+            <div class="dropdown">
+                <a class="nav-link text-center form-select m-0 text-dark" href="#" role="button" id="motherDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                    إختر الدائرة
+                </a>
+                <ul class="dropdown-menu w-100" aria-labelledby="motherDropdown">
+                    <li class="d-flex justify-content-center">
+                        <button class="btn btn-outline-warning w-75 mb-2 uncheck-filter-btn position-relative" data-filter="mother">
+                            مسح الكل
+                            <div class="chekecd-counter bg-info position-absolute px-2 rounded-circle" style="top: 15%; right: 10%;" data-counter="mother-counter"></div>
+                        </button>
+                    </li>
+                    <li>
+                        <div class="input-group px-2">
+                            <input type="text" class="form-control mother-search" placeholder="إبحث..">
+                        </div>
+                    </li>
+                    <li>
+                        <hr class="my-2">
+                    </li>
+                    @foreach (var mother in Model.Select(item => item.Doh).Distinct())
+                    {
+                        <li class="mother-filter-item" style="display:none;">
+                            <div class="form-check form-check-inline ms-2">
+                                <input class="form-check-input mother-filter" type="checkbox" value="@mother" id="@("mother_" + mother)">
+                                <label class="form-check-label" for="@("mother_" + mother)">@mother</label>
+                            </div>
+                        </li>
+                    }
+                </ul>
+            </div>
+        </div>
+        <div class="col-md-4 p-0">
+            <div>
+                <label for="minDate" class="">من سنة:</label>
+                <input type="date" id="minDate" class="form-control-sm" />
+                <label for="maxDate" class="">إلى:</label>
+                <input type="date" id="maxDate" class="form-control-sm" />
+            </div>
+        </div>
+    </div>
+    <table id="file_export" class="table mt-3 table-bordered display">
+        <thead>
+            <tr style="background-color: #e9edf2;">
+                <th>إسم المولود</th>
+                <th>تاريخ الولادة</th>
+                <th>المحافظة</th>
+                <th>الدائرة</th>
+                <th>الحالة</th>
+                <th>عمليات</th>
             </tr>
-        }
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+            @foreach (var certificate in Model)
+            {
+                <tr>
+                    <td>@certificate.ChildName @certificate.FatherFName @certificate.FatherLName</td>
+                    <td>@certificate.DOB</td>
+                    <td>@certificate.Governorate</td>
+                    <td>@certificate.Doh</td>
+                    <td class="position-relative">
+                        @{
+                            var status = certificate.BiostatisticsStage ? "bg-success" : "bg-warning";
+                            var title = certificate.BiostatisticsStage ? "مكتملة" : "غير مكتملة";
+                            ViewBag.BioStage = certificate.BiostatisticsStage;
+                        }
+                        <div class="rounded-circle @status position-absolute" style="width: 10px; height: 10px; top: 50%; transform: translate(-50%, -50%); left: 50%;" title="@title"></div>
+                    </td>
+                    <td class="dropdown">
+                        <a class="nav-link text-center m-0" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="bi bi-three-dots fs-4"></i>
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                            @if (ViewBag.canEdit && !ViewBag.BioStage)
+                            {
+                                <li><a asp-action="Edit" class="dropdown-item ps-1" asp-route-id="@certificate.BirthCertificateId"><i class="bi bi-pencil-square ms-3"></i> تعديل</a></li>
+                            }
+                            @if (ViewBag.canDelete)
+                            {
+                                <li><a asp-action="Delete" class="dropdown-item ps-1" asp-route-id="@certificate.BirthCertificateId" asp-route-returnUrl="@Context.Request.Path"><i class="bi bi-trash3 ms-3"></i> حذف</a></li>
+                            }
+                            @if (ViewBag.canRead)
+                            {
+                                <li><a asp-action="Details" class="dropdown-item ps-1" asp-route-id="@certificate.BirthCertificateId"><i class="bi bi-card-text ms-3"></i> تفاصيل</a></li>
+                            }
+                        </ul>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

@@ -16,7 +16,9 @@ namespace CRVS.Core.Models
         public bool IsRead { get; set; }
         public bool IsGoodFeedBack { get; set; }
         public bool IsSettingMessage { get; set; }
+        public bool IsOpen{ get; set; }
         public string? CurrentUser { get; set; }
         public int CertificateId { get; set; }
+        public string? NewUserId { get; set; }
     }
 }

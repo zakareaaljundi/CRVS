@@ -152,30 +152,9 @@ namespace CRVS.Controllers
                     DohName = _context.Dohs.Find(model.DohId)!.DohName;
                     DistrictName = _context.Districts.FirstOrDefault(x => x.DistrictId == model.DistrictId && x.DohId == model.DohId && x.GovernorateId == model.GovernorateId)!.DistrictName;
                     NahiaName = _context.Nahias.FirstOrDefault(x => x.NahiaId == model.NahiaId && x.DistrictId == model.DistrictId && x.DohId == model.DohId && x.GovernorateId == model.GovernorateId)!.NahiaName;
-                    /* foreach(var district in _context.Districts.ToList())
-                     {
-                         if(district.DistrictId == model.DistrictId && district.DohId == model.DohId && district.GovernorateId == model.GovernorateId)
-                         {
-                             DistrictName = district.DistrictName;
-                         }
-                     };
-                     foreach(var nahia in _context.Nahias.ToList())
-                     {
-                         if(nahia.NahiaId == model.NahiaId && nahia.DistrictId == model.DistrictId && nahia.DohId == model.DohId && nahia.GovernorateId == model.GovernorateId)
-                         {
-                             NahiaName = nahia.NahiaName;
-                         }
-                     };*/
                     VillageName = model.Village;
                     FacilityTypeName = _context.FacilityTypes.Find(model.FacilityTypeId)!.FacilityTypeName;
                     HealthInstitutionName = _context.HealthInstitutions.FirstOrDefault(x => x.HealthInstitutionId == model.HealthInstitutionId && x.FacilityTypeId == model.FacilityTypeId && x.DohId == model.DohId && x.GovernorateId == model.GovernorateId)!.HealthInstitutionName;
-                    /*foreach(var healthInstitution in _context.HealthInstitutions.ToList())
-                    {
-                        if(healthInstitution.HealthInstitutionId == model.HealthInstitutionId && healthInstitution.FacilityTypeId == model.FacilityTypeId && healthInstitution.DohId == model.DohId && healthInstitution.GovernorateId == model.GovernorateId)
-                        {
-                            HealthInstitutionName = healthInstitution.HealthInstitutionName;
-                        }
-                    };*/
                 }
                 string ImgName = FileUpload(model);
                 User newUser = new User
@@ -202,11 +181,13 @@ namespace CRVS.Controllers
                     var role = await _roleManager.FindByIdAsync(model.Roles!);
                     newUser.RoleName = role!.Name;
                     await _userManager.AddToRoleAsync(user, role!.Name!);
+                    string description = $"لقد قمت بإضافة {model.FName} كموظف جديد";
                     Notification notification = new Notification
                     {
                         HeadLine = "تمت العملية بنجاح",
-                        Description = "لقد قمت بإضافة موظف جديد",
+                        Description = description,
                         CurrentUser = CurrentUser!.Id,
+                        NewUserId = user!.Id,
                         DAT = DateTime.Now,
                         IsGoodFeedBack = true
                     };

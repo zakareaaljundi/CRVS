@@ -23,7 +23,7 @@ namespace CRVS.Controllers
         public async Task<IActionResult> Index()
         {
             var user = await _userManager.GetUserAsync(User);
-            bool IsAdmin = await _userManager.IsInRoleAsync(user!, "Admin");
+            bool IsAdmin = await _userManager.IsInRoleAsync(user!, "مكتب تسجيل المواليد والوفيات");
             if (IsAdmin)
             {
                 var admin = await _context.Users.FirstOrDefaultAsync(x => x.UserId == user!.Id);
@@ -45,23 +45,52 @@ namespace CRVS.Controllers
             /*.Where(x=>x.IsDeleted == false);*/
             return View(unBlockedUsers);
         }
-        public async Task<IActionResult> Profile()
+        public async Task<IActionResult> Profile(string? id)
         {
-            var user = await _userManager.GetUserAsync(User);
-            var currentUser = await _context.Users.FirstOrDefaultAsync(x => x.UserId == user!.Id);
-            return View(currentUser);
-        }/*
-        public async Task<IActionResult> Delete(int id)
+            if (id == null)
+            {
+                var user = await _userManager.GetUserAsync(User);
+                var currentUser = await _context.Users.FirstOrDefaultAsync(x => x.UserId == user!.Id);
+                return View(currentUser);
+            }
+            else
+            {
+                var currentUser = await _context.Users.FirstOrDefaultAsync(x => x.UserId == id);
+                return View(currentUser);
+            }
+        }
+        public async Task<IActionResult> Block(string? id)
         {
-            var user = await _userRepository.GetByIdAsync(id);
-            user.IsDeleted = true;
-            return RedirectToAction("Index");
-        }*/
-        public async Task<IActionResult> Block(int id)
-        {
-            var user = await _userRepository.GetByIdAsync(id);
+            if (string.IsNullOrEmpty(id))
+            {
+                return NotFound();
+            }
+            var user = await _context.Users.FirstOrDefaultAsync(x => x.UserId == id);
+            if (user == null)
+            {
+                return NotFound();
+            }
             user.IsBlocked = true;
+            _context.Update(user);
+            await _context.SaveChangesAsync();
             return RedirectToAction("Index");
+        }
+
+        public async Task<IActionResult> UnBlock(string? id)
+        {
+            if (string.IsNullOrEmpty(id))
+            {
+                return NotFound();
+            }
+            var user = await _context.Users.FirstOrDefaultAsync(x => x.UserId == id);
+            if (user == null)
+            {
+                return NotFound();
+            }
+            user.IsBlocked = false;
+            _context.Update(user);
+            await _context.SaveChangesAsync();
+            return RedirectToAction("Blocked");
         }
     }
 }
