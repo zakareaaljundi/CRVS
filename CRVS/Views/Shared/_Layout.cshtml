@@ -858,6 +858,16 @@
     <script src="https://cdn.datatables.net/buttons/1.5.1/js/buttons.print.min.js"></script>
     <script src="~/admin-pro/dist/js/pages/datatable/datatable-advanced.init.js"></script>
 
+    @*For the Paging in the User Index and Blocked*@
+    <script>
+        $(document).ready(function () {
+            $('#userTable').DataTable();
+            $('#userTable_wrapper .row:first-child').hide();
+            $('#input-search').attr("placeholder", "إبحث..");
+            $('#userTable thead tr:nth-child(2)').css({ 'background-color': '#dee2e6' });
+        });
+    </script>
+
     @*For the Validaition Form in the Createing Birth Certificate*@
     <script>
         //Basic Example

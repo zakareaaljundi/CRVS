@@ -263,6 +263,7 @@ namespace CRVS.Controllers
 
             bool IsBioUser = await _userManager.IsInRoleAsync(currentUser!, "شعبة الإحصاء");
             bool IsOfficeUser = await _userManager.IsInRoleAsync(currentUser!, "مكتب تسجيل المواليد والوفيات");
+            ViewBag.BioUser = IsBioUser;
             if (IsOfficeUser)
             {
                 var officeUser = await _context.Users.FirstOrDefaultAsync(x => x.UserId == currentUser!.Id);

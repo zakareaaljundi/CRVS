@@ -7,12 +7,10 @@ using System.Threading.Tasks;
 
 namespace CRVS.Core.Models.ViewModels
 {
-    public class ChangePasswordViewModel
+    public class ChangePassViewModel
     {
-        [Required]
-        [DataType(DataType.Password)]
-        public string? OldPassword { get; set; }
-
+        public string? UserId { get; set; }
+        public string? UserName { get; set; }
         [Required]
         [DataType(DataType.Password)]
         public string? NewPassword { get; set; }
