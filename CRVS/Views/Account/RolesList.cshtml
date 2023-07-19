@@ -1,33 +1,46 @@
-﻿@model IEnumerable<Microsoft.AspNetCore.Identity.IdentityRole>
+﻿@model IEnumerable<(Microsoft.AspNetCore.Identity.IdentityRole Role, int UserCount)>
+
 @{
     ViewData["Title"] = "Roles List";
 }
 
-<h1 class="text-center my-5">@Localizer["RolesList"]</h1>
+<h1 class="bg-white py-4 text-center">@Localizer["RolesList"]</h1>
 
-<table class="table table-bordered">
-    <tr>
-        <th> @Html.DisplayNameFor(x=>x.Name) </th>
-        <th>@Localizer["Operations"]</th>
-    </tr>
-    @foreach (var role in Model)
+<div class="row mt-4">
+    @foreach (var (role, userCount) in Model)
     {
-        <tr>
-            <td>@role.Name</td>
-            <td>
-                <a asp-action="EditRole" asp-controller="Account" asp-route-id="@role.Id" class="btn btn-warning">
-                    @Localizer["EditRole"]
-                </a>
-                <a asp-action="Permissions" asp-controller="Account" asp-route-id="@role.Id" class="btn btn-success">
-                    @Localizer["Permissions"]
-                </a>
-                @if (!(role.Name == "Admin"))
-                {
-                    <a asp-action="DeleteRole" asp-controller="Account" asp-route-id="@role.Id" class="btn btn-danger">
-                        @Localizer["DeleteRole"]
-                    </a>
-                }
-            </td>
-        </tr>
+        <div class="col-md-4">
+            <div class="card">
+                <div class="border-bottom title-part-padding py-4">
+                    <h4 class="card-title text-center">@role.Name</h4>
+                    <div class="align-items-center d-flex justify-content-between" style="height: 37px;">
+                        <h6 class="m-0" style="color: #808080ba"><i class="fas fa-users"></i> @userCount</h6>
+                        @if (!(role.Name == "الادارة العليا") && !(role.Name == "شعبة الإحصاء") && !(role.Name == "مكتب تسجيل المواليد والوفيات"))
+                        {
+                            <a asp-action="DeleteRole" asp-controller="Account" asp-route-id="@role.Id" class="btn btn-outline-danger" title="@Localizer["DeleteRole"]">
+                                <i class="fas fa-trash-alt"></i>
+                            </a>
+                        }
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="row text-center">
+
+                        <div class="col-md-7 px-0">
+                            <a asp-action="EditRole" asp-controller="Account" asp-route-id="@role.Id" class="btn btn-outline-warning">
+                                <i class="fas fa-edit"></i><br />
+                                @Localizer["EditRole"]
+                            </a>
+                        </div>
+                        <div class="col-md-5 px-0">
+                            <a asp-action="Permissions" asp-controller="Account" asp-route-id="@role.Id" class="btn btn-outline-success">
+                                <i class="fas fa-universal-access"></i><br />
+                                @Localizer["Permissions"]
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     }
-</table>
+</div>

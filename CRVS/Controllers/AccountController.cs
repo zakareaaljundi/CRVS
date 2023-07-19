@@ -373,9 +373,18 @@ namespace CRVS.Controllers
 
         [HttpGet]
         [Authorize(Roles = "الادارة العليا")]
-        public IActionResult RolesList()
+        public async Task<IActionResult> RolesList()
         {
-            return View(_roleManager.Roles);
+            var roles = _roleManager.Roles.ToList();
+            var rolesWithUserCounts = new List<(IdentityRole Role, int UserCount)>();
+
+            foreach (var role in roles)
+            {
+                var usersInRole = await _userManager.GetUsersInRoleAsync(role.Name!);
+                rolesWithUserCounts.Add((Role: role, UserCount: usersInRole.Count));
+            }
+
+            return View(rolesWithUserCounts);
         }
 
         [HttpGet]

@@ -126,8 +126,48 @@
             right: 50%;
             background-color: #d9dcde;
         }
+
         #maxDate, #minDate {
             border: 1px solid #e9ecef;
+        }
+
+        .first-level,
+        .first-level li {
+            position: relative;
+        }
+        .first-level:before {
+            content: "";
+            width: 2px;
+            height: calc(100% - 16px);
+            position: absolute;
+            top: 0;
+            right: 13%;
+            background-color: #a4a6a8;
+            border-radius: 1px;
+        }
+        .first-level li:before {
+            content: "";
+            width: 5%;
+            height: 2px;
+            position: absolute;
+            top: 50%;
+            right: 0;
+            background-color: #a4a6a8;
+            border-radius: 1px;
+        }
+        .first-level li:hover::before,
+        .first-level li:hover::after {
+            background-color: #fff;
+        }
+        .first-level li:after {
+            content: "";
+            width: 7px;
+            height: 7px;
+            position: absolute;
+            top: 45%;
+            right: -4px;
+            background-color: #a4a6a8;
+            border-radius: 50%;
         }
     </style>
 </head>
@@ -228,12 +268,12 @@
                                     @Localizer["Profile"]
                                 </a>@*
                                 <a class="dropdown-item" href="#">
-                                    <i data-feather="credit-card" class="feather-sm text-primary me-1 ms-1"></i>
-                                    @Localizer["MyBalance"]
+                                <i data-feather="credit-card" class="feather-sm text-primary me-1 ms-1"></i>
+                                @Localizer["MyBalance"]
                                 </a>
                                 <a class="dropdown-item" href="#">
-                                    <i data-feather="mail" class="feather-sm text-success me-1 ms-1"></i>
-                                    @Localizer["Inbox"]
+                                <i data-feather="mail" class="feather-sm text-success me-1 ms-1"></i>
+                                @Localizer["Inbox"]
                                 </a>*@
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item" asp-action="ChangePassword" asp-controller="Account" asp-area="">
@@ -317,15 +357,15 @@
                                             </span>
                                         </a>
                                     </li>@*
-                                    <li class="sidebar-item">
-                                        <a href="page-layout-fixed-sidebar.html"
-                                           class="sidebar-link">
-                                            <i class="mdi mdi-view-parallel"></i><span class="hide-menu">
-                                                @Localizer["UsersMessages"]
-                                                <span class="side-badge badge bg-info" style="margin-top: -4px;">4</span>
-                                            </span>
-                                        </a>
-                                    </li>*@
+                                <li class="sidebar-item">
+                                <a href="page-layout-fixed-sidebar.html"
+                                class="sidebar-link">
+                                <i class="mdi mdi-view-parallel"></i><span class="hide-menu">
+                                @Localizer["UsersMessages"]
+                                <span class="side-badge badge bg-info" style="margin-top: -4px;">4</span>
+                                </span>
+                                </a>
+                                </li>*@
                                 </ul>
                             </li>
                         }
@@ -381,11 +421,11 @@
                                 </li>
                                 @if ((User.IsInRole("مكتب تسجيل المواليد والوفيات")) || User.IsInRole("الادارة العليا"))
                                 {
-                                   @* <li class="sidebar-item">
-                                        <a asp-area="" asp-controller="BirthCertificates" asp-action="UnCompleted" class="sidebar-link">
-                                            <i class="mdi mdi-format-align-left"></i><span class="hide-menu">@Localizer["UnCompletedCertificates"]</span>
-                                        </a>
-                                    </li>*@
+                                    @* <li class="sidebar-item">
+                                <a asp-area="" asp-controller="BirthCertificates" asp-action="UnCompleted" class="sidebar-link">
+                                <i class="mdi mdi-format-align-left"></i><span class="hide-menu">@Localizer["UnCompletedCertificates"]</span>
+                                </a>
+                                </li>*@
                                     <li class="sidebar-item">
                                         <a asp-area="" asp-controller="BirthCertificates" asp-action="Deleted" class="sidebar-link">
                                             <i class="mdi mdi-format-align-left"></i><span class="hide-menu">@Localizer["DeletedCertificates"]</span>
@@ -1034,7 +1074,7 @@
     <script>
         $(document).ready(function () {
             //$('#file_export_filter').addClass("text-center");
-    //        $('#file_export_filter label input').addClass('w-100 h-100 fs-5');
+            //        $('#file_export_filter label input').addClass('w-100 h-100 fs-5');
             $('#file_export_filter label').contents().first().remove();
             $('#file_export_filter label input').attr("placeholder", "إبحث..");
             $('.dt-buttons :first-child').hide();

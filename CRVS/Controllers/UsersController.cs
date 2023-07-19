@@ -7,9 +7,11 @@ using Microsoft.AspNetCore.Http;
 using CRVS.EF;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Authorization;
 
 namespace CRVS.Controllers
 {
+    [Authorize]
     public class UsersController : Controller
     {
         private readonly IBaseRepository<User> _userRepository;
