@@ -29,22 +29,14 @@ namespace CRVS.Controllers
         }
         public IActionResult Index()
         {
-            // Fetch the certificate data from the server, including the creation date
-            var certificateData = _context.BirthCertificates
-                .Select(c => new
-                {
-                    CreationDate1 = c.CreationDate, // Consider only the date part
-                })
-                .GroupBy(c => c.CreationDate1)
-                .Select(g => new
-                {
-                    Date = g.Key,
+            var certificateData = _context.BirthCertificates.Select(c => new{CreationDate1 = c.CreationDate,}).GroupBy(c => c.CreationDate1)
+                .Select(g => new{
+                Date = g.Key,
                     Count = g.Count(),
                 })
                 .OrderBy(g => g.Date)
                 .ToList();
 
-            // Convert the data to JSON format and pass it to the view
             ViewBag.CertificateData = Newtonsoft.Json.JsonConvert.SerializeObject(certificateData);
 
             ViewBag.AllCerCount = _context.BirthCertificates.Count();
@@ -58,6 +50,18 @@ namespace CRVS.Controllers
             ViewBag.ApprovedPercentage = (double)ViewBag.ApprovedCerCount / totalCerCount * 100;
             ViewBag.RejectedPercentage = (double)ViewBag.RejectedCerCount / totalCerCount * 100;
             ViewBag.DeletedPercentage = (double)ViewBag.DeletedCerCount / totalCerCount * 100;
+
+            var governorates = _context.Governorates.ToList();
+            var certificateCounts = new List<int>();
+
+            foreach (var gov in governorates)
+            {
+                var count = _context.BirthCertificates.Count(x => x.Governorate == gov.GovernorateName);
+                certificateCounts.Add(count);
+            }
+
+            ViewBag.Governorates = governorates.Select(gov => gov.GovernorateName).ToList();
+            ViewBag.CertificateCounts = certificateCounts;
 
             return View();
         }

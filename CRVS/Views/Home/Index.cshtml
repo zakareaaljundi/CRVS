@@ -106,8 +106,22 @@
         </div>
     </div>
 </div>
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="border-bottom title-part-padding">
+                <h4 class="card-title mb-0">عدد الشهادات تبعاً لكل محافظة</h4>
+            </div>
+            <div class="card-body">
+                <div>
+                    <canvas id="bar-chart"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
-@*Real Time Area Chart -------> AREA CHART*@
+@*(#chart-area-datetime) script*@
 <script>
     $(function () {
         var certificateData = @Html.Raw(ViewBag.CertificateData);
@@ -178,7 +192,7 @@
     })
 </script>
 
-
+@*(#Visit-Separation) script*@
 <script>
     $(function () {
         "use strict";
@@ -257,3 +271,73 @@
     });
 
 </script>
+
+@*(#bar-chart) script*@
+<script>
+    $(function () {
+        var governorates = @Html.Raw(Json.Serialize(ViewBag.Governorates));
+        var certificateCounts = @Html.Raw(Json.Serialize(ViewBag.CertificateCounts));
+
+        new Chart(document.getElementById("bar-chart"), {
+            type: "bar",
+            data: {
+                labels: governorates,
+                datasets: [
+                    {
+                        label: "عدد الشهادات",
+                        backgroundColor: [
+                            "#03a9f4",
+                            "#e861ff",
+                            "#08ccce",
+                            "#e2b35b",
+                            "#e40503",
+                            "#03a9f4",
+                            "#e861ff",
+                            "#08ccce",
+                            "#e2b35b",
+                            "#e40503",
+                            "#03a9f4",
+                            "#e861ff",
+                            "#08ccce",
+                            "#e2b35b",
+                            "#e40503",
+                            "#03a9f4",
+                            "#e861ff",
+                            "#08ccce",
+                            "#e2b35b",
+                            "#e40503",
+                            "#03a9f4",
+                            "#e861ff",
+                            "#08ccce",
+                            "#e2b35b",
+                            "#e40503",
+                        ],
+                        data: certificateCounts,
+                    },
+                ],
+            },
+            options: {
+                legend: { display: false },
+                scales: {
+                    yAxes: [
+                        {
+                            ticks: {
+                                fontColor: "#000",
+                                fontSize: 12,
+                            },
+                        },
+                    ],
+                    xAxes: [
+                        {
+                            ticks: {
+                                fontColor: "#000",
+                                fontSize: 12,
+                            },
+                        },
+                    ],
+                },
+            },
+        });
+    });
+</script>
+
