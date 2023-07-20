@@ -21,8 +21,9 @@
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" href="~/admin-pro/assets/libs/apexcharts/dist/apexcharts.css">
-    @*    <link href="~/admin-pro//libs/jvectormap/jquery-jvectormap.css" rel="stylesheet" />
-    *@    <!-- Custom CSS -->
+    <link href="~/admin-pro/libs/jvectormap/jquery-jvectormap.css" rel="stylesheet" />
+    
+        <!-- Custom CSS -->
     <link href="~/admin-pro/assets/libs/jquery-steps/jquery.steps.css" rel="stylesheet">
     <link href="~/admin-pro/assets/libs/jquery-steps/steps.css" rel="stylesheet">
 
@@ -43,12 +44,17 @@
 
     @*Datatables Style*@
     <link href="~/admin-pro/assets/extra-libs/datatables.net-bs4/css/dataTables.bootstrap4.css" rel="stylesheet">
-    @*<link href="https://cdn.datatables.net/1.11.5/css/dataTables.bootstrap4.min.css" rel="stylesheet">
-    <link href="https://cdn.datatables.net/buttons/2.0.1/css/buttons.bootstrap4.min.css" rel="stylesheet">*@
+    
+    @*For the chart-area-datetime that inside the Home Index page*@
+    <link rel="stylesheet" href="~/admin-pro/assets/libs/apexcharts/dist/apexcharts.css">
+
+    @*For the inputs style*@
+    @*<link rel="stylesheet" type="text/css" href="~/admin-pro/assets/extra-libs/prism/prism.css" >*@
+    
     <style>
         * {
             font-family: system-ui;
-            font-size: 17px;
+            /*font-size: 17px;*/
         }
 
         .notify .heartbit {
@@ -168,6 +174,39 @@
             right: -4px;
             background-color: #a4a6a8;
             border-radius: 50%;
+        }
+
+        #percentage-title-table tr td:first-child {
+            position: relative;
+        }
+        #percentage-title-table tr td:first-child:before {
+            content: "";
+            width: 10px;
+            height: 10px;
+            position: absolute;
+            top: 20px;
+            right: -4px;
+            border-radius: 50%;
+            background-color: #000;
+        } 
+        #percentage-title-table tr:first-child td:first-child:before {
+            background-color: #00ff00;
+        } 
+        #percentage-title-table tr:nth-child(2) td:first-child:before {
+            background-color: #26c6da;
+        } 
+        #percentage-title-table tr:nth-child(3) td:first-child:before {
+            background-color: #ffec49;
+        } 
+        #percentage-title-table tr:nth-child(4) td:first-child:before {
+            background-color: #ff3c2e;
+        } 
+
+        .box {
+            background-color: aliceblue;
+            padding: 30px;
+            border-radius: 20px;
+            margin-bottom: 25px;
         }
     </style>
 </head>
@@ -869,9 +908,9 @@
     <script src="~/admin-pro/dist/js/feather.min.js"></script>
     <script src="~/admin-pro/dist/js/custom.min.js"></script>
     <!--This page JavaScript -->
-    @*<script src="~/admin-pro/assets/libs/apexcharts/dist/apexcharts.min.js"></script>*@
+    <script src="~/admin-pro/assets/libs/apexcharts/dist/apexcharts.min.js"></script>
     <!-- Chart JS -->
-    <script src="~/admin-pro/dist/js/pages/dashboards/dashboard2.js"></script>
+    @*<script src="~/admin-pro/dist/js/pages/dashboards/dashboard2.js"></script>*@
 
     <script src="~/admin-pro/assets/libs/jquery-steps/build/jquery.steps.min.js"></script>
     <script src="~/admin-pro/assets/libs/jquery-validation/dist/jquery.validate.min.js"></script>
@@ -897,6 +936,14 @@
     <script src="https://cdn.datatables.net/buttons/1.5.1/js/buttons.html5.min.js"></script>
     <script src="https://cdn.datatables.net/buttons/1.5.1/js/buttons.print.min.js"></script>
     <script src="~/admin-pro/dist/js/pages/datatable/datatable-advanced.init.js"></script>
+
+    @*For the chart-area-datetime that inside the Home Index page*@
+    <script src="~/admin-pro/assets/libs/apexcharts/dist/apexcharts.min.js"></script>
+    @*<script src="~/admin-pro/dist/js/pages/apex-chart/apex.area.init.js"></script>*@
+    
+    @*For the inputs style*@
+    @*<script src="~/admin-pro/assets/extra-libs/prism/prism.js"></script>*@
+
 
     @*For the Paging in the User Index and Blocked*@
     <script>
@@ -1254,6 +1301,7 @@
             });
         });
     </script>
+
 
     @await RenderSectionAsync("Scripts", required: false)
 </body>

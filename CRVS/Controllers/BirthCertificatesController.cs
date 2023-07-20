@@ -185,12 +185,6 @@ namespace CRVS.Controllers
                 return View(approvedCertificates);
             }
         }
-        /*public async Task<IActionResult> UnCompleted()
-        {
-            var certificates = await _certificatesRepository.GetAllAsync();
-            var unCompletedCertificates = certificates.Where(x => x.Approval == false).Where(x => x.IsDeleted == false);
-            return View(unCompletedCertificates);
-        }*/
         public async Task<IActionResult> Deleted()
         {
             var currentUser = await _userManager.GetUserAsync(User);
@@ -282,14 +276,7 @@ namespace CRVS.Controllers
                 var rejectedCertificates = certificates.Where(x => x.IsRejected == true).Where(x => x.Approval == false).Where(x => x.BiostatisticsStage == false).Where(x => x.IsDeleted == false);
                 return View(rejectedCertificates);
             }
-        }/*
-        public async Task<IActionResult> ToApprovalStage(int id)
-        {
-            var certificate = await _certificatesRepository.GetByIdAsync(id);
-            certificate.SecondStage = true;
-            _certificatesRepository.Update(certificate);
-            return RedirectToAction("SecondStage");
-        }*/
+        }
         public async Task<IActionResult> Approve(int id)
         {
             var certificate = await _certificatesRepository.GetByIdAsync(id);
@@ -1240,6 +1227,7 @@ namespace CRVS.Controllers
                 birthCertificateOld.ImgResidencyCardFront = imgResidencyCardFrontPath;
                 birthCertificateOld.ImgResidencyCardBack = imgResidencyCardBackPath;
                 birthCertificateOld.BiostatisticsStage = true;
+                birthCertificateOld.IsRejected = false;
                 if (SaveBtn == "Save")
                 {
                     birthCertificateOld.BiostatisticsStage = false;
@@ -1271,6 +1259,11 @@ namespace CRVS.Controllers
             return "\\Images\\" + newImgName;
         }
         public async Task<IActionResult> Details(int id)
+        {
+            var certificate = await _certificatesRepository.GetByIdAsync(id);
+            return View(certificate);
+        }
+        public async Task<IActionResult> Print(int id)
         {
             var certificate = await _certificatesRepository.GetByIdAsync(id);
             return View(certificate);

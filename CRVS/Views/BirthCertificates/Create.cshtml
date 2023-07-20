@@ -18,25 +18,25 @@
                         <div class="row">
                             <div class="col-md-3">
                                 <div class="form-group">
-                                    <input asp-for="Governorate" class="form-control required" value="@ViewBag.Governorate" readonly type="hidden"/>
+                                    <input asp-for="Governorate" class="form-control required" value="@ViewBag.Governorate" readonly type="hidden" />
                                     <span asp-validation-for="Governorate" class="text-danger"></span>
                                 </div>
                             </div>
                             <div class="col-md-3">
                                 <div class="form-group">
-                                    <input asp-for="Doh" class="form-control required" value="@ViewBag.Doh" readonly type="hidden"/>
+                                    <input asp-for="Doh" class="form-control required" value="@ViewBag.Doh" readonly type="hidden" />
                                     <span asp-validation-for="Doh" class="text-danger"></span>
                                 </div>
                             </div>
                             <div class="col-md-3">
                                 <div class="form-group">
-                                    <input asp-for="District" class="form-control required" value="@ViewBag.District" readonly type="hidden"/>
+                                    <input asp-for="District" class="form-control required" value="@ViewBag.District" readonly type="hidden" />
                                     <span asp-validation-for="District" class="text-danger"></span>
                                 </div>
                             </div>
                             <div class="col-md-3">
                                 <div class="form-group">
-                                    <input asp-for="Nahia" class="form-control required" value="@ViewBag.Nahia" readonly type="hidden"/>
+                                    <input asp-for="Nahia" class="form-control required" value="@ViewBag.Nahia" readonly type="hidden" />
                                     <span asp-validation-for="Nahia" class="text-danger"></span>
                                 </div>
                             </div>
@@ -44,7 +44,7 @@
                         <div class="row">
                             <div class="col-md-3">
                                 <div class="form-group">
-                                    <input asp-for="Village" class="form-control required" value="@ViewBag.Village" readonly type="hidden"/>
+                                    <input asp-for="Village" class="form-control required" value="@ViewBag.Village" readonly type="hidden" />
                                     <span asp-validation-for="Village" class="text-danger"></span>
                                 </div>
                             </div>
@@ -56,7 +56,7 @@
                             </div>
                             <div class="col-md-3">
                                 <div class="form-group">
-                                    <input asp-for="HealthInstitution" class="form-control required" value="@ViewBag.HealthInstitution" readonly type="hidden"/>
+                                    <input asp-for="HealthInstitution" class="form-control required" value="@ViewBag.HealthInstitution" readonly type="hidden" />
                                     <span asp-validation-for="HealthInstitution" class="text-danger"></span>
                                 </div>
                             </div>
@@ -67,63 +67,65 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="row">
-                            <h3 class="mb-5">1- @Localizer["NewBornInfo"] :</h3>
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    <label>أ- @Localizer["NewBornName"]</label>
-                                    <input asp-for="ChildName" class="form-control required" placeholder="@Localizer["NewBornName"]" />
-                                    <span asp-validation-for="ChildName" class="text-danger"></span>
+                        <div class="box text-center">
+                            <div class="row mb-4">
+                                <h3 class="mb-5 fs-7">@Localizer["NewBornInfo"] :</h3>
+                                <div class="col-md-3">
+                                    <div class="form-floating">
+                                        <input asp-for="ChildName" class="form-control required" placeholder="@Localizer["NewBornName"]" />
+                                        <label>@Localizer["NewBornName"]</label>
+                                        <span asp-validation-for="ChildName" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-floating">
+                                        <select asp-for="Gender" class="form-select " asp-items="Html.GetEnumSelectList<CRVS.Core.Models.BirthCertificate.Genders>()">
+                                            @*<option vlaue="-1" disabled selected hidden>--- @Localizer["NewBornGender"] ---</option>*@
+                                        </select>
+                                        <label>@Localizer["NewBornGender"]</label>
+                                        <span asp-validation-for="Gender" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-floating">
+                                        <select asp-for="BirthType" class="form-select " asp-items="Html.GetEnumSelectList<CRVS.Core.Models.BirthCertificate.BirthTypes>()">
+@*                                            <option vlaue="-1" disabled selected hidden>--- @Localizer["NewBornBirthType"] ---</option>
+*@                                        </select>
+                                        <label>@Localizer["NewBornBirthType"]</label>
+                                        <span asp-validation-for="Gender" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-floating">
+                                        <select asp-for="NumberOfBirth" class="form-select " asp-items="Html.GetEnumSelectList<CRVS.Core.Models.BirthCertificate.NumberOfBirths>()">
+@*                                            <option vlaue="-1" disabled selected hidden>--- @Localizer["NewBornNumberOfBirth"] ---</option>
+*@                                        </select>
+                                        <label>@Localizer["NewBornNumberOfBirth"]</label>
+                                        <span asp-validation-for="NumberOfBirth" class="text-danger"></span>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    <label>ب- @Localizer["NewBornGender"]</label>
-                                    <select asp-for="Gender" class="form-select " asp-items="Html.GetEnumSelectList<CRVS.Core.Models.BirthCertificate.Genders>()">
-                                        <option vlaue="-1" disabled selected hidden>--- @Localizer["NewBornGender"] ---</option>
-                                    </select>
-                                    <span asp-validation-for="Gender" class="text-danger"></span>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="form-floating">
+                                        <input asp-for="BirthHour" id="BirthHour" class="form-control" />
+                                        <label>@Localizer["NewBornBirthHour"]</label>
+                                        <span asp-validation-for="BirthHour" class="text-danger"></span>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    <label>ج- @Localizer["NewBornBirthType"]</label>
-                                    <select asp-for="BirthType" class="form-select " asp-items="Html.GetEnumSelectList<CRVS.Core.Models.BirthCertificate.BirthTypes>()">
-                                        <option vlaue="-1" disabled selected hidden>--- @Localizer["NewBornBirthType"] ---</option>
-                                    </select>
-                                    <span asp-validation-for="Gender" class="text-danger"></span>
+                                <div class="col-md-4">
+                                    <div class="form-floating">
+                                        <input asp-for="DOB" id="DOB" class="form-control " type="date" />
+                                        <label>@Localizer["NewBornDOB"]</label>
+                                        <span asp-validation-for="DOB" class="text-danger"></span>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    <label>د- @Localizer["NewBornNumberOfBirth"]</label>
-                                    <select asp-for="NumberOfBirth" class="form-select " asp-items="Html.GetEnumSelectList<CRVS.Core.Models.BirthCertificate.NumberOfBirths>()">
-                                        <option vlaue="-1" disabled selected hidden>--- @Localizer["NewBornNumberOfBirth"] ---</option>
-                                    </select>
-                                    <span asp-validation-for="NumberOfBirth" class="text-danger"></span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label>ه- @Localizer["NewBornBirthHour"]</label>
-                                    <input asp-for="BirthHour" id="BirthHour" class="form-control" />
-                                    <span asp-validation-for="BirthHour" class="text-danger"></span>
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label>و- @Localizer["NewBornDOB"]</label>
-                                    <input asp-for="DOB" id="DOB" class="form-control " type="date" />
-                                    <span asp-validation-for="DOB" class="text-danger"></span>
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label>ز- @Localizer["NewBornDOBText"]</label>
-                                    <input asp-for="DOBText" id="DOBText" class="form-control" readonly placeholder="@Localizer["NewBornDOBText"]" />
-                                    <span asp-validation-for="DOBText" class="text-danger"></span>
+                                <div class="col-md-4">
+                                    <div class="form-floating">
+                                        <input asp-for="DOBText" id="DOBText" class="form-control" readonly placeholder="@Localizer["NewBornDOBText"]" />
+                                        <label>@Localizer["NewBornDOBText"]</label>
+                                        <span asp-validation-for="DOBText" class="text-danger"></span>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -131,253 +133,256 @@
                     <!-- Step 2 -->
                     <h6>@Localizer["FatherInfo"]</h6>
                     <section>
-                        <div class="row">
-                            <h3 class="mb-5">2- @Localizer["FatherInfo"] :</h3>
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label>أ- @Localizer["FatherFName"]</label>
-                                    <input asp-for="FatherFName" class="form-control " placeholder="@Localizer["FatherFName"]" />
-                                    <span asp-validation-for="FatherFName" class="text-danger"></span>
+                        <div class="box">
+                            <div class="row mb-4 text-center">
+                                <h3 class="mb-5 fs-7">@Localizer["FatherInfo"] :</h3>
+                                <div class="col-md-4">
+                                    <div class="form-floating">
+                                        <input asp-for="FatherFName" class="form-control " placeholder="@Localizer["FatherFName"]" />
+                                        <label>@Localizer["FatherFName"]</label>
+                                        <span asp-validation-for="FatherFName" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-floating">
+                                        <label>@Localizer["FatherMName"]</label>
+                                        <input asp-for="FatherMName" class="form-control " placeholder="@Localizer["FatherMName"]" />
+                                        <span asp-validation-for="FatherMName" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-floating">
+                                        <label>@Localizer["FatherLName"]</label>
+                                        <input asp-for="FatherLName" class="form-control " placeholder="@Localizer["FatherLName"]" />
+                                        <span asp-validation-for="FatherLName" class="text-danger"></span>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label>ب- @Localizer["FatherMName"]</label>
-                                    <input asp-for="FatherMName" class="form-control " placeholder="@Localizer["FatherMName"]"/>
-                                    <span asp-validation-for="FatherMName" class="text-danger"></span>
+                            <div class="row mb-4">
+                                <div class="col-md-4">
+                                    <div class="form-floating">
+                                        <label>@Localizer["FatherDOB"]</label>
+                                        <input asp-for="FatherDOB" class="form-control " type="month" onchange="calculateAge('FatherDOB', 'FatherAgeInput')" />
+                                        <span asp-validation-for="FatherDOB" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-floating">
+                                        <label>@Localizer["FatherAge"]</label>
+                                        <input asp-for="FatherAge" id="FatherAgeInput" class="form-control " placeholder="@Localizer["FatherAge"]" readonly />
+                                        <span asp-validation-for="FatherAge" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-floating select2-parent">
+                                        <label>@Localizer["FatherJob"]</label>
+                                        <select asp-for="FatherJobId" class="select2 required" asp-items="@ViewBag.MaleJobs">
+                                            <option value="" disabled selected hidden>-- @Localizer["FatherJob"] *--</option>
+                                        </select>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label>ج- @Localizer["FatherLName"]</label>
-                                    <input asp-for="FatherLName" class="form-control " placeholder="@Localizer["FatherLName"]"/>
-                                    <span asp-validation-for="FatherLName" class="text-danger"></span>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="form-floating select2-parent">
+                                        <label>@Localizer["FatherReligion"]</label>
+                                        <select asp-for="FatherReligionId" class="select2 " asp-items="@ViewBag.MaleReligions">
+                                            <option value="" disabled selected hidden>-- @Localizer["FatherReligion"] *--</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-floating select2-parent">
+                                        <label>@Localizer["FatherNationality"]</label>
+                                        <select asp-for="FatherNationalityId" class="select2 " asp-items="@ViewBag.FatherNationalities">
+                                            <option value="" disabled selected hidden>-- @Localizer["FatherNationality"] *--</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-floating">
+                                        <label>@Localizer["FatherMobile"]</label>
+                                        <input asp-for="FatherMobile" class="form-control " placeholder="@Localizer["FatherMobile"]" />
+                                        <span asp-validation-for="FatherMobile" class="text-danger"></span>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label>د- @Localizer["FatherDOB"]</label>
-                                    <input asp-for="FatherDOB" class="form-control " type="month" onchange="calculateAge('FatherDOB', 'FatherAgeInput')" />
-                                    <span asp-validation-for="FatherDOB" class="text-danger"></span>
+                        <div class="box">
+                            <div class="row mb-4">
+                                <h3 class="mb-5 text-center">@Localizer["MotherInfo"] :</h3>
+                                <div class="col-md-4">
+                                    <div class="form-floating">
+                                        <label>@Localizer["MotherFName"]</label>
+                                        <input asp-for="MotherFName" class="form-control " placeholder="@Localizer["MotherFName"]" />
+                                        <span asp-validation-for="MotherFName" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-floating">
+                                        <label>@Localizer["MotherMName"]</label>
+                                        <input asp-for="MotherMName" class="form-control " placeholder="@Localizer["MotherMName"]" />
+                                        <span asp-validation-for="MotherMName" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-floating">
+                                        <label>@Localizer["MotherLName"]</label>
+                                        <input asp-for="MotherLName" class="form-control " placeholder="@Localizer["MotherLName"]" />
+                                        <span asp-validation-for="MotherLName" class="text-danger"></span>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label>ه- @Localizer["FatherAge"]</label>
-                                    <input asp-for="FatherAge" id="FatherAgeInput" class="form-control " placeholder="@Localizer["FatherAge"]" readonly />
-                                    <span asp-validation-for="FatherAge" class="text-danger"></span>
+                            <div class="row mb-4">
+                                <div class="col-md-4">
+                                    <div class="form-floating">
+                                        <label>@Localizer["MotherDOB"]</label>
+                                        <input asp-for="MotherDOB" class="form-control " type="month" onchange="calculateAge('MotherDOB', 'MotherAgeInput')" />
+                                        <span asp-validation-for="MotherDOB" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-floating">
+                                        <label>@Localizer["MotherAge"]</label>
+                                        <input asp-for="MotherAge" class="form-control " id="MotherAgeInput" placeholder="@Localizer["MotherAge"]" readonly />
+                                        <span asp-validation-for="MotherAge" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-floating select2-parent">
+                                        <label>@Localizer["MotherJob"]</label>
+                                        <select asp-for="MotherJobId" class="select2 required" asp-items="@ViewBag.FemaleJobs">
+                                            <option value="" disabled selected hidden>-- @Localizer["MotherJob"] *--</option>
+                                        </select>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="col-md-4">
-                                <div class="form-group select2-parent">
-                                    <label>و- @Localizer["FatherJob"]</label>
-                                    <select asp-for="FatherJobId" class="select2 required" asp-items="@ViewBag.MaleJobs">
-                                        <option value="" disabled selected hidden>-- @Localizer["FatherJob"] *--</option>
-                                    </select>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="form-floating select2-parent">
+                                        <label>@Localizer["MotherReligion"]</label>
+                                        <select asp-for="MotherReligionId" class="select2 " asp-items="@ViewBag.FemaleReligions">
+                                            <option value="" disabled selected hidden>-- @Localizer["MotherReligion"] *--</option>
+                                        </select>
+                                    </div>
                                 </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-4">
-                                <div class="form-group select2-parent">
-                                    <label>ز- @Localizer["FatherReligion"]</label>
-                                    <select asp-for="FatherReligionId" class="select2 " asp-items="@ViewBag.MaleReligions">
-                                        <option value="" disabled selected hidden>-- @Localizer["FatherReligion"] *--</option>
-                                    </select>
+                                <div class="col-md-4">
+                                    <div class="form-floating select2-parent">
+                                        <label>@Localizer["MotherNationality"]</label>
+                                        <select asp-for="MotherNationalityId" class="select2 " asp-items="@ViewBag.MotherNationalities">
+                                            <option value="" disabled selected hidden>-- @Localizer["MotherNationality"] *--</option>
+                                        </select>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="form-group select2-parent">
-                                    <label>ح- @Localizer["FatherNationality"]</label>
-                                    <select asp-for="FatherNationalityId" class="select2 " asp-items="@ViewBag.FatherNationalities">
-                                        <option value="" disabled selected hidden>-- @Localizer["FatherNationality"] *--</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label>ط- @Localizer["FatherMobile"]</label>
-                                    <input asp-for="FatherMobile" class="form-control " placeholder="@Localizer["FatherMobile"]" />
-                                    <span asp-validation-for="FatherMobile" class="text-danger"></span>
+                                <div class="col-md-4">
+                                    <div class="form-floating">
+                                        <label>@Localizer["MotherMobile"]</label>
+                                        <input asp-for="MotherMobile" class="form-control " placeholder="@Localizer["MotherMobile"]" />
+                                        <span asp-validation-for="MotherMobile" class="text-danger"></span>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </section>
-                    <script>
-                        $(document).ready(function () {
-                            $(".select2-container .select2-dropdown .select2-results ul li:first-child").addClass("hide");
-                        });
-                        //$(".select2-results > .select2-results__option > li:first-child").attr("hidden", true);
-                    </script>
+
                     <!-- Step 3 -->
                     <h6>@Localizer["MotherInfo"]</h6>
                     <section>
-                        <div class="row">
-                            <h3 class="mb-5">3- @Localizer["MotherInfo"] :</h3>
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label>أ- @Localizer["MotherFName"]</label>
-                                    <input asp-for="MotherFName" class="form-control " placeholder="@Localizer["MotherFName"]" />
-                                    <span asp-validation-for="MotherFName" class="text-danger"></span>
+                        <div class="box">
+                            <div class="row">
+                                <h3 class="mb-4">4- @Localizer["NumOfPreviousAliveChildren"]</h3>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label>أ- @Localizer["Alive"]</label>
+                                        <input asp-for="Alive" class="form-control required" placeholder="@Localizer["Alive"]" min="0" />
+                                        <span asp-validation-for="Alive" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label>ب- @Localizer["BornAliveThenDied"]</label>
+                                        <input asp-for="BornAliveThenDied" class="form-control " placeholder="@Localizer["BornAliveThenDied"]" min="0" />
+                                        <span asp-validation-for="BornAliveThenDied" class="text-danger"></span>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label>ب- @Localizer["MotherMName"]</label>
-                                    <input asp-for="MotherMName" class="form-control " placeholder="@Localizer["MotherMName"]" />
-                                    <span asp-validation-for="MotherMName" class="text-danger"></span>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label>ج- @Localizer["BornDied"]</label>
+                                        <input asp-for="StillBirth" class="form-control " placeholder="@Localizer["BornDied"]" min="0" />
+                                        <span asp-validation-for="StillBirth" class="text-danger"></span>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label>ج- @Localizer["MotherLName"]</label>
-                                    <input asp-for="MotherLName" class="form-control " placeholder="@Localizer["MotherLName"]" />
-                                    <span asp-validation-for="MotherLName" class="text-danger"></span>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label>د- @Localizer["NoAbortionIfThere"]</label>
+                                        <input asp-for="NoAbortion" class="form-control" placeholder="@Localizer["NoAbortionIfThere"]" min="0" />
+                                        <span asp-validation-for="NoAbortion" class="text-danger"></span>
+                                    </div>
                                 </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label>د- @Localizer["MotherDOB"]</label>
-                                    <input asp-for="MotherDOB" class="form-control " type="month" onchange="calculateAge('MotherDOB', 'MotherAgeInput')" />
-                                    <span asp-validation-for="MotherDOB" class="text-danger"></span>
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label>ه- @Localizer["MotherAge"]</label>
-                                    <input asp-for="MotherAge" class="form-control " id="MotherAgeInput" placeholder="@Localizer["MotherAge"]" readonly />
-                                    <span asp-validation-for="MotherAge" class="text-danger"></span>
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="form-group select2-parent">
-                                    <label>و- @Localizer["MotherJob"]</label>
-                                    <select asp-for="MotherJobId" class="select2 required" asp-items="@ViewBag.FemaleJobs">
-                                        <option value="" disabled selected hidden>-- @Localizer["MotherJob"] *--</option>
-                                    </select>
+                                <div class="col-md-4" style="display: none;" id="BornDisableContainer">
+                                    <div class="form-group">
+                                        <label>ه- @Localizer["BornDisable"]</label>
+                                        <input asp-for="BornDisable" class="form-control " placeholder="@Localizer["BornDisable"]" min="0" />
+                                        <span asp-validation-for="BornDisable" class="text-danger"></span>
+                                        <div id="bornDisableError" class="text-danger fs-3" style="display: none;">@Localizer["BornDisableError"].</div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="col-md-4">
-                                <div class="form-group select2-parent">
-                                    <label>ز- @Localizer["MotherReligion"]</label>
-                                    <select asp-for="MotherReligionId" class="select2 " asp-items="@ViewBag.FemaleReligions">
-                                        <option value="" disabled selected hidden>-- @Localizer["MotherReligion"] *--</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="form-group select2-parent">
-                                    <label>ح- @Localizer["MotherNationality"]</label>
-                                    <select asp-for="MotherNationalityId" class="select2 " asp-items="@ViewBag.MotherNationalities">
-                                        <option value="" disabled selected hidden>-- @Localizer["MotherNationality"] *--</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label>ط- @Localizer["MotherMobile"]</label>
-                                    <input asp-for="MotherMobile" class="form-control " placeholder="@Localizer["MotherMobile"]" />
-                                    <span asp-validation-for="MotherMobile" class="text-danger"></span>
+                        <div class="box">
+                            <div class="row">
+                                <div class="col-md-8">
+                                    <div class="form-group">
+                                        <label>5- @Localizer["IsMotherAndFatherRelated"]</label>
+                                        <select asp-for="Relative" class="form-select w-50 d-inline" asp-items="Html.GetEnumSelectList<CRVS.Core.Models.BirthCertificate.Relatives>()">
+                                            <option vlaue="-1" disabled selected hidden>@Localizer["IsMotherAndFatherRelated"]</option>
+                                        </select>
+                                        <span asp-validation-for="Relative" class="text-danger"></span>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </section>
-                    <!-- Step 4 -->
-                    <h6>@Localizer["BirthInfo"]</h6>
-                    <section>
-                        <div class="row">
-                            <h3 class="mb-4">4- @Localizer["NumOfPreviousAliveChildren"]</h3>
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label>أ- @Localizer["Alive"]</label>
-                                    <input asp-for="Alive" class="form-control required" placeholder="@Localizer["Alive"]" min="0" />
-                                    <span asp-validation-for="Alive" class="text-danger"></span>
+                        <div class="box">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>6- @Localizer["IsDisabled"]</label>
+                                        <select asp-for="IsDisabled" class="form-select " asp-items="Html.GetEnumSelectList<CRVS.Core.Models.BirthCertificate.IsDisableds>()">
+                                            <option vlaue="-1" disabled selected hidden>@Localizer["IsDisabled"]</option>
+                                        </select>
+                                        <span asp-validation-for="IsDisabled" class="text-danger"></span>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label>ب- @Localizer["BornAliveThenDied"]</label>
-                                    <input asp-for="BornAliveThenDied" class="form-control " placeholder="@Localizer["BornAliveThenDied"]" min="0" />
-                                    <span asp-validation-for="BornAliveThenDied" class="text-danger"></span>
+                                <div class="col-md-6">
+                                    <div class="form-group select2-parent" id="DisabledTypeIdContainer">
+                                        <label>أ- @Localizer["DisabledType"]</label>
+                                        <select asp-for="DisabledTypeId" class="select2 " asp-items="@ViewBag.Disabilities">
+                                            <option value="" disabled selected hidden>-- @Localizer["DisabledType"] *--</option>
+                                        </select>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label>ج- @Localizer["BornDied"]</label>
-                                    <input asp-for="StillBirth" class="form-control " placeholder="@Localizer["BornDied"]" min="0" />
-                                    <span asp-validation-for="StillBirth" class="text-danger"></span>
+                        <div class="box">
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label>7- @Localizer["DurationOfPregnancy"]</label>
+                                        <input asp-for="DurationOfPregnancy" class="form-control " placeholder="@Localizer["DurationOfPregnancy"]" />
+                                        <span asp-validation-for="DurationOfPregnancy" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label>8- @Localizer["BabyWeight"]</label>
+                                        <input asp-for="BabyWeight" class="form-control " placeholder="@Localizer["BabyWeight"]" />
+                                        <span asp-validation-for="BabyWeight" class="text-danger"></span>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label>د- @Localizer["NoAbortionIfThere"]</label>
-                                    <input asp-for="NoAbortion" class="form-control" placeholder="@Localizer["NoAbortionIfThere"]" min="0" />
-                                    <span asp-validation-for="NoAbortion" class="text-danger"></span>
-                                </div>
-                            </div>
-                            <div class="col-md-4" style="display: none;" id="BornDisableContainer">
-                                <div class="form-group">
-                                    <label>ه- @Localizer["BornDisable"]</label>
-                                    <input asp-for="BornDisable" class="form-control " placeholder="@Localizer["BornDisable"]" min="0" />
-                                    <span asp-validation-for="BornDisable" class="text-danger"></span>
-                                    <div id="bornDisableError" class="text-danger fs-3" style="display: none;">@Localizer["BornDisableError"].</div>
-                                </div>
-                            </div>
-                        </div><hr />
-                        <div class="row">
-                            <div class="col-md-8">
-                                <div class="form-group">
-                                    <label>5- @Localizer["IsMotherAndFatherRelated"]</label>
-                                    <select asp-for="Relative" class="form-select w-50 d-inline" asp-items="Html.GetEnumSelectList<CRVS.Core.Models.BirthCertificate.Relatives>()">
-                                        <option vlaue="-1" disabled selected hidden>@Localizer["IsMotherAndFatherRelated"]</option>
-                                    </select>
-                                    <span asp-validation-for="Relative" class="text-danger"></span>
-                                </div>
-                            </div><hr />
                         </div>
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label>6- @Localizer["IsDisabled"]</label>
-                                    <select asp-for="IsDisabled" class="form-select " asp-items="Html.GetEnumSelectList<CRVS.Core.Models.BirthCertificate.IsDisableds>()">
-                                        <option vlaue="-1" disabled selected hidden>@Localizer["IsDisabled"]</option>
-                                    </select>
-                                    <span asp-validation-for="IsDisabled" class="text-danger"></span>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group select2-parent" id="DisabledTypeIdContainer">
-                                    <label>أ- @Localizer["DisabledType"]</label>
-                                    <select asp-for="DisabledTypeId" class="select2 " asp-items="@ViewBag.Disabilities">
-                                        <option value="" disabled selected hidden>-- @Localizer["DisabledType"] *--</option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div><hr />
-                        <div class="row">
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    <label>7- @Localizer["DurationOfPregnancy"]</label>
-                                    <input asp-for="DurationOfPregnancy" class="form-control " placeholder="@Localizer["DurationOfPregnancy"]" />
-                                    <span asp-validation-for="DurationOfPregnancy" class="text-danger"></span>
-                                </div>
-                            </div>
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    <label>8- @Localizer["BabyWeight"]</label>
-                                    <input asp-for="BabyWeight" class="form-control " placeholder="@Localizer["BabyWeight"]" />
-                                    <span asp-validation-for="BabyWeight" class="text-danger"></span>
-                                </div>
-                            </div>
-                        </div><hr />
                         @{
                             if (ViewBag.FacilityType == "مكتب تسجيل الولادات والوفيات")
                             {
@@ -398,43 +403,45 @@
                                 birthOccurredByOptions.RemoveAt(2);
                             }
                         }
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label>9- @Localizer["PlaceOfBirth"]</label>
-                                    <input asp-for="PlaceOfBirth" class="form-control " value="@ViewBag.PlaceOfBirth" readonly />
-                                    <span asp-validation-for="PlaceOfBirth" class="text-danger"></span>
+                        <div class="box">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>9- @Localizer["PlaceOfBirth"]</label>
+                                        <input asp-for="PlaceOfBirth" class="form-control " value="@ViewBag.PlaceOfBirth" readonly />
+                                        <span asp-validation-for="PlaceOfBirth" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="col-md-6" id="BirthOccurredByContainer">
+                                    <div class="form-group">
+                                        <label>أ- @Localizer["BirthOccurredBy"]؟</label>
+                                        <select asp-for="BirthOccurredBy" class="form-select " asp-items="@(new SelectList(birthOccurredByOptions, "Value", "Text"))">
+                                            <option vlaue="-1" disabled selected hidden>--- @Localizer["BirthOccurredBy"] ---</option>
+                                        </select>
+                                        <span asp-validation-for="BirthOccurredBy" class="text-danger"></span>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="col-md-6" id="BirthOccurredByContainer">
-                                <div class="form-group">
-                                    <label>أ- @Localizer["BirthOccurredBy"]؟</label>
-                                    <select asp-for="BirthOccurredBy" class="form-select " asp-items="@(new SelectList(birthOccurredByOptions, "Value", "Text"))">
-                                        <option vlaue="-1" disabled selected hidden>--- @Localizer["BirthOccurredBy"] ---</option>
-                                    </select>
-                                    <span asp-validation-for="BirthOccurredBy" class="text-danger"></span>
+                            <div class="row" id="TheKabilaLicenseInputs" style="display: none">
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label>ب- @Localizer["LicenseNo"]</label>
+                                        <input asp-for="LicenseNo" class="form-control " placeholder="@Localizer["LicenseNo"]" />
+                                        <span asp-validation-for="LicenseNo" class="text-danger"></span>
+                                    </div>
                                 </div>
-                            </div>
-                        </div>
-                        <div class="row" id="TheKabilaLicenseInputs" style="display: none">
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label>ب- @Localizer["LicenseNo"]</label>
-                                    <input asp-for="LicenseNo" class="form-control " placeholder="@Localizer["LicenseNo"]" />
-                                    <span asp-validation-for="LicenseNo" class="text-danger"></span>
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label>ج- @Localizer["LicenseYear"]</label>
-                                    <input asp-for="LicenseYear" class="form-control " />
-                                    <span asp-validation-for="LicenseYear" class="text-danger"></span>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label>ج- @Localizer["LicenseYear"]</label>
+                                        <input asp-for="LicenseYear" class="form-control " />
+                                        <span asp-validation-for="LicenseYear" class="text-danger"></span>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </section>
-                    <!-- Step 5 -->
-                    <h6>معلومات العائلة</h6>
+                    <!-- Step 4 -->
+                    <h6>@Localizer["BirthInfo"]</h6>
                     <section>
                         <div class="row">
                             <h3>10- @Localizer["FamilyPermanentAddress"] :</h3>
@@ -557,6 +564,10 @@
                                 </div>
                             </div>
                         </div><hr />
+                    </section>
+                    <!-- Step 5 -->
+                    <h6>معلومات العائلة</h6>
+                    <section>
                         <div class="row">
                             <h3>12- @Localizer["InfoAboutInformer"] :</h3>
                             <div class="col-md-4">
@@ -623,7 +634,7 @@
                                     <span asp-validation-for="RationCard" class="text-danger"></span>
                                 </div>
                             </div>
-                        </div>
+                        </div><hr />
                     </section>
                     <!-- Step 6 -->
                     <h6>إثباتات</h6>
@@ -692,7 +703,7 @@
                                     <span asp-validation-for="ImageResidencyCardBack" class="text-danger"></span>
                                 </div>
                             </div>
-                        </div>
+                        </div><hr />
                     </section>
                     <input type="hidden" asp-for="SaveBtn" id="SaveBtn" value="SaveAndSend" />
                     <input type="submit" value="حفظ" name="Save" onclick="setSaveBtnValue('Save'); removeRequiredClass();" class="btn btn-primary position-absolute px-4 py-2 rounded-pill" style="bottom: -100px; right: 47%;" />
@@ -701,6 +712,12 @@
         </div>
     </div>
 </div>
+
+<script>
+    $(document).ready(function () {
+        $(".select2-container .select2-dropdown .select2-results ul li:first-child").addClass("hide");
+    });
+</script>
 
 @*To Add the search bar to the Seclet Lists*@
 <script>
@@ -1142,7 +1159,7 @@
         document.getElementById("SaveBtn").value = btnValue;
     }
 </script>
-           
+
 @*Remove all the Reqiured Inputs to save the work *@
 <script>
     function removeRequiredClass() {

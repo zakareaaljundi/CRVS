@@ -1,0 +1,154 @@
+﻿@model CRVS.Core.Models.BirthCertificate
+@{
+    ViewData["Title"] = Localizer["PrintPage"];
+}
+
+<div id="certificate" class="bg-white p-5 m-auto" style="border-radius: 20px; box-shadow: 0 0 5px; width: 790px">
+    <div class="row mb-5 mt-3">
+        <div class="col-9 d-flex flex-column justify-content-evenly position-relative">
+            @*<h1 class="mb-5">@Html.DisplayFor(model=> model.Name) Birth Certificate</h1>*@
+            <h1 class="mb-5 font-weight-bold">@Localizer["BirthCertificate"]</h1>
+            <div class="mt-4">
+                <h5>@Localizer["NewBornName"]</h5>
+                <h2>@Html.DisplayFor(model=> model.ChildName) @Html.DisplayFor(model=> model.FatherFName) @Html.DisplayFor(model=> model.FatherMName) @Html.DisplayFor(model=> model.FatherLName)</h2>
+            </div>
+            <img class="w-25 position-absolute top-0"style="left: 9%;" src="~/Images/approved.png" />
+        </div>
+        <div class="col-3">
+            <div>
+                <canvas class="w-100 h-100" id="qrcode"></canvas>
+            </div>
+        </div>
+    </div>
+    <hr />
+    <div class="row my-5">
+        <h4 class="mb-4">@Localizer["ChildInfo"]</h4>
+        <div class="d-flex">
+            <div class="w-25 py-1 px-2" style="border-top: 1px solid;">
+                <div class="font-weight-medium">@Localizer["HealthId"]</div>
+                <div>@Html.DisplayFor(model=> model.HealthId)</div>
+            </div>
+            <div class="w-25 py-1 px-2" style="border-top: 1px solid; border-right: 1px solid">
+                <div class="font-weight-medium">@Localizer["CertificateNumber"]</div>
+                <div>@Html.DisplayFor(model=> model.BirthCertificateId)</div>
+            </div>
+            <div class="w-25 py-1 px-2" style="border-top: 1px solid; border-right: 1px solid">
+                <div class="font-weight-medium">@Localizer["RegisterationDate"]</div>
+                <div>@Html.DisplayFor(model=> model.CreationDate)</div>
+            </div>
+            <div class="w-25 py-1 px-2" style="border-top: 1px solid; border-right: 1px solid">
+                <div class="font-weight-medium">@Localizer["Gender"]</div>
+                <div>@Html.DisplayFor(model=> model.Gender)</div>
+            </div>
+        </div>
+        <div class="d-flex">
+            <div class="w-50 py-1 px-2" style="border-top: 1px solid; border-bottom: 1px solid">
+                <div class="font-weight-medium">@Localizer["BirthType"]</div>
+                <div>@Html.DisplayFor(model=> model.BirthType)</div>
+            </div>
+            <div class="w-50 py-1 px-2" style="border: 1px solid; border-left: none;">
+                <div class="font-weight-medium">@Localizer["DateOfBirthInThreeSyllables"]</div>
+                <div>@Html.DisplayFor(model=> model.DOB)</div>
+            </div>
+        </div>
+    </div>
+    <div class="row my-5">
+        <h4 class="mb-4">@Localizer["PlaceOfBirth"]</h4>
+        <div class="d-flex">
+            <div class="w-25 py-1 px-2" style="border-top: 1px solid;">
+                <div class="font-weight-medium">@Localizer["PlaceOfBirth"]</div>
+                <div>@Html.DisplayFor(model=> model.PlaceOfBirth)</div>
+            </div>
+            <div class="w-25 py-1 px-2" style="border-top: 1px solid; border-right: 1px solid">
+                <div class="font-weight-medium">@Localizer["Governorate"]</div>
+                <div>@Html.DisplayFor(model=> model.Governorate)</div>
+            </div>
+            <div class="w-25 py-1 px-2" style="border-top: 1px solid; border-right: 1px solid">
+                <div class="font-weight-medium">@Localizer["Dirctorate"]</div>
+                <div>@Html.DisplayFor(model=> model.Doh)</div>
+            </div>
+            <div class="w-25 py-1 px-2" style="border-top: 1px solid; border-right: 1px solid">
+                <div class="font-weight-medium">@Localizer["District"]</div>
+                <div>@Html.DisplayFor(model=> model.District)</div>
+            </div>
+        </div>
+        <div class="d-flex">
+            <div class="w-25 py-1 px-2" style="border-top: 1px solid; border-bottom: 1px solid">
+                <div class="font-weight-medium">@Localizer["HospitalIcon"]</div>
+                <div><i class="bi bi-plus"></i></div>
+            </div>
+            <div class="w-25 py-1 px-2" style="border: 1px solid; border-left: none">
+                <div class="font-weight-medium">@Localizer["BabyWeight"]</div>
+                <div>@Html.DisplayFor(model=> model.BabyWeight)</div>
+            </div>
+            <div class="w-25 py-1 px-2" style="border: 1px solid; border-left: none">
+                <div class="font-weight-medium">@Localizer["DurationOfPregnancy"]</div>
+                <div>@Html.DisplayFor(model=> model.DurationOfPregnancy)</div>
+            </div>
+            <div class="w-25 py-1 px-2" style="border: 1px solid; border-left: none;">
+                <div class="font-weight-medium">@Localizer["BirthOccurredBy"]</div>
+                <div>@Html.DisplayFor(model=> model.BirthOccurredBy)</div>
+            </div>
+        </div>
+    </div>
+    <div class="row my-5">
+        <h4 class="mb-4">@Localizer["FatherInfo"]</h4>
+        <div class="d-flex">
+            <div class="w-100 py-1 px-2" style="border-top: 1px solid;">
+                <div class="font-weight-medium">@Localizer["FatherName"]</div>
+                <div>@Html.DisplayFor(model=> model.FatherFName) @Html.DisplayFor(model=> model.FatherMName) @Html.DisplayFor(model=> model.FatherLName)</div>
+            </div>
+        </div>
+        <div class="d-flex">
+            <div class="w-25 py-1 px-2" style="border-top: 1px solid; border-bottom: 1px solid;">
+                <div class="font-weight-medium">@Localizer["FatherReligion"]</div>
+                <div>@Html.DisplayFor(model=> model.FatherReligion)</div>
+            </div>
+            <div class="w-25 py-1 px-2" style="border: 1px solid; border-left: none;">
+                <div class="font-weight-medium">@Localizer["FatherJob"]</div>
+                <div>@Html.DisplayFor(model=> model.FatherJob)</div>
+            </div>
+            <div class="w-25 py-1 px-2" style="border: 1px solid; border-left: none;">
+                <div class="font-weight-medium">@Localizer["FatherNationality"]</div>
+                <div>@Html.DisplayFor(model=> model.FatherNationality)</div>
+            </div>
+            <div class="w-25 py-1 px-2" style="border: 1px solid; border-left: none; ">
+                <div class="font-weight-medium">@Localizer["FatherAge"]</div>
+                <div>@Html.DisplayFor(model=> model.FatherAge)</div>
+            </div>
+        </div>
+    </div>
+    <div class="row my-5">
+        <h4 class="mb-4">@Localizer["MotherInfo"]</h4>
+        <div class="d-flex">
+            <div class="w-100 py-1 px-2" style="border-top: 1px solid;">
+                <div class="font-weight-medium">@Localizer["MotherName"]</div>
+                <div>@Html.DisplayFor(model=> model.MotherFName) @Html.DisplayFor(model=> model.MotherMName) @Html.DisplayFor(model=> model.MotherLName)</div>
+            </div>
+        </div>
+        <div class="d-flex">
+            <div class="w-25 py-1 px-2" style="border-top: 1px solid; border-bottom: 1px solid;">
+                <div> class="font-weight-medium"@Localizer["MotherReligion"]</div>
+                <div>@Html.DisplayFor(model=> model.MotherReligion)</div>
+            </div>
+            <div class="w-25 py-1 px-2" style="border: 1px solid; border-left: none;">
+                <div class="font-weight-medium">@Localizer["MotherJob"]</div>
+                <div>@Html.DisplayFor(model=> model.MotherJob)</div>
+            </div>
+            <div class="w-25 py-1 px-2" style="border: 1px solid; border-left: none">
+                <div class="font-weight-medium">@Localizer["MotherNationality"]</div>
+                <div>@Html.DisplayFor(model=> model.MotherNationality)</div>
+            </div>
+            <div class="w-25 py-1 px-2" style="border: 1px solid; border-left: none; ">
+                <div class="font-weight-medium">@Localizer["MotherAge"]</div>
+                <div>@Html.DisplayFor(model=> model.MotherAge)</div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row my-5 text-center">
+    <div class="col">
+        <button onclick="convertToPdf()" class="btn btn-primary">@Localizer["Print"]</button>
+        @*<a asp-action="Index" class="btn btn-warning ms-2">Cancel</a>*@
+    </div>
+</div>

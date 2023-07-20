@@ -2,72 +2,258 @@
     ViewData["Title"] = "Home Page";
 }
 
-<div class="container-fluid">
-    <div class="row page-titles">
-        <div class="col-md-5 col-12 align-self-center">
-            <h3 class="text-themecolor mb-0">لوحة التحكم</h3>
+<div class="row page-titles">
+    <div class="col-md-5 col-12 align-self-center">
+        <h3 class="text-themecolor mb-0">لوحة التحكم</h3>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-lg-3 col-md-6">
+        <div class="card">
+            <div class="card-body">
+                <div class="d-flex no-block">
+                    <div class="me-3 align-self-center">
+                        <span class="lstick d-inline-block align-middle"></span><img src="~/admin-pro/assets/images/icon/income.png" alt="Income" />
+                    </div>
+                    <div class="align-self-center">
+                        <h6 class="text-muted mt-2 mb-0">مجموع الشهادات</h6>
+                        <h2>@ViewBag.AllCerCount</h2>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
-    <div class="row">
-        <div class="col-lg-3 col-md-6">
-            <div class="card">
-                <div class="card-body">
-                    <div class="d-flex no-block">
-                        <div class="me-3 align-self-center">
-                            <span class="lstick d-inline-block align-middle"></span><img src="~/admin-pro/assets/images/icon/income.png" alt="Income" />
-                        </div>
-                        <div class="align-self-center">
-                            <h6 class="text-muted mt-2 mb-0">مجموع الشهادات</h6>
-                            <h2>953,000</h2>
-                        </div>
+    <div class="col-lg-3 col-md-6">
+        <div class="card">
+            <div class="card-body">
+                <div class="d-flex no-block">
+                    <div class="me-3 align-self-center">
+                        <span class="lstick d-inline-block align-middle"></span><img src="~/admin-pro/assets/images/icon/expense.png" alt="Income" />
+                    </div>
+                    <div class="align-self-center">
+                        <h6 class="text-muted mt-2 mb-0">مجموع الموافق عليهم</h6>
+                        <h2>@ViewBag.ApprovedCerCount</h2>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="col-lg-3 col-md-6">
-            <div class="card">
-                <div class="card-body">
-                    <div class="d-flex no-block">
-                        <div class="me-3 align-self-center">
-                            <span class="lstick d-inline-block align-middle"></span><img src="~/admin-pro/assets/images/icon/expense.png" alt="Income" />
-                        </div>
-                        <div class="align-self-center">
-                            <h6 class="text-muted mt-2 mb-0">مجموع الموافق عليهم</h6>
-                            <h2>236,000</h2>
-                        </div>
+    </div>
+    <div class="col-lg-3 col-md-6">
+        <div class="card">
+            <div class="card-body">
+                <div class="d-flex no-block">
+                    <div class="me-3 align-self-center">
+                        <span class="lstick d-inline-block align-middle"></span><img src="~/admin-pro/assets/images/icon/assets.png" alt="Income" />
+                    </div>
+                    <div class="align-self-center">
+                        <h6 class="text-muted mt-2 mb-0">مجموع المرفوضة</h6>
+                        <h2>@ViewBag.RejectedCerCount</h2>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="col-lg-3 col-md-6">
-            <div class="card">
-                <div class="card-body">
-                    <div class="d-flex no-block">
-                        <div class="me-3 align-self-center">
-                            <span class="lstick d-inline-block align-middle"></span><img src="~/admin-pro/assets/images/icon/assets.png" alt="Income" />
-                        </div>
-                        <div class="align-self-center">
-                            <h6 class="text-muted mt-2 mb-0">مجموع المرفوضة</h6>
-                            <h2>987,563</h2>
-                        </div>
+    </div>
+    <div class="col-lg-3 col-md-6">
+        <div class="card">
+            <div class="card-body">
+                <div class="d-flex no-block">
+                    <div class="me-3 align-self-center">
+                        <span class="lstick d-inline-block align-middle"></span><img src="~/admin-pro/assets/images/icon/staff.png" alt="Income" />
                     </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-lg-3 col-md-6">
-            <div class="card">
-                <div class="card-body">
-                    <div class="d-flex no-block">
-                        <div class="me-3 align-self-center">
-                            <span class="lstick d-inline-block align-middle"></span><img src="~/admin-pro/assets/images/icon/staff.png" alt="Income" />
-                        </div>
-                        <div class="align-self-center">
-                            <h6 class="text-muted mt-2 mb-0">مجموع المعلقة</h6>
-                            <h2>987,563</h2>
-                        </div>
+                    <div class="align-self-center">
+                        <h6 class="text-muted mt-2 mb-0">مجموع المعلقة</h6>
+                        <h2>@ViewBag.PendingCerCount</h2>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
+
+<div class="row">
+    <div class="col-lg-9" style="direction: ltr">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">تعداد الشهادات الصادرة على الفترات الزمنية</h4>
+                <div id="chart-area-datetime"></div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-3 d-flex align-items-stretch">
+        <div class="card w-100">
+            <div class="card-body py-0">
+                <div id="Visit-Separation" style="height:290px; width:100%; margin-top: -55px;" class="d-flex justify-content-center align-items-center"></div>
+                <table class="table vm fs-3" id="percentage-title-table">
+                    <tr>
+                        <td class="b-0">الموافق عليهم</td>
+                        <td class="text-end font-weight-medium b-0">@string.Format("{0:0.0}%", ViewBag.ApprovedPercentage)</td>
+                    </tr>
+                    <tr>
+                        <td>المعلقة</td>
+                        <td class="text-end font-weight-medium">@string.Format("{0:0.0}%", ViewBag.PendingPercentage)</td>
+                    </tr>
+                    <tr>
+                        <td>المرفوضة</td>
+                        <td class="text-end font-weight-medium">@string.Format("{0:0.0}%", ViewBag.RejectedPercentage)</td>
+                    </tr>
+                    <tr>
+                        <td>المحذوفة</td>
+                        <td class="text-end font-weight-medium">@string.Format("{0:0.0}%", ViewBag.DeletedPercentage)</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+@*Real Time Area Chart -------> AREA CHART*@
+<script>
+    $(function () {
+        var certificateData = @Html.Raw(ViewBag.CertificateData);
+        var chartData = certificateData.map(item => [new Date(item.Date).getTime(), item.Count]);
+        var minDate = Math.min(...certificateData.map(item => new Date(item.Date).getTime()));
+        var options = {
+            series: [{
+                data: chartData, 
+            }],
+            chart: {
+                id: 'area-datetime',
+                fontFamily: 'Nunito Sans,sans-serif',
+                type: 'area',
+                height: 350,
+                zoom: {
+                    autoScaleYaxis: true
+                },
+                toolbar: {
+                    show: false,
+                },
+            },
+            grid: {
+                show: false
+            },
+            colors: ['#6993ff'],
+            dataLabels: {
+                enabled: false
+            },
+            markers: {
+                size: 0,
+                style: 'hollow',
+            },
+            xaxis: {
+                type: 'datetime',
+                min: minDate,
+                tickAmount: 6,
+                labels: {
+                    style: {
+                        colors: ["#a1aab2", "#a1aab2", "#a1aab2", "#a1aab2", "#a1aab2", "#a1aab2", "#a1aab2", "#a1aab2", "#a1aab2", "#a1aab2", "#a1aab2", "#a1aab2"],
+                    },
+                },
+            },
+            yaxis: {
+                labels: {
+                    style: {
+                        colors: ["#a1aab2", "#a1aab2", "#a1aab2", "#a1aab2", "#a1aab2", "#a1aab2", "#a1aab2"],
+                    },
+                },
+            },
+            tooltip: {
+                x: {
+                    format: 'dd MMM yyyy'
+                },
+                theme: "dark",
+            },
+            fill: {
+                type: 'gradient',
+                gradient: {
+                    shadeIntensity: 1,
+                    opacityFrom: 0.7,
+                    opacityTo: 0.9,
+                    stops: [0, 100]
+                }
+            },
+        };
+        var chart_area_datetime = new ApexCharts(document.querySelector("#chart-area-datetime"), options);
+        chart_area_datetime.render();
+    })
+</script>
+
+
+<script>
+    $(function () {
+        "use strict";
+        var option_Visit_Separation = {
+            series: [@ViewBag.ApprovedCerCount, @ViewBag.PendingCerCount, @ViewBag.RejectedCerCount, @ViewBag.DeletedCerCount],
+            labels: ["الموافق عليهم", "المعلقة", "المرفوضة", "المحذوفة"],
+            chart: {
+                type: 'donut',
+                fontFamily: 'Montserrat,sans-serif',
+                height: 225,
+                offsetY: 30,
+            },
+            dataLabels: {
+                enabled: false,
+            },
+            stroke: {
+                width: 0,
+            },
+            plotOptions: {
+                pie: {
+                    expandOnClick: true,
+                    donut: {
+                        size: '80',
+                        labels: {
+                            show: true,
+                            name: {
+                                show: true,
+                                offsetY: 10,
+
+                            },
+                            value: {
+                                show: false,
+                            },
+                            total: {
+                                show: true,
+                                color: '#000',
+                                fontFamily: 'Montserrat,sans-serif',
+                                fontSize: '26px',
+                                fontWeight: 600,
+                                label: 'الشهادات',
+                            }
+                        },
+                    },
+                },
+            },
+            colors: ['#00ff00', '#26c6da', '#ffec49', '#ff3c2e'],
+            tooltip: {
+                show: true,
+                fillSeriesColor: false,
+            },
+            legend: {
+                show: false
+            },
+            responsive: [{
+                breakpoint: 1025,
+                options: {
+                    chart: {
+                        height: 220,
+                        width: 220
+                    },
+                }
+            },
+            {
+                breakpoint: 769,
+                options: {
+                    chart: {
+                        height: 250,
+                        width: 250
+                    },
+                }
+            }]
+        };
+
+        var chart_pie_donut_status = new ApexCharts(document.querySelector("#Visit-Separation"), option_Visit_Separation);
+        chart_pie_donut_status.render();
+    });
+
+</script>
